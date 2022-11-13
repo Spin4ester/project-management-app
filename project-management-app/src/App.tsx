@@ -7,14 +7,19 @@ import { Main } from 'pages/Main/Main';
 import { Welcome } from 'pages/Welcome/Welcome';
 import { Profile } from 'pages/Profile/Profile';
 import { ErrorPage } from 'pages/Error/ErrorPage';
+import { Header } from 'components/Header/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Registration } from 'pages/Registration/Registration';
 
 function App() {
   return (
     <div className="App">
+      <Header />
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/boards" element={<Main />} />
         <Route path="/login" element={<Authorization />} />
+        <Route path="/registration" element={<Registration />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
