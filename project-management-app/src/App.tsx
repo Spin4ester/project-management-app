@@ -11,6 +11,7 @@ import { Header } from 'components/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Registration } from 'pages/Registration/Registration';
 import { Footer } from 'components/Footer/Footer';
+import Board from 'pages/Board/Board';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/boards" element={<Main />} />
+        <Route path="/boards/1" element={<Board />} />
         <Route path="/login" element={<Authorization />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/profile" element={<Profile />} />

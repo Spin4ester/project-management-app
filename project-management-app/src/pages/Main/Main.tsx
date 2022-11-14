@@ -1,13 +1,13 @@
-import { Board } from 'components/Board/Board';
+import { BoardPreview } from 'components/BoardPreview/BoardPreview';
 import React from 'react';
 import './Main.css';
 
 export function Main() {
   return (
     <main className="main_container">
-      <Board />
-      <Board />
-      <Board />
+      <BoardPreview />
+      <BoardPreview />
+      <BoardPreview />
       <div>Add Board</div>
     </main>
   );

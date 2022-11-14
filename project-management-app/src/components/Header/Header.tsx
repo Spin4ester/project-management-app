@@ -18,6 +18,9 @@ export function Header() {
             <LinkContainer to="/registration">
               <Nav.Link href="#registration">Sign Up</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/boards">
+              <Nav.Link href="#boards">Boards</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
         <Button variant="primary">RU | EN</Button>
