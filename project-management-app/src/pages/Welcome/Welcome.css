@@ -1,8 +1,8 @@
-.video_content {
-    margin: 20px;
+.welcome_container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 50px;
+    margin: 20px;
 }
 
 

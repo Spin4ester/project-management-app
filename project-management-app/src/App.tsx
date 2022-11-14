@@ -10,6 +10,7 @@ import { ErrorPage } from 'pages/Error/ErrorPage';
 import { Header } from 'components/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Registration } from 'pages/Registration/Registration';
+import { Footer } from 'components/Footer/Footer';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

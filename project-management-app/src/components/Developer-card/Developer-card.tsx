@@ -12,7 +12,6 @@ export const DeveloperCard = ({ name }: Props) => {
       <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
-        <Card.Text>Example Text</Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroup.Item>Cras justo odio</ListGroup.Item>
@@ -20,8 +19,8 @@ export const DeveloperCard = ({ name }: Props) => {
         <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
       </ListGroup>
       <Card.Body>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
+        <Card.Link href="#">Github</Card.Link>
+        <Card.Link href="#">Linkedin</Card.Link>
       </Card.Body>
     </Card>
   );
