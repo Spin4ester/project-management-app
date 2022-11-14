@@ -1,0 +1,13 @@
+.video_content {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+
+.developers_content {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
