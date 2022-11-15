@@ -1,4 +1,4 @@
-.column_container {
+.container {
     background-color: bisque;
     width: 220px;
     height: fit-content;
@@ -8,7 +8,11 @@
     font-family: 'Staatliches', cursive;
 }
 
-.column_content {
+.container > h5 {
+    margin-bottom: 0;
+}
+
+.content {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -16,6 +20,3 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.column_container > h5 {
-    margin-bottom: 0;
-}

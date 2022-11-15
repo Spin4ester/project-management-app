@@ -1,4 +1,4 @@
-.footer_container {
+.container {
     flex: 0 0 auto;
     display: flex;
     flex-direction: row;
@@ -8,11 +8,11 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.footer_container > img {
+.container > img {
     width: 6%;
     height: 6%;
 }
 
-.footer_container > a {
+.container > a {
     text-decoration: none;
 }

@@ -1,4 +1,4 @@
-.board-preview_container {
+.container {
     width: 300px;
     height: 100px;
     background-color: rgb(255, 246, 207);
@@ -8,32 +8,32 @@
     font-size: 0.8em;
 }
 
-.board-preview_container:hover {
+.container:hover {
     background-color: rgb(217, 176, 255);
     cursor: pointer;
     transition: 0.3s;
 }
 
-.board-preview_content {
+.content {
     margin: 10px;
 }
 
-.board-preview_content > div > h6 {
+.content > div > h6 {
     font-family: 'Staatliches', cursive;
 }
 
-.board-preview_content > div {
+.content > div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.board-preview-description {
+.description {
     text-align: left;
 }
 
-.board-preview-icon {
+.icon {
     height: 20px;
     width: 20px;
 }

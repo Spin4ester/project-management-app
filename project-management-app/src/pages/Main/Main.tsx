@@ -1,10 +1,10 @@
 import { BoardPreview } from 'components/BoardPreview/BoardPreview';
 import React from 'react';
-import './Main.css';
+import styles from './Main.module.css';
 
 export function Main() {
   return (
-    <main className="main_container">
+    <main className={styles.container}>
       <BoardPreview />
       <BoardPreview />
       <BoardPreview />

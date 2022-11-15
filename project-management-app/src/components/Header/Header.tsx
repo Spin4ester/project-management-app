@@ -13,7 +13,10 @@ export function Header() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <LinkContainer to="/login">
-              <Nav.Link href="#login">Sing In</Nav.Link>
+              <Nav.Link href="#login">Sign In</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/profile">
+              <Nav.Link href="#profile">Profile</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/registration">
               <Nav.Link href="#registration">Sign Up</Nav.Link>

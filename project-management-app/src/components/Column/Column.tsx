@@ -1,12 +1,12 @@
 import { Task } from 'components/Task/Task';
 import React from 'react';
-import './Column.css';
+import styles from './Column.module.css';
 
 export const Column = () => {
   return (
-    <div className="column_container">
+    <div className={styles.container}>
       <h5>Column Name</h5>
-      <div className="column_content">
+      <div className={styles.content}>
         <Task />
         <Task />
         <Task />

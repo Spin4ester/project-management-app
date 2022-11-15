@@ -1,4 +1,4 @@
-.task_container {
+.container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -11,16 +11,16 @@
     font-size: 0.7em;
 }
 
-.task_container > img {
+.container > img {
     width: 20px;
     height: 20px;
 }
 
-.task_container > p {
+.container > p {
     margin-bottom: 0;
 }
 
-.task_container:hover {
+.container:hover {
     background-color: rgb(202, 238, 255);
     cursor: pointer;
     transition: 0.3s;
