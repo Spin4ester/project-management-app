@@ -11,7 +11,7 @@ import { Header } from 'components/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { SignUp } from 'pages/SignUp/SignUp';
 import { Footer } from 'components/Footer/Footer';
-import Board from 'pages/Board/Board';
+import { Board } from 'pages/Board/Board';
 
 function App() {
   return (
