@@ -1,0 +1,39 @@
+.container {
+    width: 300px;
+    height: 100px;
+    background-color: rgb(255, 246, 207);
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8em;
+}
+
+.container:hover {
+    background-color: rgb(217, 176, 255);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.content {
+    margin: 10px;
+}
+
+.content > div > h6 {
+    font-family: 'Staatliches', cursive;
+}
+
+.content > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.description {
+    text-align: left;
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+}

@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin: 20px;
+}
+
+.developers_content {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
