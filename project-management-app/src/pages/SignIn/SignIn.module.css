@@ -1,0 +1,59 @@
+.container {
+    background-color: beige;
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+}
+
+.content > h4 {
+    font-family: 'Staatliches', cursive;
+}
+
+.input {
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.input:hover {
+    cursor: pointer;
+    background-color: rgb(215, 255, 254);
+    transition: 0.3s;
+}
+
+.input:focus {
+    outline-color: rgb(7, 19, 240);
+}
+
+.signup {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.signup > h6 {
+    margin-bottom: 0;
+}
+
+.button {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid #000;
+    font-family: 'Staatliches', cursive;
+}
+
+.button:hover {
+    background-color: rgb(99, 128, 254);
+    color: aliceblue;
+    transition: 0.3s;
+}
+
