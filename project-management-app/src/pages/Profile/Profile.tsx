@@ -1,5 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function Profile() {
-  return <div className="profile_container">Profile</div>;
+  const { t } = useTranslation();
+  return <div className="profile_container">{t('Profile')}</div>;
 }

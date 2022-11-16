@@ -1,0 +1,17 @@
+export const en = {
+  AccountLogin: 'Account Login',
+  SignIn: 'Sign In',
+  Profile: 'Profile',
+  Login: 'Login',
+  Password: 'Password',
+  DoNotHaveAccount: "Don't have account yet?",
+  SignUp: 'Sign Up',
+  Boards: 'Boards',
+  AccountRegistration: 'Account Registration',
+  ConfirmPassword: 'Confirm password',
+  AlreadyAmember: 'Already a member?',
+  KanbanTypeProjectManagementApp: 'Tik-Task is a Kanban type Project management app',
+  Rustam: 'Rustam',
+  Dasha: 'Dasha',
+  Anya: 'Anya',
+};
