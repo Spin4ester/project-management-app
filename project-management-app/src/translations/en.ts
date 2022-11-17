@@ -14,4 +14,8 @@ export const en = {
   Rustam: 'Rustam',
   Dasha: 'Dasha',
   Anya: 'Anya',
+  UpdateProfile: 'Update profile',
+  UpdateImage: 'Update Image',
+  DeleteUser: 'Delete User',
+  Hello: 'Hello',
 };

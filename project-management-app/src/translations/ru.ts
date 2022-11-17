@@ -14,4 +14,8 @@ export const ru = {
   Rustam: 'Рустам',
   Dasha: 'Даша',
   Anya: 'Аня',
+  UpdateProfile: 'Обновить профиль',
+  UpdateImage: 'Обновить фото',
+  DeleteUser: 'Удалить пользователя',
+  Hello: 'Привет',
 };
