@@ -6,7 +6,7 @@ export const ru = {
   Password: 'Пароль',
   DoNotHaveAccount: 'Нет аккаунта?',
   SignUp: 'Регистрация',
-  Boards: 'Доски',
+  Boards: 'Борды',
   AccountRegistration: 'Регистрация',
   ConfirmPassword: 'Подтвердить пароль',
   AlreadyAmember: 'Уже есть аккаунт?',
