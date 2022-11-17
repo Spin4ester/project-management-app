@@ -14,7 +14,7 @@
 }
 
 .content>h4 {
-  font-family: 'Staatliches', cursive;
+  font-family: 'Oswald', sans-serif;
 }
 
 .input {
@@ -58,7 +58,7 @@
   background-color: transparent;
   border-radius: 5px;
   border: 1px solid #000;
-  font-family: 'Staatliches', cursive;
+  font-family: 'Oswald', sans-serif;
 }
 
 .buttonSignup {

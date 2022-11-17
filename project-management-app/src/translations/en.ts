@@ -18,4 +18,8 @@ export const en = {
   AtLeast2symbols: 'At least 2 symbols required',
   AtLeast8symbols: 'At least 8 symbols required',
   PasswordsDoNotMatch: 'Parwords do not match',
+  UpdateProfile: 'Update profile',
+  UpdateImage: 'Update Image',
+  DeleteUser: 'Delete User',
+  Hello: 'Hello',
 };

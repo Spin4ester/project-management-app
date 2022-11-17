@@ -18,4 +18,8 @@ export const ru = {
   AtLeast2symbols: 'Минимум 2 символа',
   AtLeast8symbols: 'Минимум 8 символов',
   PasswordsDoNotMatch: 'Пароли не совпадают',
+  UpdateProfile: 'Обновить профиль',
+  UpdateImage: 'Обновить фото',
+  DeleteUser: 'Удалить пользователя',
+  Hello: 'Привет',
 };
