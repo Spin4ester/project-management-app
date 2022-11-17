@@ -14,4 +14,8 @@ export const en = {
   Rustam: 'Rustam',
   Dasha: 'Dasha',
   Anya: 'Anya',
+  ThisFieldIsRequired: 'This field is required',
+  AtLeast2symbols: 'At least 2 symbols required',
+  AtLeast8symbols: 'At least 8 symbols required',
+  PasswordsDoNotMatch: 'Parwords do not match',
 };

@@ -14,4 +14,8 @@ export const ru = {
   Rustam: 'Рустам',
   Dasha: 'Даша',
   Anya: 'Аня',
+  ThisFieldIsRequired: 'Поле обязательно для заполнения',
+  AtLeast2symbols: 'Минимум 2 символа',
+  AtLeast8symbols: 'Минимум 8 символов',
+  PasswordsDoNotMatch: 'Пароли не совпадают',
 };
