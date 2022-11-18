@@ -18,4 +18,5 @@ export const ru = {
   UpdateImage: 'Обновить фото',
   DeleteUser: 'Удалить пользователя',
   Hello: 'Привет',
+  Error404: 'Эта страница не найдена...',
 };
