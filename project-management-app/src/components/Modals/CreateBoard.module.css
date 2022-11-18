@@ -1,0 +1,58 @@
+.container {
+    background-color: rgb(239, 220, 245);
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 10px;
+    height: 50%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+}
+
+.content > h6 {
+    font-family: 'Oswald', sans-serif;
+}
+
+.input {
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.input:hover {
+    cursor: pointer;
+    background-color: rgb(245, 255, 255);
+    transition: 0.3s;
+}
+
+.input:focus {
+    outline-color: rgb(0, 92, 0);
+}
+
+.description {
+    resize: none;
+    height: 200px;
+}
+
+.buttons_container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.button {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid #000;
+    font-family: 'Oswald', sans-serif;
+}
+
+.button:hover {
+    background-color: rgb(99, 128, 254);
+    color: aliceblue;
+    transition: 0.3s;
+}

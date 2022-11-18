@@ -19,4 +19,7 @@ export const en = {
   DeleteUser: 'Delete User',
   Hello: 'Hello',
   Error404: "We can't found this page...",
+  CreateBoard: 'Create Board',
+  Create: 'Create',
+  Cancel: 'Cancel',
 };

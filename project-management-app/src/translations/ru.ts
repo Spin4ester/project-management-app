@@ -19,4 +19,7 @@ export const ru = {
   DeleteUser: 'Удалить пользователя',
   Hello: 'Привет',
   Error404: 'Эта страница не найдена...',
+  CreateBoard: 'Cоздать борд',
+  Create: 'Cоздать',
+  Cancel: 'Отмена',
 };
