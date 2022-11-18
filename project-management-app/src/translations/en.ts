@@ -18,4 +18,5 @@ export const en = {
   UpdateImage: 'Update Image',
   DeleteUser: 'Delete User',
   Hello: 'Hello',
+  Error404: "We can't found this page...",
 };
