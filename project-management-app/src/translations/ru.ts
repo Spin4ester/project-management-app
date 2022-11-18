@@ -2,6 +2,7 @@ export const ru = {
   AccountLogin: 'Войти в аккаунт',
   SignIn: 'Войти',
   Profile: 'Профиль',
+  UserName: 'Имя',
   Login: 'Логин',
   Password: 'Пароль',
   DoNotHaveAccount: 'Нет аккаунта?',
@@ -22,4 +23,5 @@ export const ru = {
   UpdateImage: 'Обновить фото',
   DeleteUser: 'Удалить пользователя',
   Hello: 'Привет',
+  MaxNameLength: 'Максимальное количество символов - 30',
 };

@@ -2,6 +2,7 @@ export const en = {
   AccountLogin: 'Account Login',
   SignIn: 'Sign In',
   Profile: 'Profile',
+  UserName: 'Name',
   Login: 'Login',
   Password: 'Password',
   DoNotHaveAccount: "Don't have account yet?",
@@ -22,4 +23,5 @@ export const en = {
   UpdateImage: 'Update Image',
   DeleteUser: 'Delete User',
   Hello: 'Hello',
+  MaxNameLength: 'Max length is 30 symbols',
 };

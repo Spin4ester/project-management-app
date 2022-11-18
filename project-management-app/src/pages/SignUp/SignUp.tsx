@@ -3,6 +3,8 @@ import styles from './SignUp.module.css';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { userSignup } from 'common/asyncActions/fetchRequests';
+import { INewUser } from 'common/types';
 
 export function SignUp() {
   const { t } = useTranslation();
@@ -11,6 +13,8 @@ export function SignUp() {
     handleSubmit,
     formState: { errors },
     getValues,
+    setError,
+    reset,
   } = useForm();
   const navigate = useNavigate();
 
@@ -19,7 +23,20 @@ export function SignUp() {
       <form
         className={styles.content}
         id="signup-form"
-        onSubmit={handleSubmit((data) => onSubmit(data))}
+        onSubmit={handleSubmit(async (data) => {
+          try {
+            delete data.confirmPassword;
+            const res = await userSignup(data as INewUser);
+            if (res.statusCode === 409) {
+              setError('login', { type: 'custom', message: res.message }, { shouldFocus: true });
+            } else {
+              reset();
+              navigate('/boards');
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        })}
         noValidate
       >
         <h4>{t('AccountRegistration')}</h4>
@@ -27,16 +44,35 @@ export function SignUp() {
         <div className={styles.inputContainer}>
           <input
             className={styles.input}
-            placeholder={t('Login') as string}
+            placeholder={t('UserName') as string}
             type="text"
             autoComplete="off"
-            {...register('userName', {
+            {...register('name', {
               required: { value: true, message: `${t('ThisFieldIsRequired')}` },
-              minLength: { value: 2, message: `${t('AtLeast2symbols')}` },
+              maxLength: { value: 30, message: `${t('MaxNameLength')}` },
             })}
           />
           <p className={styles.authError} id="userNameError">
-            {errors.userName?.message?.toString()}
+            {errors.name?.message?.toString()}
+          </p>
+        </div>
+
+        <div className={styles.inputContainer}>
+          <input
+            className={styles.input}
+            placeholder={t('Login') as string}
+            type="text"
+            autoComplete="off"
+            {...register('login', {
+              required: { value: true, message: `${t('ThisFieldIsRequired')}` },
+              minLength: { value: 2, message: `${t('AtLeast2symbols')}` },
+              maxLength: { value: 30, message: `${t('MaxNameLength')}` },
+              // validate: async (value) =>
+              //   (await CheckLoginAvaliability(value)) || 'This login is already taken',
+            })}
+          />
+          <p className={styles.authError} id="userLoginError">
+            {errors.login?.message?.toString()}
           </p>
         </div>
 
@@ -46,13 +82,13 @@ export function SignUp() {
             placeholder={t('Password') as string}
             type="password"
             autoComplete="off"
-            {...register('userPassword', {
+            {...register('password', {
               required: { value: true, message: `${t('ThisFieldIsRequired')}` },
               minLength: { value: 8, message: `${t('AtLeast8symbols')}` },
             })}
           />
           <p className={styles.authError} id="passwordError">
-            {errors.userPassword?.message?.toString()}
+            {errors.password?.message?.toString()}
           </p>
         </div>
 
@@ -64,8 +100,7 @@ export function SignUp() {
             autoComplete="off"
             {...register('confirmPassword', {
               required: { value: true, message: `${t('ThisFieldIsRequired')}` },
-              validate: (value) =>
-                value === getValues('userPassword') || `${t('PasswordsDoNotMatch')}`,
+              validate: (value) => value === getValues('password') || `${t('PasswordsDoNotMatch')}`,
             })}
           />
           <p className={styles.authError} id="confirmPasswordError">
@@ -85,6 +120,29 @@ export function SignUp() {
   );
 }
 
-function onSubmit(data: unknown) {
-  console.log(data);
-}
+// async function CheckLoginAvaliability(newLogin: string) {
+//   const users = (await getUsersForLoginAvaliabilityCheck()) as IUser[];
+//   const logins = users.map((user) => user.login);
+//   return !logins.find((login) => login === newLogin);
+// }
+
+// async function getUsersForLoginAvaliabilityCheck() {
+//   const url = `${config.api.url}users`;
+//   // get token from LS
+//   const token =
+//     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzc3ZjAyOWVjZWUyNzQxZWZkMjU5NSIsImxvZ2luIjoiZGFzaGEiLCJpYXQiOjE2Njg3NzU4MDQsImV4cCI6MTY2ODgxOTAwNH0.3EMg_w89EN53GcLR0kdrkDyMcr9CS0seHF5WM1x5C_8';
+//   try {
+//     const res = await fetch(url, {
+//       method: 'GET',
+//       headers: {
+//         Accept: 'application/json',
+//         'Content-type': 'application/json',
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     const users = res.json();
+//     return users;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
