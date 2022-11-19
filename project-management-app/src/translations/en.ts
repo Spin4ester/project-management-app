@@ -1,6 +1,7 @@
 export const en = {
   AccountLogin: 'Account Login',
   SignIn: 'Sign In',
+  SignOut: 'Sign Out',
   Profile: 'Profile',
   UserName: 'Name',
   Login: 'Login',
@@ -8,6 +9,7 @@ export const en = {
   DoNotHaveAccount: "Don't have account yet?",
   SignUp: 'Sign Up',
   Boards: 'Boards',
+  Workspace: 'Workspace',
   AccountRegistration: 'Account Registration',
   ConfirmPassword: 'Confirm password',
   AlreadyAmember: 'Already a member?',

@@ -1,6 +1,7 @@
 export const ru = {
   AccountLogin: 'Войти в аккаунт',
   SignIn: 'Войти',
+  SignOut: 'Выйти',
   Profile: 'Профиль',
   UserName: 'Имя',
   Login: 'Логин',
@@ -8,6 +9,7 @@ export const ru = {
   DoNotHaveAccount: 'Нет аккаунта?',
   SignUp: 'Регистрация',
   Boards: 'Борды',
+  Workspace: 'Рабочее пространство',
   AccountRegistration: 'Регистрация',
   ConfirmPassword: 'Подтвердить пароль',
   AlreadyAmember: 'Уже есть аккаунт?',

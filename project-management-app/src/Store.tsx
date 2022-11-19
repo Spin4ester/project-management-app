@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import boardSlice from 'BoardSlice';
 import modalSlice from 'ModalSlice';
-import thunk from 'redux-thunk';
 import userSlice from 'UserSlice';
 
 export const store = configureStore({

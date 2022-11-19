@@ -33,7 +33,6 @@ export async function userSignin(user: IUserLogin) {
     });
     const signinData = await res.json();
     localStorage.setItem('token', signinData.token);
-    // isAuth = true
     return signinData;
   } catch (error) {
     console.log(error);

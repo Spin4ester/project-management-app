@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { userSignin } from 'common/asyncActions/fetchRequests';
 import { IUserLogin } from 'common/types';
+import { useDispatch } from 'react-redux';
+import { signInUser } from 'UserSlice';
 
 export function SignIn() {
   const { t } = useTranslation();
@@ -16,6 +18,7 @@ export function SignIn() {
     reset,
   } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
@@ -28,6 +31,7 @@ export function SignIn() {
             setError('login', { type: 'custom', message: `${t('AuthorizationError')}` });
             setError('password', { type: 'custom', message: `${t('AuthorizationError')}` });
           } else {
+            dispatch(signInUser());
             reset();
             navigate('/boards');
           }
