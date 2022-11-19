@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './CreateModal.module.css';
 import { useTranslation } from 'react-i18next';
 
-export const CreateBoard = () => {
+export const CreateTask = () => {
   const { t, i18n } = useTranslation();
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h6>{t('CreateBoard')}</h6>
+        <h6>{t('CreateTask')}</h6>
         <input
           className={`${styles.title} ${styles.input}`}
           placeholder="Title"

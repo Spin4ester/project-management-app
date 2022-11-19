@@ -20,6 +20,10 @@ export const en = {
   Hello: 'Hello',
   Error404: "We can't found this page...",
   CreateBoard: 'Create Board',
+  CreateColumn: 'Create Column',
+  CreateTask: 'Create Task',
   Create: 'Create',
   Cancel: 'Cancel',
+  Delete: 'Delete',
+  DeleteConfirmation: 'Are you sure you want to delete this?',
 };
