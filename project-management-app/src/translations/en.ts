@@ -26,4 +26,12 @@ export const en = {
   MaxNameLength: 'Max length is 30 symbols',
   LoginTaken: 'Login already exists',
   AuthorizationError: 'Authorization error',
+  Error404: "We can't found this page...",
+  CreateBoard: 'Create Board',
+  CreateColumn: 'Create Column',
+  CreateTask: 'Create Task',
+  Create: 'Create',
+  Cancel: 'Cancel',
+  Delete: 'Delete',
+  DeleteConfirmation: 'Are you sure you want to delete this?',
 };

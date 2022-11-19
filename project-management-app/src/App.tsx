@@ -11,22 +11,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { SignUp } from 'pages/SignUp/SignUp';
 import { Footer } from 'components/Footer/Footer';
 import { Board } from 'pages/Board/Board';
+import { Provider } from 'react-redux';
+import { store } from 'Store';
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/boards" element={<Main />} />
-        <Route path="/boards/1" element={<Board />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/registration" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-      <Footer />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/boards" element={<Main />} />
+          <Route path="/boards/1" element={<Board />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/registration" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Provider>
   );
 }
 

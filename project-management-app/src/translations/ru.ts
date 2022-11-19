@@ -26,4 +26,12 @@ export const ru = {
   MaxNameLength: 'Максимальное количество символов - 30',
   LoginTaken: 'Такой логин существует',
   AuthorizationError: 'Ошибка авторизации',
+  Error404: 'Эта страница не найдена...',
+  CreateBoard: 'Cоздать борд',
+  CreateColumn: 'Cоздать колонну',
+  CreateTask: 'Cоздать задачу',
+  Create: 'Cоздать',
+  Cancel: 'Отмена',
+  Delete: 'Удалить',
+  DeleteConfirmation: 'Вы точно хотите это сделать?',
 };
