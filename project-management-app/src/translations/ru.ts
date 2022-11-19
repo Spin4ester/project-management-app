@@ -24,4 +24,6 @@ export const ru = {
   DeleteUser: 'Удалить пользователя',
   Hello: 'Привет',
   MaxNameLength: 'Максимальное количество символов - 30',
+  LoginTaken: 'Такой логин существует',
+  AuthorizationError: 'Ошибка авторизации',
 };

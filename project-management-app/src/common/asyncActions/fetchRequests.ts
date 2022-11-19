@@ -1,4 +1,4 @@
-import { INewUser } from 'common/types';
+import { INewUser, IUserLogin } from 'common/types';
 import config from '../../config';
 
 export async function userSignup(newUser: INewUser) {
@@ -12,17 +12,39 @@ export async function userSignup(newUser: INewUser) {
       },
       body: JSON.stringify(newUser),
     });
-    const signupData = res.json();
+    const signupData = await res.json();
     return signupData;
   } catch (error) {
     console.log(error);
+    return null;
+  }
+}
+
+export async function userSignin(user: IUserLogin) {
+  const url = `${config.api.url}auth/signin`;
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+    const signinData = await res.json();
+    localStorage.setItem('token', signinData.token);
+    // isAuth = true
+    return signinData;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
 
 export async function getAllUsers() {
   const url = `${config.api.url}users`;
-  // const token = get token from LS
-  let token;
+  const token = localStorage.getItem('token');
+  if (!token) return null;
   try {
     const res = await fetch(url, {
       method: 'GET',
@@ -32,7 +54,7 @@ export async function getAllUsers() {
         Authorization: `Bearer ${token}`,
       },
     });
-    const users = res.json();
+    const users = await res.json();
     return users;
   } catch (error) {
     console.log(error);

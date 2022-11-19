@@ -24,4 +24,6 @@ export const en = {
   DeleteUser: 'Delete User',
   Hello: 'Hello',
   MaxNameLength: 'Max length is 30 symbols',
+  LoginTaken: 'Login already exists',
+  AuthorizationError: 'Authorization error',
 };

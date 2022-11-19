@@ -3,7 +3,7 @@ import styles from './SignUp.module.css';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { userSignup } from 'common/asyncActions/fetchRequests';
+import { userSignin, userSignup } from 'common/asyncActions/fetchRequests';
 import { INewUser } from 'common/types';
 
 export function SignUp() {
@@ -26,10 +26,16 @@ export function SignUp() {
         onSubmit={handleSubmit(async (data) => {
           try {
             delete data.confirmPassword;
-            const res = await userSignup(data as INewUser);
-            if (res.statusCode === 409) {
-              setError('login', { type: 'custom', message: res.message }, { shouldFocus: true });
+            const user = await userSignup(data as INewUser);
+            if (user.statusCode === 409) {
+              setError(
+                'login',
+                { type: 'custom', message: `${t('LoginTaken')}` },
+                { shouldFocus: true }
+              );
             } else {
+              const userLoginData = { login: user.login, password: data.password };
+              await userSignin(userLoginData);
               reset();
               navigate('/boards');
             }
