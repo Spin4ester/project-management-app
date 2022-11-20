@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { userSignin, userSignup } from 'common/asyncActions/fetchRequests';
 import { INewUser } from 'common/types';
+import { useDispatch } from 'react-redux';
+import { signInUser } from 'UserSlice';
 
 export function SignUp() {
   const { t } = useTranslation();
@@ -17,6 +19,7 @@ export function SignUp() {
     reset,
   } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
@@ -36,6 +39,7 @@ export function SignUp() {
             } else {
               const userLoginData = { login: user.login, password: data.password };
               await userSignin(userLoginData);
+              dispatch(signInUser());
               reset();
               navigate('/boards');
             }

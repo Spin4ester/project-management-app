@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface IStateUser {
   isAuth: boolean;
-  userId: string;
+  // userId: string;
   userName: string;
 }
 
 export const initialState: IStateUser = {
-  isAuth: false,
+  isAuth: !!localStorage.getItem('token'),
   userName: 'User',
-  userId: 'hello',
+  // userId: 'hello',
 };
 
 export const userSlice = createSlice({
