@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { SignIn } from 'pages/SignIn/SignIn';
 import { Main } from 'pages/Main/Main';
 import { Welcome } from 'pages/Welcome/Welcome';
@@ -11,26 +11,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { SignUp } from 'pages/SignUp/SignUp';
 import { Footer } from 'components/Footer/Footer';
 import { Board } from 'pages/Board/Board';
-import { Provider } from 'react-redux';
-import { store } from 'Store';
+import { RootState } from 'Store';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const isAuth = useSelector((state: RootState) => state.user.isAuth);
+  console.log(location);
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/boards" element={<Main />} />
-          <Route path="/boards/1" element={<Board />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/registration" element={<SignUp />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Provider>
+    <div className="App">
+      <Header />
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/boards" element={!isAuth ? <Navigate replace to="/" /> : <Main />} />
+        <Route path="/boards/1" element={<Board />} />
+        <Route path="/login" element={isAuth ? <Navigate replace to="/boards" /> : <SignIn />} />
+        <Route
+          path="/registration"
+          element={isAuth ? <Navigate replace to="/boards" /> : <SignUp />}
+        />
+        <Route path="/profile" element={!isAuth ? <Navigate replace to="/" /> : <Profile />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 

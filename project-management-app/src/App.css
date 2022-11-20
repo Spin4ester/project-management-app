@@ -1,7 +1,7 @@
 .App {
   text-align: center;
-  background: rgb(2,0,36);
-  background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(192,192,235,1) 0%, rgba(169,239,254,1) 100%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(192, 192, 235, 1) 0%, rgba(169, 239, 254, 1) 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -38,7 +38,17 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.navbar-text {
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
+}
+
+.navbar-text:hover {
+  color: rgba(255, 255, 255, 0.75);
 }
