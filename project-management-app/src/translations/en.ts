@@ -30,6 +30,7 @@ export const en = {
   AuthorizationError: 'Authorization error',
   Error404: "We can't found this page...",
   CreateBoard: 'Create Board',
+  EditBoard: 'Edit Board',
   CreateColumn: 'Create Column',
   CreateTask: 'Create Task',
   Create: 'Create',

@@ -20,12 +20,15 @@ export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal(state) {
-      state.editBoardModal = true;
+    openCreateBoardModal(state, action) {
+      state.createBoardModal = action.payload;
+    },
+    openEditBoardModal(state, action) {
+      state.editBoardModal = action.payload;
     },
   },
 });
 
-export const { openModal } = modalSlice.actions;
+export const { openCreateBoardModal, openEditBoardModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

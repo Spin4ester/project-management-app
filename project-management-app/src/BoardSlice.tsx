@@ -79,7 +79,6 @@ export const boardSlice = createSlice({
       })
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
         state.previews = action.payload;
-        console.log(action.payload);
         state.isLoaded = true;
       })
       .addCase(fetchUserBoards.rejected, (state) => {

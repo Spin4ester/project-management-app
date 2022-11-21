@@ -1,5 +1,5 @@
 import { BoardPreview } from 'components/BoardPreview/BoardPreview';
-import { CreateBoard } from 'components/Modals/CreateBoard';
+import { BoardPreviewModal } from 'components/Modals/BoardPreviewModal';
 import { RootState } from 'Store';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect } from 'react';
@@ -18,9 +18,7 @@ export function Main() {
   return (
     <main className={styles.container}>
       {isLoaded && <BoardPreview />}
-
-      <div>Add Board</div>
-      <CreateBoard />
+      <BoardPreviewModal />
     </main>
   );
 }

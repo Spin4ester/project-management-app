@@ -30,6 +30,7 @@ export const ru = {
   AuthorizationError: 'Ошибка авторизации',
   Error404: 'Эта страница не найдена...',
   CreateBoard: 'Cоздать борд',
+  EditBoard: 'Редактировать борд',
   CreateColumn: 'Cоздать колонну',
   CreateTask: 'Cоздать задачу',
   Create: 'Cоздать',
