@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { IUserBoard } from 'common/types';
+import { IUserBoard, IUserBoardData } from 'common/types';
 import config from 'config';
 
 export const fetchUserBoards = createAsyncThunk(
@@ -27,6 +27,48 @@ export const fetchUserBoards = createAsyncThunk(
     }
   }
 );
+
+export const createUserBoard = createAsyncThunk(
+  'user/board',
+  async function (board: IUserBoardData, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}boards`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(board),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+// export async function userSignin(user: IUserLogin) {
+//   const url = `${config.api.url}auth/signin`;
+//   try {
+//     const res = await fetch(url, {
+//       method: 'POST',
+//       headers: {
+//         Accept: 'application/json',
+//         'Content-type': 'application/json',
+//       },
+//       body: JSON.stringify(user),
+//     });
+//     const signinData = await res.json();
+//     localStorage.setItem('token', signinData.token);
+//     return signinData;
+//   } catch (error) {
+//     console.log(error);
+//     return null;
+//   }
+// }
 
 // export async function getAllUserBoards(user: string) {
 //   const url = `${config.api.url}boardsSet/${user}`;

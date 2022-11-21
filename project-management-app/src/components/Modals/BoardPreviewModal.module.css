@@ -3,7 +3,7 @@
     padding: 20px;
     margin: 0 auto;
     border-radius: 10px;
-    height: 50%;
+    height: 20%;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
 
@@ -74,3 +74,11 @@
     color: aliceblue;
     transition: 0.3s;
 }
+
+.authError {
+    position: absolute;
+    color: rgb(201, 47, 47);
+    padding-left: 5px;
+    text-align: left;
+    font-size: 0.9rem;
+  }

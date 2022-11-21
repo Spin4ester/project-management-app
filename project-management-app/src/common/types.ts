@@ -31,3 +31,9 @@ export interface IUserBoard {
   users: string[];
   _id: string;
 }
+
+export interface IUserBoardData {
+  owner: string;
+  title: string;
+  users: string[];
+}
