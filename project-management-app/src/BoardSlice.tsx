@@ -113,6 +113,9 @@ export const boardSlice = createSlice({
     changeBoard(state, action: PayloadAction<string>) {
       state.board = action.payload;
     },
+    changeIsLoaded(state, action) {
+      state.isLoaded = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -129,6 +132,6 @@ export const boardSlice = createSlice({
   },
 });
 
-export const { changeBoard } = boardSlice.actions;
+export const { changeBoard, changeIsLoaded } = boardSlice.actions;
 
 export default boardSlice.reducer;

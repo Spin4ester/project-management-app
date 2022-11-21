@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from 'Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { openCreateBoardModal, openEditBoardModal } from 'ModalSlice';
-import { createUserBoard } from 'BoardSlice';
+import { changeIsLoaded, createUserBoard, fetchUserBoards } from 'BoardSlice';
 import { useForm } from 'react-hook-form';
 
 export const BoardPreviewModal = () => {
   const createBoardModal = useSelector((state: RootState) => state.modal.createBoardModal);
   const editBoardModal = useSelector((state: RootState) => state.modal.editBoardModal);
+  const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
@@ -36,6 +37,8 @@ export const BoardPreviewModal = () => {
               })
             );
             dispatch(openCreateBoardModal(false));
+            dispatch(changeIsLoaded(false));
+            dispatch(fetchUserBoards(localStorage.getItem('userId')!));
           })}
         >
           <div className={styles.content}>
@@ -52,7 +55,7 @@ export const BoardPreviewModal = () => {
               })}
             ></input>
             <p className={styles.authError} id="boardNameError">
-              {errors.name?.message?.toString()}
+              {errors.title?.message?.toString()}
             </p>
             {/* <textarea
               className={`${styles.description} ${styles.input}`}
@@ -62,9 +65,11 @@ export const BoardPreviewModal = () => {
               <button className={styles.button}>{t('Create')}</button>
               <button
                 className={styles.button}
-                onClick={() =>
-                  dispatch(openEditBoardModal(false)) && dispatch(openCreateBoardModal(false))
-                }
+                onClick={() => {
+                  dispatch(openEditBoardModal(false));
+                  dispatch(openCreateBoardModal(false));
+                  reset();
+                }}
               >
                 {t('Cancel')}
               </button>
