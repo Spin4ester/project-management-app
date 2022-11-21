@@ -13,6 +13,7 @@ export async function userSignup(newUser: INewUser) {
       body: JSON.stringify(newUser),
     });
     const signupData = await res.json();
+    localStorage.setItem('userId', signupData._id);
     return signupData;
   } catch (error) {
     console.log(error);
@@ -55,6 +56,26 @@ export async function getAllUsers() {
     });
     const users = await res.json();
     return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getAllUserBoards(user: string) {
+  const url = `${config.api.url}boardsSet/${user}`;
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const userBoards = await res.json();
+    return userBoards;
   } catch (error) {
     console.log(error);
   }

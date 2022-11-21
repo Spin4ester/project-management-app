@@ -9,7 +9,7 @@ interface IStateUser {
 export const initialState: IStateUser = {
   isAuth: !!localStorage.getItem('token'),
   userName: 'User',
-  // userId: 'hello',
+  // userId: '',
 };
 
 export const userSlice = createSlice({

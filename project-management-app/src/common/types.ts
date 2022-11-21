@@ -24,3 +24,10 @@ export interface IErrorResponse {
   statusCode: string;
   message: string;
 }
+
+export interface IUserBoard {
+  owner: string;
+  title: string;
+  users: string[];
+  _id: string;
+}
