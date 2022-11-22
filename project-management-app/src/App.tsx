@@ -11,12 +11,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { SignUp } from 'pages/SignUp/SignUp';
 import { Footer } from 'components/Footer/Footer';
 import { Board } from 'pages/Board/Board';
-import { RootState } from 'Store';
+import { RootState } from 'redux/Store';
 import { useSelector } from 'react-redux';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
-  console.log(location);
   return (
     <div className="App">
       <Header />
