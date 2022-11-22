@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect } from 'react';
 import styles from './Main.module.css';
 import { fetchUserBoards } from 'BoardSlice';
+import { DeleteModal } from 'components/Modals/DeleteModal';
 
 export function Main() {
   const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
@@ -19,6 +20,7 @@ export function Main() {
     <main className={styles.container}>
       {isLoaded && <BoardPreview />}
       <BoardPreviewModal />
+      <DeleteModal />
     </main>
   );
 }

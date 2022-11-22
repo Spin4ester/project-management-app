@@ -9,7 +9,7 @@ import { getAllUserBoards } from 'common/asyncActions/fetchRequests';
 import { IUserBoard } from 'common/types';
 import { fetchUserBoards } from 'BoardSlice';
 import AddPreview from '../../assets/icons/add-preview.png';
-import { openCreateBoardModal } from 'ModalSlice';
+import { openCreateBoardModal, openDeleteModal, openEditBoardModal } from 'ModalSlice';
 import { useTranslation } from 'react-i18next';
 
 export const BoardPreview = () => {
@@ -27,12 +27,26 @@ export const BoardPreview = () => {
   return (
     <>
       {boardPreviews.map((el) => (
-        <div key={el._id} className={styles.container}>
+        <div
+          key={el._id}
+          className={styles.container}
+          onClick={() => navigate(`/boards/${el._id}`)}
+        >
           <div className={styles.content}>
             <h6>{el.title}</h6>
             <div className={styles.icons_container}>
-              <img className={styles.icon} src={EditIcon} alt="Edit"></img>
-              <img className={styles.icon} src={DeleteIcon} alt="Delete"></img>
+              <img
+                className={styles.icon}
+                src={EditIcon}
+                alt="Edit"
+                onClick={() => dispatch(openEditBoardModal(true))}
+              ></img>
+              <img
+                className={styles.icon}
+                src={DeleteIcon}
+                alt="Delete"
+                onClick={() => dispatch(openDeleteModal(true))}
+              ></img>
             </div>
           </div>
         </div>

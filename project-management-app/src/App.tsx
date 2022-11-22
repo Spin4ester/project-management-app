@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/boards" element={!isAuth ? <Navigate replace to="/" /> : <Main />} />
-        <Route path="/boards/1" element={<Board />} />
+        <Route path="/boards/:id" element={<Board />} />
         <Route path="/login" element={isAuth ? <Navigate replace to="/boards" /> : <SignIn />} />
         <Route
           path="/registration"

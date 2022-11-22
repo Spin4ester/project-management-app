@@ -26,9 +26,12 @@ export const modalSlice = createSlice({
     openEditBoardModal(state, action) {
       state.editBoardModal = action.payload;
     },
+    openDeleteModal(state, action) {
+      state.deleteItemModal = action.payload;
+    },
   },
 });
 
-export const { openCreateBoardModal, openEditBoardModal } = modalSlice.actions;
+export const { openCreateBoardModal, openEditBoardModal, openDeleteModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

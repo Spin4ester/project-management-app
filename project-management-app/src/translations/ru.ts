@@ -34,6 +34,7 @@ export const ru = {
   CreateColumn: 'Cоздать колонну',
   CreateTask: 'Cоздать задачу',
   Create: 'Cоздать',
+  Update: 'Редактировать',
   Cancel: 'Отмена',
   Delete: 'Удалить',
   DeleteConfirmation: 'Вы точно хотите это сделать?',

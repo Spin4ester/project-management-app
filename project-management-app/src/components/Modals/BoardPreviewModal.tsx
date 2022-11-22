@@ -62,7 +62,9 @@ export const BoardPreviewModal = () => {
               placeholder="Description"
             ></textarea> */}
             <div className={styles.buttons_container}>
-              <button className={styles.button}>{t('Create')}</button>
+              <button className={styles.button}>
+                {createBoardModal ? t('Create') : t('Update')}
+              </button>
               <button
                 className={styles.button}
                 onClick={() => {

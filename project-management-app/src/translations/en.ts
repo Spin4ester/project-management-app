@@ -34,6 +34,7 @@ export const en = {
   CreateColumn: 'Create Column',
   CreateTask: 'Create Task',
   Create: 'Create',
+  Update: 'Update',
   Cancel: 'Cancel',
   Delete: 'Delete',
   DeleteConfirmation: 'Are you sure you want to delete this?',
