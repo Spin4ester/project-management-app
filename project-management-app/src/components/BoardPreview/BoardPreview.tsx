@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import styles from './BoardPreview.module.css';
 import EditIcon from '../../assets/icons/edit.png';
 import DeleteIcon from '../../assets/icons/delete.png';
-import { RootState } from 'Store';
+import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllUserBoards } from 'common/asyncActions/fetchRequests';
 import { IUserBoard } from 'common/types';
-import { fetchUserBoards } from 'BoardSlice';
+import { changeBoard, changeBoardPreview, fetchUserBoards } from 'redux/BoardSlice';
 import AddPreview from '../../assets/icons/add-preview.png';
-import { openCreateBoardModal, openDeleteModal, openEditBoardModal } from 'ModalSlice';
+import { openCreateBoardModal, openDeleteModal, openEditBoardModal } from 'redux/ModalSlice';
 import { useTranslation } from 'react-i18next';
 
 export const BoardPreview = () => {
@@ -30,7 +30,9 @@ export const BoardPreview = () => {
         <div
           key={el._id}
           className={styles.container}
-          onClick={() => navigate(`/boards/${el._id}`)}
+          onClick={() => {
+            navigate(`/boards/${el._id}`);
+          }}
         >
           <div className={styles.content}>
             <h6>{el.title}</h6>
@@ -39,13 +41,20 @@ export const BoardPreview = () => {
                 className={styles.icon}
                 src={EditIcon}
                 alt="Edit"
-                onClick={() => dispatch(openEditBoardModal(true))}
+                onClick={(e) => {
+                  dispatch(changeBoardPreview(el._id));
+                  e.stopPropagation();
+                  dispatch(openEditBoardModal(true));
+                }}
               ></img>
               <img
                 className={styles.icon}
                 src={DeleteIcon}
                 alt="Delete"
-                onClick={() => dispatch(openDeleteModal(true))}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(openDeleteModal(true));
+                }}
               ></img>
             </div>
           </div>

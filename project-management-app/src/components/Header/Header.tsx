@@ -2,9 +2,9 @@ import React from 'react';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { LinkContainer } from 'react-router-bootstrap';
-import { RootState } from 'Store';
+import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
-import { signOutUser } from 'UserSlice';
+import { signOutUser } from 'redux/UserSlice';
 import { useNavigate } from 'react-router-dom';
 
 export function Header() {

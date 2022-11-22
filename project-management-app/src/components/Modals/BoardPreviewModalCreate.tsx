@@ -1,15 +1,21 @@
 import React from 'react';
 import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
-import { RootState } from 'Store';
+import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
-import { openCreateBoardModal, openEditBoardModal } from 'ModalSlice';
-import { changeIsLoaded, createUserBoard, fetchUserBoards } from 'BoardSlice';
+import { openCreateBoardModal, openEditBoardModal } from 'redux/ModalSlice';
+import {
+  changeIsLoaded,
+  createUserBoard,
+  fetchUserBoards,
+  updateUserBoard,
+} from 'redux/BoardSlice';
 import { useForm } from 'react-hook-form';
 
-export const BoardPreviewModal = () => {
+export const BoardPreviewModalCreate = () => {
   const createBoardModal = useSelector((state: RootState) => state.modal.createBoardModal);
   const editBoardModal = useSelector((state: RootState) => state.modal.editBoardModal);
+  const boardPreviewId = useSelector((state: RootState) => state.board.boardPreviewId);
   const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
@@ -25,11 +31,11 @@ export const BoardPreviewModal = () => {
 
   return (
     <>
-      {(createBoardModal || editBoardModal) && (
+      {createBoardModal && (
         <form
           className={styles.container}
-          onSubmit={handleSubmit((data) => {
-            dispatch(
+          onSubmit={handleSubmit(async (data) => {
+            await dispatch(
               createUserBoard({
                 title: data.title,
                 owner: localStorage.getItem('userId')!,
@@ -39,10 +45,11 @@ export const BoardPreviewModal = () => {
             dispatch(openCreateBoardModal(false));
             dispatch(changeIsLoaded(false));
             dispatch(fetchUserBoards(localStorage.getItem('userId')!));
+            reset();
           })}
         >
           <div className={styles.content}>
-            <h6>{createBoardModal ? t('CreateBoard') : t('EditBoard')}</h6>
+            <h6>{t('CreateBoard')}</h6>
             <input
               className={`${styles.title} ${styles.input}`}
               placeholder="Title"
@@ -62,15 +69,11 @@ export const BoardPreviewModal = () => {
               placeholder="Description"
             ></textarea> */}
             <div className={styles.buttons_container}>
-              <button className={styles.button}>
-                {createBoardModal ? t('Create') : t('Update')}
-              </button>
+              <button className={styles.button}>{t('Create')}</button>
               <button
                 className={styles.button}
                 onClick={() => {
-                  dispatch(openEditBoardModal(false));
                   dispatch(openCreateBoardModal(false));
-                  reset();
                 }}
               >
                 {t('Cancel')}

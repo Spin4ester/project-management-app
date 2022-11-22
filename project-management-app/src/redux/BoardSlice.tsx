@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { IUserBoard, IUserBoardData } from 'common/types';
+import { IUserBoard, IUserBoardData, IUserBoardDataUpdate } from 'common/types';
 import config from 'config';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/Store';
 
 export const fetchUserBoards = createAsyncThunk(
   'user/boards',
@@ -29,7 +31,7 @@ export const fetchUserBoards = createAsyncThunk(
 );
 
 export const createUserBoard = createAsyncThunk(
-  'user/board',
+  'user/createBoard',
   async function (board: IUserBoardData, { rejectWithValue }) {
     try {
       const token = localStorage.getItem('token');
@@ -50,47 +52,51 @@ export const createUserBoard = createAsyncThunk(
   }
 );
 
-// export async function userSignin(user: IUserLogin) {
-//   const url = `${config.api.url}auth/signin`;
-//   try {
-//     const res = await fetch(url, {
-//       method: 'POST',
-//       headers: {
-//         Accept: 'application/json',
-//         'Content-type': 'application/json',
-//       },
-//       body: JSON.stringify(user),
-//     });
-//     const signinData = await res.json();
-//     localStorage.setItem('token', signinData.token);
-//     return signinData;
-//   } catch (error) {
-//     console.log(error);
-//     return null;
-//   }
-// }
+export const deleteUserBoard = createAsyncThunk(
+  'user/deleteBoard',
+  async function (boardId: string, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}boards/${boardId}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
-// export async function getAllUserBoards(user: string) {
-//   const url = `${config.api.url}boardsSet/${user}`;
-//   const token = localStorage.getItem('token');
-//   if (!token) return null;
-//   try {
-//     const res = await fetch(url, {
-//       method: 'GET',
-//       headers: {
-//         Accept: 'application/json',
-//         'Content-type': 'application/json',
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     const userBoards = await res.json();
-//     return userBoards;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+export const updateUserBoard = createAsyncThunk(
+  'user/updateBoard',
+  async function (board: IUserBoardDataUpdate, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}boards/${board._id}`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(board.body),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 interface IStateBoard {
+  boardPreviewId: string;
   board: string;
   task: string;
   column: string;
@@ -99,6 +105,7 @@ interface IStateBoard {
 }
 
 export const initialState: IStateBoard = {
+  boardPreviewId: 'first',
   board: 'first',
   task: 'first',
   column: 'first',
@@ -112,6 +119,9 @@ export const boardSlice = createSlice({
   reducers: {
     changeBoard(state, action: PayloadAction<string>) {
       state.board = action.payload;
+    },
+    changeBoardPreview(state, action: PayloadAction<string>) {
+      state.boardPreviewId = action.payload;
     },
     changeIsLoaded(state, action) {
       state.isLoaded = action.payload;
@@ -128,10 +138,17 @@ export const boardSlice = createSlice({
       })
       .addCase(fetchUserBoards.rejected, (state) => {
         // state.searchError = 'Sorry, network issues, we are looking into the problem';
+      })
+      .addCase(updateUserBoard.pending, (state) => {
+        state.isLoaded = false;
+      })
+      .addCase(updateUserBoard.fulfilled, (state) => {})
+      .addCase(updateUserBoard.rejected, (state) => {
+        // state.searchError = 'Sorry, network issues, we are looking into the problem';
       });
   },
 });
 
-export const { changeBoard, changeIsLoaded } = boardSlice.actions;
+export const { changeBoard, changeIsLoaded, changeBoardPreview } = boardSlice.actions;
 
 export default boardSlice.reducer;

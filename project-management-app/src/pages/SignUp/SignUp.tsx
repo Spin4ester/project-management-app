@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { userSignin, userSignup } from 'common/asyncActions/fetchRequests';
 import { INewUser } from 'common/types';
 import { useDispatch } from 'react-redux';
-import { signInUser } from 'UserSlice';
+import { signInUser } from 'redux/UserSlice';
 
 export function SignUp() {
   const { t } = useTranslation();

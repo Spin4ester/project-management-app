@@ -37,3 +37,12 @@ export interface IUserBoardData {
   title: string;
   users: string[];
 }
+
+export interface IUserBoardDataUpdate {
+  body: {
+    owner: string;
+    title: string;
+    users: string[];
+  };
+  _id: string;
+}

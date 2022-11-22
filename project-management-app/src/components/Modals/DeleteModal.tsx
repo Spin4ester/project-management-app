@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './DeleteModal.module.css';
 import { useTranslation } from 'react-i18next';
-import { RootState } from 'Store';
+import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
-import { openDeleteModal } from 'ModalSlice';
+import { openDeleteModal } from 'redux/ModalSlice';
 
 export const DeleteModal = () => {
   const { t } = useTranslation();
