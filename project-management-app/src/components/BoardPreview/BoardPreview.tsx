@@ -7,7 +7,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllUserBoards } from 'common/asyncActions/fetchRequests';
 import { IUserBoard } from 'common/types';
-import { changeBoard, changeBoardPreview, fetchUserBoards } from 'redux/BoardSlice';
+import {
+  changeBoard,
+  changeBoardPreview,
+  deleteBoardPreview,
+  deleteUserBoard,
+  fetchUserBoards,
+} from 'redux/BoardSlice';
 import AddPreview from '../../assets/icons/add-preview.png';
 import { openCreateBoardModal, openDeleteModal, openEditBoardModal } from 'redux/ModalSlice';
 import { useTranslation } from 'react-i18next';
@@ -52,6 +58,7 @@ export const BoardPreview = () => {
                 src={DeleteIcon}
                 alt="Delete"
                 onClick={(e) => {
+                  dispatch(deleteBoardPreview(el._id));
                   e.stopPropagation();
                   dispatch(openDeleteModal(true));
                 }}

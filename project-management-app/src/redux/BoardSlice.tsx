@@ -96,6 +96,7 @@ export const updateUserBoard = createAsyncThunk(
 );
 
 interface IStateBoard {
+  toBeDeleteBoard: string;
   boardPreviewId: string;
   board: string;
   task: string;
@@ -105,6 +106,7 @@ interface IStateBoard {
 }
 
 export const initialState: IStateBoard = {
+  toBeDeleteBoard: 'none',
   boardPreviewId: 'first',
   board: 'first',
   task: 'first',
@@ -125,6 +127,9 @@ export const boardSlice = createSlice({
     },
     changeIsLoaded(state, action) {
       state.isLoaded = action.payload;
+    },
+    deleteBoardPreview(state, action) {
+      state.toBeDeleteBoard = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -149,6 +154,7 @@ export const boardSlice = createSlice({
   },
 });
 
-export const { changeBoard, changeIsLoaded, changeBoardPreview } = boardSlice.actions;
+export const { changeBoard, changeIsLoaded, changeBoardPreview, deleteBoardPreview } =
+  boardSlice.actions;
 
 export default boardSlice.reducer;
