@@ -12,8 +12,8 @@ interface IStateUser {
 
 export const initialState: IStateUser = {
   isAuth: !!localStorage.getItem('token'),
-  userName: 'User',
-  userId: '',
+  userName: localStorage.getItem('userName') || 'User',
+  userId: localStorage.getItem('userId') || '',
 };
 
 export const userSlice = createSlice({
