@@ -11,9 +11,18 @@ export const Board = () => {
       <Column />
       <Column />
       <Column />
-      <CreateColumn />
+      <Column />
+      <Column />
+      <Column />
+      <Column />
+      <Column />
+      <Column />
+      <Column />
+      <Column />
+      <Column />
+      {/* <CreateColumn />
       <DeleteModal />
-      <CreateTask />
+      <CreateTask /> */}
     </div>
   );
 };
