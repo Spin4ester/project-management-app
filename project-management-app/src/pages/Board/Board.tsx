@@ -11,15 +11,6 @@ export const Board = () => {
       <Column />
       <Column />
       <Column />
-      <Column />
-      <Column />
-      <Column />
-      <Column />
-      <Column />
-      <Column />
-      <Column />
-      <Column />
-      <Column />
       {/* <CreateColumn />
       <DeleteModal />
       <CreateTask /> */}

@@ -17,5 +17,21 @@
   flex-direction: column;
   gap: 10px;
   margin: 10px;
+  padding: 7px 0;
   font-family: 'Montserrat', sans-serif;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.content::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: rgb(224, 220, 228);
+  border-radius: 5px;
+  margin: 3px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgba(2, 0, 36, 1);
+  border-radius: 5px;
 }
