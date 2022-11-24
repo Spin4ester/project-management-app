@@ -25,10 +25,14 @@
 
 
 .input {
-  width: 230px;
+  width: 250px;
   border-radius: 5px;
   padding: 5px 10px;
   margin-bottom: 15px;
+}
+
+.input::placeholder {
+  font-size: 0.95rem;
 }
 
 .input:hover {

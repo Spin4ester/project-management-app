@@ -5,13 +5,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUser } from 'redux/UserSlice';
-import { useNavigate } from 'react-router-dom';
 
 export function Header() {
   const { t, i18n } = useTranslation();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   return (
     <Navbar sticky="top" bg="dark" variant="dark">
@@ -27,22 +25,6 @@ export function Header() {
                 <Nav.Link href="#login">{t('SignIn')}</Nav.Link>
               </LinkContainer>
             )}
-            {isAuth && (
-              <Navbar.Text
-                onClick={() => {
-                  removeUserFromLocalStorage();
-                  dispatch(signOutUser());
-                  navigate('/');
-                }}
-              >
-                {t('SignOut')}
-              </Navbar.Text>
-            )}
-            {isAuth && (
-              <LinkContainer to="/profile">
-                <Nav.Link href="#profile">{t('Profile')}</Nav.Link>
-              </LinkContainer>
-            )}
             {!isAuth && (
               <LinkContainer to="/registration">
                 <Nav.Link href="#registration">{t('SignUp')}</Nav.Link>
@@ -52,6 +34,21 @@ export function Header() {
               <LinkContainer to="/boards">
                 <Nav.Link href="#boards">{t('Workspace')}</Nav.Link>
               </LinkContainer>
+            )}
+            {isAuth && (
+              <LinkContainer to="/profile">
+                <Nav.Link href="#profile">{t('Profile')}</Nav.Link>
+              </LinkContainer>
+            )}
+            {isAuth && (
+              <Navbar.Text
+                onClick={() => {
+                  removeUserFromLocalStorage();
+                  dispatch(signOutUser());
+                }}
+              >
+                {t('SignOut')}
+              </Navbar.Text>
             )}
           </Nav>
         </Navbar.Collapse>
@@ -67,7 +64,7 @@ export function Header() {
   );
 }
 
-function removeUserFromLocalStorage() {
+export function removeUserFromLocalStorage() {
   localStorage.removeItem('token');
   localStorage.removeItem('userName');
   localStorage.removeItem('userId');

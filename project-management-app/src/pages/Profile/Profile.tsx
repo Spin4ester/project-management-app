@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppDispatch, RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './Profile.module.css';
 import { useForm } from 'react-hook-form';
 import { IErrorResponse, INewUser, IUser, IUserUpdate } from 'common/types';
-import { updateUserOnServer, userSigninFetch, updateUserInfo } from 'redux/UserSlice';
+import {
+  updateUserOnServer,
+  userSigninFetch,
+  updateUserInfo,
+  deleteUserFromServer,
+  signOutUser,
+} from 'redux/UserSlice';
+import { removeUserFromLocalStorage } from 'components/Header/Header';
+import { DeleteModal } from 'components/Modals/DeleteModal';
 
 export function Profile() {
   const { t } = useTranslation();
@@ -18,6 +26,9 @@ export function Profile() {
   } = useForm({ defaultValues: { name: '', login: '', password: '', confirmPassword: '' } });
   const { userId, userName, userLogin } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
   async function updateUser(newUserInfo: INewUser) {
     if (newUserInfo.name || newUserInfo.login || newUserInfo.password) {
@@ -45,8 +56,33 @@ export function Profile() {
     }
   }
 
+  async function deleteUser() {
+    if (deleteConfirmed) {
+      try {
+        await dispatch(deleteUserFromServer(userId));
+        removeUserFromLocalStorage();
+        dispatch(signOutUser());
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   return (
     <div className={styles.container}>
+      {modalOpen && (
+        <DeleteModal
+          onDeleteClick={async () => {
+            setDeleteConfirmed(true);
+            await deleteUser();
+            setModalOpen(false);
+          }}
+          onCancelClick={() => {
+            setModalOpen(false);
+            setDeleteConfirmed(false);
+          }}
+        />
+      )}
       <h5>
         {t('Hello')}, {userName}!
       </h5>
@@ -148,7 +184,9 @@ export function Profile() {
             {t('UpdateProfile')}
           </button>
         </form>
-        <button className={styles.buttonDelete}>{t('DeleteAccount')}</button>
+        <button className={styles.buttonDelete} onClick={() => setModalOpen(true)}>
+          {t('DeleteAccount')}
+        </button>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export const Board = () => {
       <Column />
       <Column />
       <CreateColumn />
-      <DeleteModal />
+      <DeleteModal onDeleteClick={() => {}} onCancelClick={() => {}} />
       <CreateTask />
     </div>
   );
