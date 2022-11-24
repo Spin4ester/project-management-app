@@ -4,7 +4,6 @@
   flex-wrap: nowrap;
   gap: 10px;
   margin: 10px;
-  flex: 1 0 auto;
   overflow-x: auto;
 }
 
@@ -18,4 +17,12 @@
 .container::-webkit-scrollbar-thumb {
   background: rgba(2, 0, 36, 1);
   border-radius: 5px;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-bottom: 10px;
 }
