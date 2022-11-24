@@ -19,7 +19,7 @@
   margin: 10px;
   padding: 7px 0;
   font-family: 'Montserrat', sans-serif;
-  max-height: calc(100vh - 210px);
+  max-height: calc(100vh - 240px);
   overflow-y: auto;
 }
 
