@@ -30,9 +30,7 @@ export function Header() {
             {isAuth && (
               <Navbar.Text
                 onClick={() => {
-                  localStorage.removeItem('token');
-                  localStorage.removeItem('userName');
-                  localStorage.removeItem('userId');
+                  removeUserFromLocalStorage();
                   dispatch(signOutUser());
                   navigate('/');
                 }}
@@ -67,4 +65,11 @@ export function Header() {
       </Container>
     </Navbar>
   );
+}
+
+function removeUserFromLocalStorage() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('userName');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('userLogin');
 }
