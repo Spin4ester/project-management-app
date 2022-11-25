@@ -1,5 +1,5 @@
 .container {
-  z-index: 100;
+  z-index: 2000;
   position: absolute;
   background-color: rgb(239, 220, 245);
   padding: 20px;
@@ -58,7 +58,7 @@
 
 .blur {
   position: fixed;
-  z-index: 50;
+  z-index: 1500;
   left: 0;
   top: 0;
   width: 100%;

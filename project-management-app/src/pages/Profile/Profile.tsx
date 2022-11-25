@@ -14,6 +14,7 @@ import {
 } from 'redux/UserSlice';
 import { removeUserFromLocalStorage } from 'components/Header/Header';
 import { DeleteModal } from 'components/Modals/DeleteModal';
+import { closeDeleteProfileModal, openDeleteProfileModal } from 'redux/ModalSlice';
 
 export function Profile() {
   const { t } = useTranslation();
@@ -25,9 +26,10 @@ export function Profile() {
     reset,
   } = useForm({ defaultValues: { name: '', login: '', password: '', confirmPassword: '' } });
   const { userId, userName, userLogin } = useSelector((state: RootState) => state.user);
+
+  const modalOpen = useSelector((state: RootState) => state.modal.user.deleteProfileModal);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [modalOpen, setModalOpen] = useState(false);
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
   async function updateUser(newUserInfo: INewUser) {
@@ -55,8 +57,8 @@ export function Profile() {
     }
   }
 
-  async function deleteUser() {
-    if (deleteConfirmed) {
+  async function deleteUser(toBeDeleted: boolean) {
+    if (toBeDeleted) {
       try {
         await dispatch(deleteUserFromServer(userId));
         removeUserFromLocalStorage();
@@ -68,7 +70,7 @@ export function Profile() {
   }
 
   useEffect(() => {
-    deleteUser();
+    deleteUser(deleteConfirmed);
     // eslint-disable-next-line
   }, [deleteConfirmed]);
 
@@ -78,11 +80,10 @@ export function Profile() {
         <DeleteModal
           onDeleteClick={async () => {
             setDeleteConfirmed(true);
-            // await deleteUser();
-            setModalOpen(false);
+            dispatch(closeDeleteProfileModal());
           }}
           onCancelClick={() => {
-            setModalOpen(false);
+            dispatch(closeDeleteProfileModal());
             setDeleteConfirmed(false);
           }}
         />
@@ -188,7 +189,7 @@ export function Profile() {
             {t('UpdateProfile')}
           </button>
         </form>
-        <button className={styles.buttonDelete} onClick={() => setModalOpen(true)}>
+        <button className={styles.buttonDelete} onClick={() => dispatch(openDeleteProfileModal())}>
           {t('DeleteProfile')}
         </button>
       </div>
