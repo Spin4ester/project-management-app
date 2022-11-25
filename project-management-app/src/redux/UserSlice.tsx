@@ -8,12 +8,14 @@ interface IStateUser {
   isAuth: boolean;
   userId: string;
   userName: string;
+  userLogin: string;
 }
 
 export const initialState: IStateUser = {
   isAuth: !!localStorage.getItem('token'),
-  userName: localStorage.getItem('userName') || 'User',
+  userName: localStorage.getItem('userName') || '',
   userId: localStorage.getItem('userId') || '',
+  userLogin: localStorage.getItem('userLogin') || '',
 };
 
 export const userSlice = createSlice({
@@ -25,12 +27,14 @@ export const userSlice = createSlice({
     },
     signOutUser(state) {
       state.isAuth = false;
-      state.userName = 'User';
+      state.userName = '';
       state.userId = '';
+      state.userLogin = '';
     },
-    updateUserInfo(state, action: PayloadAction<{ _id: string; name: string }>) {
+    updateUserInfo(state, action: PayloadAction<{ _id: string; name: string; login: string }>) {
       state.userId = action.payload._id;
       state.userName = action.payload.name;
+      state.userLogin = action.payload.login;
     },
   },
 });
@@ -105,9 +109,9 @@ export const fetchUserWithId = createAsyncThunk<string, string>('user', async (i
   }
 });
 
-export const updateUserOnServer = createAsyncThunk<IUserUpdate, string>(
+export const updateUserOnServer = createAsyncThunk<string, [string, IUserUpdate]>(
   'update user',
-  async (id, newUserInfo) => {
+  async ([id, newUserInfo]) => {
     const url = `${config.api.url}users/${id}`;
     const token = localStorage.getItem('token');
     if (!token) return null;
