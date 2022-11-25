@@ -23,7 +23,7 @@ export const ru = {
   PasswordsDoNotMatch: 'Пароли не совпадают',
   UpdateProfile: 'Обновить профиль',
   UpdateImage: 'Изменить фото',
-  DeleteAccount: 'Удалить профиль',
+  DeleteProfile: 'Удалить профиль',
   Hello: 'Привет',
   EditName: 'Изменить имя',
   EditLogin: 'Изменить логин',
@@ -40,5 +40,5 @@ export const ru = {
   Create: 'Cоздать',
   Cancel: 'Отмена',
   Delete: 'Удалить',
-  DeleteConfirmation: 'Вы точно хотите это сделать?',
+  DeleteConfirmation: 'Вы точно хотите удалить',
 };

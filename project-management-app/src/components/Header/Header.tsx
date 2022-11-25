@@ -31,13 +31,13 @@ export function Header() {
               </LinkContainer>
             )}
             {isAuth && (
-              <LinkContainer to="/boards">
-                <Nav.Link href="#boards">{t('Workspace')}</Nav.Link>
+              <LinkContainer to="/profile">
+                <Nav.Link href="#profile">{t('Profile')}</Nav.Link>
               </LinkContainer>
             )}
             {isAuth && (
-              <LinkContainer to="/profile">
-                <Nav.Link href="#profile">{t('Profile')}</Nav.Link>
+              <LinkContainer to="/boards">
+                <Nav.Link href="#boards">{t('Workspace')}</Nav.Link>
               </LinkContainer>
             )}
             {isAuth && (

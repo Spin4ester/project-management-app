@@ -23,7 +23,7 @@ export const en = {
   PasswordsDoNotMatch: 'Parwords do not match',
   UpdateProfile: 'Update profile',
   UpdateImage: 'Update Image',
-  DeleteAccount: 'Delete account',
+  DeleteProfile: 'Delete profile',
   Hello: 'Hello',
   EditName: 'Edit name',
   EditLogin: 'Edit login',
@@ -40,5 +40,5 @@ export const en = {
   Create: 'Create',
   Cancel: 'Cancel',
   Delete: 'Delete',
-  DeleteConfirmation: 'Are you sure you want to delete this?',
+  DeleteConfirmation: 'Are you sure you want to delete',
 };

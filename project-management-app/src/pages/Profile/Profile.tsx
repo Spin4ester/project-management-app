@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppDispatch, RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -37,7 +37,6 @@ export function Profile() {
         login: newUserInfo.login || userLogin,
         password: newUserInfo.password || newUserInfo.confirmPassword!,
       };
-      console.log(updatedUser);
       const newUserData = await (await dispatch(updateUserOnServer([userId, updatedUser]))).payload;
       if ((newUserData as IErrorResponse).statusCode) {
         const loginError = (newUserData as IErrorResponse).statusCode === 409;
@@ -68,13 +67,18 @@ export function Profile() {
     }
   }
 
+  useEffect(() => {
+    deleteUser();
+    // eslint-disable-next-line
+  }, [deleteConfirmed]);
+
   return (
     <div className={styles.container}>
       {modalOpen && (
         <DeleteModal
           onDeleteClick={async () => {
             setDeleteConfirmed(true);
-            await deleteUser();
+            // await deleteUser();
             setModalOpen(false);
           }}
           onCancelClick={() => {
@@ -185,7 +189,7 @@ export function Profile() {
           </button>
         </form>
         <button className={styles.buttonDelete} onClick={() => setModalOpen(true)}>
-          {t('DeleteAccount')}
+          {t('DeleteProfile')}
         </button>
       </div>
     </div>
