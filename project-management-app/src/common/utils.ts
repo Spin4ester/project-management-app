@@ -11,3 +11,10 @@ export function setHeaders(token?: string) {
       };
   return headers as HeadersInit;
 }
+
+export function removeUserFromLocalStorage() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('userName');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('userLogin');
+}

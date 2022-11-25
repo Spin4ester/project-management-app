@@ -12,7 +12,7 @@ import {
   deleteUserFromServer,
   signOutUser,
 } from 'redux/UserSlice';
-import { removeUserFromLocalStorage } from 'components/Header/Header';
+import { removeUserFromLocalStorage } from 'common/utils';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import { closeDeleteProfileModal, openDeleteProfileModal } from 'redux/ModalSlice';
 
