@@ -23,7 +23,6 @@ export function Main() {
       {isLoaded && <BoardPreview />}
       <BoardPreviewModalCreate />
       <BoardPreviewModalEdit />
-      <DeleteModal />
     </main>
   );
 }

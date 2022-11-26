@@ -5,13 +5,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUser } from 'redux/UserSlice';
-import { useNavigate } from 'react-router-dom';
 
 export function Header() {
   const { t, i18n } = useTranslation();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   return (
     <Navbar sticky="top" bg="dark" variant="dark">
@@ -22,28 +20,36 @@ export function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <LinkContainer to="/login" hidden={isAuth}>
-              <Nav.Link href="#login">{t('SignIn')}</Nav.Link>
-            </LinkContainer>
-            <Navbar.Text
-              hidden={!isAuth}
-              onClick={() => {
-                localStorage.removeItem('token');
-                dispatch(signOutUser());
-                navigate('/');
-              }}
-            >
-              {t('SignOut')}
-            </Navbar.Text>
-            <LinkContainer to="/profile" hidden={!isAuth}>
-              <Nav.Link href="#profile">{t('Profile')}</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/registration" hidden={isAuth}>
-              <Nav.Link href="#registration">{t('SignUp')}</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/boards" hidden={!isAuth}>
-              <Nav.Link href="#boards">{t('Workspace')}</Nav.Link>
-            </LinkContainer>
+            {!isAuth && (
+              <LinkContainer to="/login">
+                <Nav.Link href="#login">{t('SignIn')}</Nav.Link>
+              </LinkContainer>
+            )}
+            {!isAuth && (
+              <LinkContainer to="/registration">
+                <Nav.Link href="#registration">{t('SignUp')}</Nav.Link>
+              </LinkContainer>
+            )}
+            {isAuth && (
+              <LinkContainer to="/profile">
+                <Nav.Link href="#profile">{t('Profile')}</Nav.Link>
+              </LinkContainer>
+            )}
+            {isAuth && (
+              <LinkContainer to="/boards">
+                <Nav.Link href="#boards">{t('Workspace')}</Nav.Link>
+              </LinkContainer>
+            )}
+            {isAuth && (
+              <Navbar.Text
+                onClick={() => {
+                  removeUserFromLocalStorage();
+                  dispatch(signOutUser());
+                }}
+              >
+                {t('SignOut')}
+              </Navbar.Text>
+            )}
           </Nav>
         </Navbar.Collapse>
         <Button variant="primary" onClick={() => i18n.changeLanguage('en')}>
@@ -56,4 +62,11 @@ export function Header() {
       </Container>
     </Navbar>
   );
+}
+
+export function removeUserFromLocalStorage() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('userName');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('userLogin');
 }

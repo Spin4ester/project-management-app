@@ -16,12 +16,18 @@ export interface INewUser {
   confirmPassword?: string;
 }
 
+export interface IUserUpdate {
+  name: string;
+  login: string;
+  password: string;
+}
+
 export interface IUserSigninData {
   token: string;
 }
 
 export interface IErrorResponse {
-  statusCode: string;
+  statusCode: number;
   message: string;
 }
 

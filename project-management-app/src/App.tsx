@@ -16,7 +16,6 @@ import { useSelector } from 'react-redux';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
-  console.log(location);
   return (
     <div className="App">
       <Header />

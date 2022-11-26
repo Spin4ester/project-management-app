@@ -23,8 +23,8 @@ export const BoardPreview = () => {
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const boardPreviews = useSelector((state: RootState) => state.board.previews);
   const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
-  const createBoardModal = useSelector((state: RootState) => state.modal.createBoardModal);
-  const editBoardModal = useSelector((state: RootState) => state.modal.editBoardModal);
+  const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
+  const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   const navigate = useNavigate();

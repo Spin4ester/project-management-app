@@ -3,10 +3,11 @@ import styles from './SignUp.module.css';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { userSignin, userSignup } from 'common/asyncActions/fetchRequests';
-import { INewUser } from 'common/types';
+import { IErrorResponse, INewUser, IUser, IUserSigninData } from 'common/types';
 import { useDispatch } from 'react-redux';
-import { signInUser } from 'redux/UserSlice';
+import { signInUser, updateUserInfo, userSigninFetch, userSignupFetch } from 'redux/UserSlice';
+import { AppDispatch } from 'redux/Store';
+import { saveUserToLocalStorage } from 'pages/SignIn/SignIn';
 
 export function SignUp() {
   const { t } = useTranslation();
@@ -19,34 +20,35 @@ export function SignUp() {
     reset,
   } = useForm();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
+  async function onSubmit(data: INewUser) {
+    try {
+      delete data.confirmPassword;
+      const user = await (await dispatch(userSignupFetch(data))).payload;
+      if ((user as IErrorResponse).statusCode === 409) {
+        setError('login', { type: 'custom', message: `${t('LoginTaken')}` }, { shouldFocus: true });
+      } else {
+        const userLoginData = { login: (user as IUser).login, password: data.password };
+        const loginData = await (await dispatch(userSigninFetch(userLoginData))).payload;
+        dispatch(signInUser());
+        dispatch(updateUserInfo(user as IUser));
+        localStorage.setItem('token', (loginData as IUserSigninData).token);
+        saveUserToLocalStorage(user as IUser);
+        reset();
+        navigate('/boards');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div className={styles.container}>
       <form
         className={styles.content}
         id="signup-form"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            delete data.confirmPassword;
-            const user = await userSignup(data as INewUser);
-            if (user.statusCode === 409) {
-              setError(
-                'login',
-                { type: 'custom', message: `${t('LoginTaken')}` },
-                { shouldFocus: true }
-              );
-            } else {
-              const userLoginData = { login: user.login, password: data.password };
-              await userSignin(userLoginData);
-              dispatch(signInUser());
-              reset();
-              navigate('/boards');
-            }
-          } catch (e) {
-            console.log(e);
-          }
-        })}
+        onSubmit={handleSubmit(async (data) => onSubmit(data as INewUser))}
         noValidate
       >
         <h4>{t('AccountRegistration')}</h4>
@@ -77,8 +79,6 @@ export function SignUp() {
               required: { value: true, message: `${t('ThisFieldIsRequired')}` },
               minLength: { value: 2, message: `${t('AtLeast2symbols')}` },
               maxLength: { value: 30, message: `${t('MaxNameLength')}` },
-              // validate: async (value) =>
-              //   (await CheckLoginAvaliability(value)) || 'This login is already taken',
             })}
           />
           <p className={styles.authError} id="userLoginError">
@@ -129,30 +129,3 @@ export function SignUp() {
     </div>
   );
 }
-
-// async function CheckLoginAvaliability(newLogin: string) {
-//   const users = (await getUsersForLoginAvaliabilityCheck()) as IUser[];
-//   const logins = users.map((user) => user.login);
-//   return !logins.find((login) => login === newLogin);
-// }
-
-// async function getUsersForLoginAvaliabilityCheck() {
-//   const url = `${config.api.url}users`;
-//   // get token from LS
-//   const token =
-//     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzc3ZjAyOWVjZWUyNzQxZWZkMjU5NSIsImxvZ2luIjoiZGFzaGEiLCJpYXQiOjE2Njg3NzU4MDQsImV4cCI6MTY2ODgxOTAwNH0.3EMg_w89EN53GcLR0kdrkDyMcr9CS0seHF5WM1x5C_8';
-//   try {
-//     const res = await fetch(url, {
-//       method: 'GET',
-//       headers: {
-//         Accept: 'application/json',
-//         'Content-type': 'application/json',
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     const users = res.json();
-//     return users;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
