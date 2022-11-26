@@ -7,6 +7,7 @@ interface IStateModal {
     createColumnModal: boolean;
     createTaskModal: boolean;
     deleteItemModal: boolean;
+    openDeleteModal: boolean;
   };
   user: { deleteProfileModal: boolean };
 }
@@ -18,6 +19,7 @@ export const initialState: IStateModal = {
     createColumnModal: false,
     createTaskModal: false,
     deleteItemModal: false,
+    openDeleteModal: false,
   },
   user: { deleteProfileModal: false },
 };
@@ -26,8 +28,14 @@ export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal(state) {
-      state.main.editBoardModal = true;
+    openCreateBoardModal(state, action) {
+      state.main.createBoardModal = action.payload;
+    },
+    openEditBoardModal(state, action) {
+      state.main.editBoardModal = action.payload;
+    },
+    openDeleteModal(state, action) {
+      state.main.deleteItemModal = action.payload;
     },
     openDeleteProfileModal(state) {
       state.user.deleteProfileModal = true;
@@ -38,5 +46,11 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { openModal, openDeleteProfileModal, closeDeleteProfileModal } = modalSlice.actions;
+export const {
+  openDeleteModal,
+  openDeleteProfileModal,
+  closeDeleteProfileModal,
+  openCreateBoardModal,
+  openEditBoardModal,
+} = modalSlice.actions;
 export default modalSlice.reducer;

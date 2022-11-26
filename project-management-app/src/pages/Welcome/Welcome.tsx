@@ -12,9 +12,7 @@ export function Welcome() {
         <h2>Tik-Task</h2>
         <h4>{t('KanbanTypeProjectManagementApp')}</h4>
       </div>
-      <div className={styles.video_content}>
-        <YouTube videoId="jfKfPfyJRdk" />
-      </div>
+      <div className={styles.video_content}>{/* <YouTube videoId="jfKfPfyJRdk" /> */}</div>
       <div className={styles.developers_content}>
         <DeveloperCard name={t('Rustam')} />
         <DeveloperCard name={t('Dasha')} />

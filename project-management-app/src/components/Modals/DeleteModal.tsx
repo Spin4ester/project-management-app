@@ -1,6 +1,10 @@
 import React from 'react';
 import styles from './DeleteModal.module.css';
 import { useTranslation } from 'react-i18next';
+import { RootState } from 'redux/Store';
+import { useSelector, useDispatch } from 'react-redux';
+import { openDeleteModal } from 'redux/ModalSlice';
+import { deleteUserBoard, fetchUserBoards } from 'redux/BoardSlice';
 
 interface IProps {
   onDeleteClick: () => void;
@@ -9,6 +13,9 @@ interface IProps {
 
 export const DeleteModal = (props: IProps) => {
   const { t } = useTranslation();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dispatch = useDispatch<any>();
+
   return (
     <>
       <div className={styles.blur} onClick={props.onCancelClick}></div>

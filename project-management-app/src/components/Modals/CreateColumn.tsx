@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './CreateModal.module.css';
+import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
 
 export const CreateColumn = () => {
