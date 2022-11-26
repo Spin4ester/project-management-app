@@ -30,6 +30,8 @@ export const BoardPreview = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  console.log(boardPreviews);
+
   return (
     <>
       {boardPreviews.map((el) => (
