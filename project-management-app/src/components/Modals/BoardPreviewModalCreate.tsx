@@ -17,6 +17,7 @@ export const BoardPreviewModalCreate = () => {
   const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
   const boardPreviewId = useSelector((state: RootState) => state.board.boardPreviewId);
   const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
+  const userId = useSelector((state: RootState) => state.user.userId);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
@@ -33,7 +34,7 @@ export const BoardPreviewModalCreate = () => {
     <>
       {createBoardModal && (
         <div
-          className={styles.bg_wrapper}
+          className={styles.bg_blur}
           onClick={() => {
             dispatch(openCreateBoardModal(false));
           }}
@@ -51,7 +52,7 @@ export const BoardPreviewModalCreate = () => {
               );
               dispatch(openCreateBoardModal(false));
               dispatch(changeIsLoaded(false));
-              dispatch(fetchUserBoards(localStorage.getItem('userId')!));
+              dispatch(fetchUserBoards(userId));
               reset();
             })}
           >

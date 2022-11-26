@@ -4,18 +4,22 @@ import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect } from 'react';
 import styles from './Main.module.css';
-import { fetchUserBoards } from 'redux/BoardSlice';
+import { deleteUserBoard, fetchUserBoards } from 'redux/BoardSlice';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import { BoardPreviewModalCreate } from 'components/Modals/BoardPreviewModalCreate';
+import { openDeleteModal } from 'redux/ModalSlice';
 
 export function Main() {
   const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
+  const userId = useSelector((state: RootState) => state.user.userId);
   const boardPreviews = useSelector((state: RootState) => state.board.previews);
+  const toBeDeleteBoard = useSelector((state: RootState) => state.board.toBeDeleteBoard);
+  const isOpenDeleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(fetchUserBoards(localStorage.getItem('userId')!));
+    dispatch(fetchUserBoards(userId));
   }, [dispatch]);
 
   return (
@@ -23,6 +27,16 @@ export function Main() {
       {isLoaded && <BoardPreview />}
       <BoardPreviewModalCreate />
       <BoardPreviewModalEdit />
+      {isOpenDeleteModal && (
+        <DeleteModal
+          onCancelClick={() => dispatch(openDeleteModal(false))}
+          onDeleteClick={async () => {
+            await dispatch(deleteUserBoard(toBeDeleteBoard));
+            dispatch(fetchUserBoards(userId));
+            dispatch(openDeleteModal(false));
+          }}
+        />
+      )}
     </main>
   );
 }

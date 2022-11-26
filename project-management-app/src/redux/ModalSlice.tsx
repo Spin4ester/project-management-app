@@ -7,6 +7,7 @@ interface IStateModal {
     createColumnModal: boolean;
     createTaskModal: boolean;
     deleteItemModal: boolean;
+    openDeleteModal: boolean;
   };
   user: { deleteProfileModal: boolean };
 }
@@ -18,6 +19,7 @@ export const initialState: IStateModal = {
     createColumnModal: false,
     createTaskModal: false,
     deleteItemModal: false,
+    openDeleteModal: false,
   },
   user: { deleteProfileModal: false },
 };

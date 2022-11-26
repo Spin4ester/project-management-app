@@ -13,9 +13,6 @@ interface IProps {
 
 export const DeleteModal = (props: IProps) => {
   const { t } = useTranslation();
-
-  const deleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
-  const toBeDeleteBoard = useSelector((state: RootState) => state.board.toBeDeleteBoard);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
