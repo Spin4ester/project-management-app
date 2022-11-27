@@ -43,4 +43,7 @@ export const en = {
   Cancel: 'Cancel',
   Delete: 'Delete',
   DeleteConfirmation: 'Are you sure you want to delete',
+  BudapestHungary: 'Budapest, Hungary',
+  WarsawPoland: 'Warsaw, Poland',
+  MinskBelarus: 'Minsk, Belarus',
 };

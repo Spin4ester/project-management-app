@@ -43,4 +43,7 @@ export const ru = {
   Cancel: 'Отмена',
   Delete: 'Удалить',
   DeleteConfirmation: 'Вы точно хотите удалить',
+  BudapestHungary: 'Будапешт, Венгрия',
+  WarsawPoland: 'Варшава, Польша',
+  MinskBelarus: 'Минск, Беларусь',
 };

@@ -1,27 +1,30 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+import styles from './DeveloperCard.module.css';
+import Checked from '../../assets/icons/checked.png';
 
 type Props = {
   name: string;
+  location: string;
+  image: string;
+  tasks: string[];
 };
 
-export const DeveloperCard = ({ name }: Props) => {
+export const DeveloperCard = ({ name, location, image, tasks }: Props) => {
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-      </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-      </ListGroup>
-      <Card.Body>
-        <Card.Link href="#">Github</Card.Link>
-        <Card.Link href="#">Linkedin</Card.Link>
-      </Card.Body>
-    </Card>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <img src={image} className={styles.photo}></img>
+        <h3>{name}</h3>
+        <h6>{location}</h6>
+        <div className={styles.tasks}>
+          {tasks.map((el) => (
+            <div key={el} className={styles.task}>
+              <div>{el}</div>
+              <img src={Checked} alt="Task"></img>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
