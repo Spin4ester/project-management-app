@@ -30,3 +30,25 @@ export interface IErrorResponse {
   statusCode: number;
   message: string;
 }
+
+export interface IUserBoard {
+  owner: string;
+  title: string;
+  users: string[];
+  _id: string;
+}
+
+export interface IUserBoardData {
+  owner: string;
+  title: string;
+  users: string[];
+}
+
+export interface IUserBoardDataUpdate {
+  body: {
+    owner: string;
+    title: string;
+    users: string[];
+  };
+  _id: string;
+}

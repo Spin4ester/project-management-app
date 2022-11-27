@@ -1,31 +1,56 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IStateModal {
-  editBoardModal: boolean;
-  createBoardModal: boolean;
-  createColumnModal: boolean;
-  createTaskModal: boolean;
-  deleteItemModal: boolean;
+  main: {
+    editBoardModal: boolean;
+    createBoardModal: boolean;
+    createColumnModal: boolean;
+    createTaskModal: boolean;
+    deleteItemModal: boolean;
+    openDeleteModal: boolean;
+  };
+  user: { deleteProfileModal: boolean };
 }
 
 export const initialState: IStateModal = {
-  editBoardModal: false,
-  createBoardModal: false,
-  createColumnModal: false,
-  createTaskModal: false,
-  deleteItemModal: false,
+  main: {
+    editBoardModal: false,
+    createBoardModal: false,
+    createColumnModal: false,
+    createTaskModal: false,
+    deleteItemModal: false,
+    openDeleteModal: false,
+  },
+  user: { deleteProfileModal: false },
 };
 
 export const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal(state) {
-      state.editBoardModal = true;
+    openCreateBoardModal(state, action) {
+      state.main.createBoardModal = action.payload;
+    },
+    openEditBoardModal(state, action) {
+      state.main.editBoardModal = action.payload;
+    },
+    openDeleteModal(state, action) {
+      state.main.deleteItemModal = action.payload;
+    },
+    openDeleteProfileModal(state) {
+      state.user.deleteProfileModal = true;
+    },
+    closeDeleteProfileModal(state) {
+      state.user.deleteProfileModal = false;
     },
   },
 });
 
-export const { openModal } = modalSlice.actions;
-
+export const {
+  openDeleteModal,
+  openDeleteProfileModal,
+  closeDeleteProfileModal,
+  openCreateBoardModal,
+  openEditBoardModal,
+} = modalSlice.actions;
 export default modalSlice.reducer;

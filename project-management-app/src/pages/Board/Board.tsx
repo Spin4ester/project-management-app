@@ -25,7 +25,7 @@ export const Board = () => {
         <button onClick={addColumn}>Add column</button>
       </div>
       {/* <CreateColumn />
-      <DeleteModal />
+      <DeleteModal onDeleteClick={() => {}} onCancelClick={() => {}} />
       <CreateTask /> */}
     </div>
   );
