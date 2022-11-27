@@ -3,6 +3,11 @@
     flex-direction: column;
     gap: 50px;
     margin: 20px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.project_content {
+    font-family: 'Montserrat', sans-serif;
 }
 
 .developers_content {
@@ -10,4 +15,12 @@
     flex-wrap: wrap;
     gap: 30px;
     justify-content: center;
+}
+
+
+.logo {
+    font-family: 'Staatliches', cursive;
+    font-size: 2em ;
+    margin: 0;
+    color: #000;
 }

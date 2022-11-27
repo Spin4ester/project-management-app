@@ -1,7 +1,6 @@
 .container {
     display: flex;
     flex-direction: column;
-    font-family: 'Oswald', sans-serif;
     padding: 30px;
     background-color: rgba(35, 33, 37, 0.2);
     border-radius: 10px;
@@ -11,6 +10,12 @@
 .container:hover {
     background-color: rgba(92, 69, 116, 0.2);
     transition: 0.3s;
+}
+
+.container:hover .task {
+    background-color: rgb(221, 221, 221);
+    color: #000;
+    transition: 0.5s;
 }
 
 .content {
@@ -23,6 +28,17 @@
 .photo {
     width: 130px;
     border-radius: 50px;
+}
+
+.location {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.location > img {
+    width: 20px;
+    height: 20px;
 }
 
 .tasks {
@@ -42,6 +58,7 @@
     background-color: rgba(43, 43, 43, 0.897);
     border-radius: 10px;
     color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 

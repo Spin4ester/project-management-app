@@ -46,4 +46,5 @@ export const ru = {
   BudapestHungary: 'Будапешт, Венгрия',
   WarsawPoland: 'Варшава, Польша',
   MinskBelarus: 'Минск, Беларусь',
+  OurTeam: 'Наша Команда',
 };
