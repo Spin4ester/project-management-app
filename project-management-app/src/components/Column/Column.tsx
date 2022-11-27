@@ -4,33 +4,32 @@ import { Droppable } from 'react-beautiful-dnd';
 import styles from './Column.module.css';
 
 export const Column = (props) => {
-  // const [tasks, setTasks] = useState(props.column.items);
-
   const children = props.column?.items?.map((element, index) => {
-    return <Task item={element} key={element.id} index={index} />;
+    return <Task item={element} key={element.id} index={index} onDeleteTask={props.onDeleteTask} />;
   });
 
   const addTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    props.onTaskAdd({ title: 'new task', id: 'newtask' }, props.droppableId);
+    const newId = 'newtask' + Math.random();
+    props.onTaskAdd({ title: 'new task', id: newId }, props.droppableId);
   };
 
   return (
-    <Droppable droppableId={props.droppableId} key={props.droppableId}>
-      {(provided) => {
-        return (
-          <div className={styles.container} {...provided.droppableProps} ref={provided.innerRef}>
-            <h5>{props.column.title}</h5>
-            <div className={styles.content}>
+    <div className={styles.container}>
+      <h5>{props.column.title}</h5>
+      <Droppable droppableId={props.droppableId} key={props.droppableId}>
+        {(provided) => {
+          return (
+            <div className={styles.content} {...provided.droppableProps} ref={provided.innerRef}>
               {children}
               {provided.placeholder}
             </div>
-            <div>
-              <button onClick={addTask}>Add task</button>
-            </div>
-          </div>
-        );
-      }}
-    </Droppable>
+          );
+        }}
+      </Droppable>
+      <div>
+        <button onClick={addTask}>Add task</button>
+      </div>
+    </div>
   );
 };

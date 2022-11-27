@@ -25,3 +25,15 @@
   cursor: pointer;
   transition: 0.3s;
 }
+
+.delete_img {
+  transition: 0.5s;
+}
+
+.delete_img:hover {
+  transform: scale(1.2);
+}
+
+.delete_img:active {
+  transform: scale(0.6);
+}

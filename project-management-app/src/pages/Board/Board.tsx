@@ -35,6 +35,12 @@ export const Board = () => {
     setColumns({ ...col });
   };
 
+  const onDeleteTask = (colId, taskId) => {
+    const col = columns;
+    col[colId].items = col[colId].items.filter((el) => el.id !== taskId);
+    setColumns({ ...col });
+  };
+
   const children = Object.entries(columns).map(([columnId, column], index) => {
     return (
       <Column
@@ -43,13 +49,17 @@ export const Board = () => {
         droppableId={columnId}
         index={index}
         onTaskAdd={onTaskAdd}
+        onDeleteTask={onDeleteTask}
       />
     );
   });
 
   const addColumn = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setColumns({ ...columns, new: { title: 'New', items: [] } });
+    const newId = 'new' + Math.random();
+    const col = columns;
+    col[newId] = { title: 'New', items: [] };
+    setColumns({ ...col });
   };
 
   const onDragEnd = (result, columns, setColumns) => {
@@ -62,17 +72,6 @@ export const Board = () => {
       const destItems = [...destColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
       destItems.splice(destination.index, 0, removed);
-      console.log({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      });
       setColumns({
         ...columns,
         [source.droppableId]: {
