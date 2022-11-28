@@ -34,7 +34,7 @@ export const BoardPreviewModalCreate = () => {
     <>
       {createBoardModal && (
         <div
-          className={styles.bg_blur}
+          className={styles.blur}
           onClick={() => {
             dispatch(openCreateBoardModal(false));
           }}

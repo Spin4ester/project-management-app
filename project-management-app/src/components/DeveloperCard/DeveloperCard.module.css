@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    background-color: rgba(35, 33, 37, 0.2);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.container:hover {
+    background-color: rgba(92, 69, 116, 0.2);
+    transition: 0.3s;
+}
+
+.container:hover .task {
+    background-color: rgb(221, 221, 221);
+    color: #000;
+    transition: 0.5s;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.photo {
+    width: 130px;
+    border-radius: 50px;
+}
+
+.location {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.location > img {
+    width: 20px;
+    height: 20px;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    height: 2em;
+    width: 220px;
+    background-color: rgba(43, 43, 43, 0.897);
+    border-radius: 10px;
+    color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+
+.task > img {
+    width: 20px;
+    height: 20px;
+}

@@ -10,17 +10,17 @@ import { BoardPreviewModalCreate } from 'components/Modals/BoardPreviewModalCrea
 import { openDeleteModal } from 'redux/ModalSlice';
 
 export function Main() {
-  const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
+  const { isLoaded, toBeDeleteBoard } = useSelector((state: RootState) => state.board);
+  // const isAuth = useSelector((state: RootState) => state.board.isLoaded);
   const userId = useSelector((state: RootState) => state.user.userId);
   const boardPreviews = useSelector((state: RootState) => state.board.previews);
-  const toBeDeleteBoard = useSelector((state: RootState) => state.board.toBeDeleteBoard);
   const isOpenDeleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(fetchUserBoards(userId));
-  }, [dispatch]);
+  }, [userId]);
 
   return (
     <main className={styles.container}>

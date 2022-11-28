@@ -13,7 +13,7 @@ export const en = {
   AccountRegistration: 'Account Registration',
   ConfirmPassword: 'Confirm password',
   AlreadyAmember: 'Already a member?',
-  KanbanTypeProjectManagementApp: 'Tik-Task is a Kanban type Project management app',
+  KanbanTypeProjectManagementApp: 'Tik-Task is a Kanban type Project management app.',
   Rustam: 'Rustam',
   Dasha: 'Dasha',
   Anya: 'Anya',
@@ -43,4 +43,8 @@ export const en = {
   Cancel: 'Cancel',
   Delete: 'Delete',
   DeleteConfirmation: 'Are you sure you want to delete',
+  BudapestHungary: 'Budapest, Hungary',
+  WarsawPoland: 'Warsaw, Poland',
+  MinskBelarus: 'Minsk, Belarus',
+  OurTeam: 'Our Team',
 };
