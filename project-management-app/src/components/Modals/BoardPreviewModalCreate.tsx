@@ -3,20 +3,15 @@ import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
-import { openCreateBoardModal, openEditBoardModal } from 'redux/ModalSlice';
-import {
-  changeIsLoaded,
-  createUserBoard,
-  fetchUserBoards,
-  updateUserBoard,
-} from 'redux/BoardSlice';
+import { openCreateBoardModal } from 'redux/ModalSlice';
+import { changeIsLoaded, createUserBoard, fetchUserBoards } from 'redux/BoardSlice';
 import { useForm } from 'react-hook-form';
 
 export const BoardPreviewModalCreate = () => {
   const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
-  const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
-  const boardPreviewId = useSelector((state: RootState) => state.board.boardPreviewId);
-  const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
+  // const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
+  // const boardPreviewId = useSelector((state: RootState) => state.board.boardPreviewId);
+  // const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
   const userId = useSelector((state: RootState) => state.user.userId);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
@@ -26,7 +21,7 @@ export const BoardPreviewModalCreate = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
+    // setError,
     reset,
   } = useForm();
 

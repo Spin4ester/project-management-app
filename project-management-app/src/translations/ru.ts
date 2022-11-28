@@ -42,7 +42,7 @@ export const ru = {
   Update: 'Редактировать',
   Cancel: 'Отмена',
   Delete: 'Удалить',
-  DeleteConfirmation: 'Вы точно хотите удалить',
+  DeleteConfirmation: 'Вы точно хотите удалить это?',
   BudapestHungary: 'Будапешт, Венгрия',
   WarsawPoland: 'Варшава, Польша',
   MinskBelarus: 'Минск, Беларусь',

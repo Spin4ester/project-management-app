@@ -1,7 +1,6 @@
 import { Column } from 'components/Column/Column';
 import { CreateColumn } from 'components/Modals/CreateColumn';
 import { CreateTask } from 'components/Modals/CreateTask';
-import { DeleteModal } from 'components/Modals/DeleteModal';
 import * as React from 'react';
 import styles from './Board.module.css';
 
@@ -12,7 +11,6 @@ export const Board = () => {
       <Column />
       <Column />
       <CreateColumn />
-      <DeleteModal onDeleteClick={() => {}} onCancelClick={() => {}} />
       <CreateTask />
     </div>
   );

@@ -42,7 +42,7 @@ export const en = {
   Update: 'Update',
   Cancel: 'Cancel',
   Delete: 'Delete',
-  DeleteConfirmation: 'Are you sure you want to delete',
+  DeleteConfirmation: 'Are you sure you want to delete it?',
   BudapestHungary: 'Budapest, Hungary',
   WarsawPoland: 'Warsaw, Poland',
   MinskBelarus: 'Minsk, Belarus',

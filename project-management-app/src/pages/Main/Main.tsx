@@ -13,13 +13,14 @@ export function Main() {
   const { isLoaded, toBeDeleteBoard } = useSelector((state: RootState) => state.board);
   // const isAuth = useSelector((state: RootState) => state.board.isLoaded);
   const userId = useSelector((state: RootState) => state.user.userId);
-  const boardPreviews = useSelector((state: RootState) => state.board.previews);
+  // const boardPreviews = useSelector((state: RootState) => state.board.previews);
   const isOpenDeleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(fetchUserBoards(userId));
+    // eslint-disable-next-line
   }, [userId]);
 
   return (

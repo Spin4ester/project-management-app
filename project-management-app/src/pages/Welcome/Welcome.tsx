@@ -1,7 +1,7 @@
 import { DeveloperCard } from 'components/DeveloperCard/DeveloperCard';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import YouTube from 'react-youtube';
+// import YouTube from 'react-youtube';
 import styles from './Welcome.module.css';
 import RusPic from '../../assets/img/rustam.jpg';
 import DashaPic from '../../assets/img/dasha.png';
