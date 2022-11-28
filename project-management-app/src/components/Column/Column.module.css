@@ -6,10 +6,16 @@
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   font-family: 'Oswald', sans-serif;
+  transition: 0.5s;
 }
 
-.container > h5 {
-  margin-bottom: 0;
+.container:active {
+  background-color: rgb(255, 239, 220);
+}
+
+.title {
+  display: inline;
+  cursor: pointer;
 }
 
 .content {
@@ -40,6 +46,7 @@
   transition: 0.5s;
   float: right;
   transform: scale(0.8);
+  cursor: pointer;
 }
 
 .delete_img:hover {
@@ -53,4 +60,20 @@
 .header {
   margin: 5px 5px 0 15px;
   text-align: left;
+  height: 30px;
+}
+
+.title_form {
+  border-radius: 5px;
+}
+
+.edit_btn {
+  border: none;
+  background: none;
+  padding: 1px 3px;
+}
+
+.edit_btn img {
+  width: 21px;
+  vertical-align: sub;
 }
