@@ -5,14 +5,37 @@ import styles from './Column.module.css';
 import CloseIcon from '../../assets/icons/cancel.png';
 import CheckedIcon from '../../assets/icons/checked.png';
 import CrossIcon from '../../assets/icons/cross.png';
+import { openDeleteColumnModal } from 'redux/ModalSlice';
+import { useDispatch } from 'react-redux';
 
-export const Column = (props) => {
+type TaskProps = {
+  id: string;
+  title: string;
+};
+
+type ColumnProps = {
+  id: string;
+  title: string;
+  items: TaskProps[] | [];
+};
+
+type ColumnComponentProps = {
+  column: ColumnProps;
+  droppableId: string;
+  onTaskAdd: (task: TaskProps, colId: string) => void;
+  onDeleteTask: (colId: string, taskId: string) => void;
+  onDeleteColumn: (colId: string) => void;
+};
+
+export const Column = (props: ColumnComponentProps) => {
   const [isTitleEditable, setTitleEditable] = useState(false);
   const [titleValue, setTitleValue] = useState(props.column.title);
 
   const children = props.column?.items?.map((element, index) => {
     return <Task item={element} key={element.id} index={index} onDeleteTask={props.onDeleteTask} />;
   });
+
+  const dispatch = useDispatch();
 
   const addTask = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -22,18 +45,18 @@ export const Column = (props) => {
 
   const deleteColumn = (e: React.MouseEvent) => {
     e.preventDefault();
-    const target = e.target as HTMLElement;
-    if (target) {
-      const colId = (target.parentNode?.parentNode as HTMLElement)?.getAttribute('id');
-      props.onDeleteColumn(colId);
-    }
+    dispatch(openDeleteColumnModal(true));
+    // dispatch(deleteColumn(props.droppableId));
+    // const target = e.target as HTMLElement;
+    // if (target) {
+    //   const colId = (target.parentNode?.parentNode as HTMLElement)?.getAttribute('id');
+    //   if (colId) props.onDeleteColumn(colId);
+    // }
   };
 
-  const showUpdateTitleForm = (e: React.MouseEvent) => {
+  const showEditTitleForm = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (target) {
-      setTitleEditable(true);
-    }
+    if (target) setTitleEditable(true);
   };
 
   const notUpdateTitle = () => {
@@ -43,6 +66,7 @@ export const Column = (props) => {
 
   const updateTitle = () => {
     setTitleEditable(false);
+    if (!titleValue) setTitleValue(props.column.title);
   };
 
   return (
@@ -56,7 +80,7 @@ export const Column = (props) => {
               onClick={deleteColumn}
               className={styles.delete_img}
             />
-            <h5 className={styles.title} onClick={showUpdateTitleForm}>
+            <h5 className={styles.title} onClick={showEditTitleForm}>
               {props.column.title}
             </h5>
           </>

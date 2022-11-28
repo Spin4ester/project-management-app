@@ -95,6 +95,27 @@ export const updateUserBoard = createAsyncThunk(
   }
 );
 
+export const deleteUserColumn = createAsyncThunk(
+  'user/deleteBoard',
+  async function (boardId: string, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}boards/${boardId}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 interface IStateBoard {
   toBeDeleteBoard: string;
   boardPreviewId: string;
@@ -103,6 +124,7 @@ interface IStateBoard {
   column: string;
   previews: IUserBoard[];
   isLoaded: boolean;
+  toBeDeleteColumn: string;
 }
 
 export const initialState: IStateBoard = {
@@ -113,6 +135,7 @@ export const initialState: IStateBoard = {
   column: 'first',
   previews: [],
   isLoaded: false,
+  toBeDeleteColumn: 'none',
 };
 
 export const boardSlice = createSlice({
@@ -130,6 +153,9 @@ export const boardSlice = createSlice({
     },
     deleteBoardPreview(state, action) {
       state.toBeDeleteBoard = action.payload;
+    },
+    deleteColumn(state, action) {
+      state.toBeDeleteColumn = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -154,7 +180,7 @@ export const boardSlice = createSlice({
   },
 });
 
-export const { changeBoard, changeIsLoaded, changeBoardPreview, deleteBoardPreview } =
+export const { changeBoard, changeIsLoaded, changeBoardPreview, deleteBoardPreview, deleteColumn } =
   boardSlice.actions;
 
 export default boardSlice.reducer;

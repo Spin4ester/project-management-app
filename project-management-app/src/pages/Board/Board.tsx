@@ -4,14 +4,22 @@ import { CreateTask } from 'components/Modals/CreateTask';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import * as React from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { deleteUserBoard, fetchUserBoards } from 'redux/BoardSlice';
-import { openDeleteModal } from 'redux/ModalSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { openDeleteColumnModal, openDeleteModal, openDeleteTaskModal } from 'redux/ModalSlice';
 import { RootState } from 'redux/Store';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './Board.module.css';
+import { deleteUserColumn } from 'redux/BoardSlice';
+import AddPreview from '../../assets/icons/add-preview.png';
+import { useTranslation } from 'react-i18next';
+
+type TaskProps = {
+  id: string;
+  title: string;
+};
 
 export const Board = () => {
+  const { t } = useTranslation();
   const [columns, setColumns] = useState([
     {
       id: 'first',
@@ -30,14 +38,18 @@ export const Board = () => {
       ],
     },
   ]);
+  const isOpenDeleteColumnModal = useSelector(
+    (state: RootState) => state.modal.board.deleteColumnModal
+  );
+  const { toBeDeleteColumn } = useSelector((state: RootState) => state.board);
 
-  const onTaskAdd = (task, columnId) => {
+  const onTaskAdd = (task: TaskProps, columnId: string) => {
     const columnsCopy = [...columns];
     columnsCopy.find((el) => el.id === columnId)?.items.push(task);
     setColumns([...columnsCopy]);
   };
 
-  const onDeleteTask = (colId, taskId) => {
+  const onDeleteTask = (colId: string, taskId: string) => {
     const columnsCopy = [...columns];
     const col = columnsCopy.find((el) => el.id === colId);
     if (col) {
@@ -46,7 +58,7 @@ export const Board = () => {
     setColumns([...columnsCopy]);
   };
 
-  const onDeleteColumn = (colId) => {
+  const onDeleteColumn = (colId: string) => {
     const columnsNew = columns.filter((el) => el.id !== colId);
     setColumns([...columnsNew]);
   };
@@ -72,8 +84,8 @@ export const Board = () => {
     );
   });
 
-  const addColumn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const addColumn = () => {
+    // e.preventDefault();
     const newId = 'new' + Math.random();
     const columnsCopy = [...columns];
     columnsCopy.push({ id: newId, title: 'New', items: [] });
@@ -119,7 +131,8 @@ export const Board = () => {
     }
   };
 
-  // const createColumnModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dispatch = useDispatch<any>();
 
   return (
     <div className={styles.container}>
@@ -153,9 +166,18 @@ export const Board = () => {
           }}
         />
       )} */}
-      {/* <CreateColumn />
-      <DeleteModal onDeleteClick={() => {}} onCancelClick={() => {}} />
-      <CreateTask /> */}
+      {/* <CreateColumn /> */}
+      {isOpenDeleteColumnModal && (
+        <DeleteModal
+          onCancelClick={() => dispatch(openDeleteColumnModal(false))}
+          onDeleteClick={async () => {
+            await dispatch(deleteUserColumn(toBeDeleteColumn));
+            // dispatch(fetchUserBoards(userId));
+            dispatch(openDeleteModal(false));
+          }}
+        />
+      )}
+      {/* <CreateTask /> */}
     </div>
   );
 };
