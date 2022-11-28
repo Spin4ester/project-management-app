@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUser } from 'redux/UserSlice';
+import styles from './Header.module.css';
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -12,14 +13,16 @@ export function Header() {
   const dispatch = useDispatch();
 
   return (
-    <Navbar sticky="top" bg="dark" variant="dark">
+    <Navbar sticky="top" bg="dark" variant="dark" className={styles.container}>
       <Container>
         <LinkContainer to="/">
-          <Navbar.Brand href="#home">Tik-Task</Navbar.Brand>
+          <Navbar.Brand href="#home" className={styles.logo}>
+            <span>T</span>ik-<span>T</span>ask
+          </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+          <Nav className={`${styles.links} mx-auto`}>
             {!isAuth && (
               <LinkContainer to="/login">
                 <Nav.Link href="#login">{t('SignIn')}</Nav.Link>
@@ -42,6 +45,7 @@ export function Header() {
             )}
             {isAuth && (
               <Navbar.Text
+                className={styles.link}
                 onClick={() => {
                   removeUserFromLocalStorage();
                   dispatch(signOutUser());
@@ -52,7 +56,11 @@ export function Header() {
             )}
           </Nav>
         </Navbar.Collapse>
-        <Button variant="primary" onClick={() => i18n.changeLanguage('en')}>
+        <Button
+          variant="primary"
+          className={styles.button}
+          onClick={() => i18n.changeLanguage('en')}
+        >
           EN
         </Button>
         <div> | </div>

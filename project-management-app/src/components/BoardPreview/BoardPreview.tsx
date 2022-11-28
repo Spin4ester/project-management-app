@@ -25,12 +25,9 @@ export const BoardPreview = () => {
   const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
   const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
   const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  console.log(boardPreviews);
 
   return (
     <>
