@@ -2,6 +2,7 @@ import { Task } from 'components/Task/Task';
 import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import styles from './Column.module.css';
+import CloseIcon from '../../assets/icons/cancel.png';
 
 export const Column = (props) => {
   const children = props.column?.items?.map((element, index) => {
@@ -14,9 +15,23 @@ export const Column = (props) => {
     props.onTaskAdd({ title: 'new task', id: newId }, props.droppableId);
   };
 
+  const deleteColumn = (e: React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
+    const colId = e.target.parentNode.parentNode.getAttribute('id');
+    props.onDeleteColumn(colId);
+  };
+
   return (
-    <div className={styles.container}>
-      <h5>{props.column.title}</h5>
+    <div className={styles.container} id={props.droppableId}>
+      <div className={styles.header}>
+        <img
+          src={CloseIcon}
+          alt="Delete column"
+          onClick={deleteColumn}
+          className={styles.delete_img}
+        />
+        <h5>{props.column.title}</h5>
+      </div>
       <Droppable droppableId={props.droppableId} key={props.droppableId}>
         {(provided) => {
           return (

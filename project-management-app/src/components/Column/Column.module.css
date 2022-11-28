@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 10px;
+  margin: 20px 10px 10px;
   padding: 7px 0;
   font-family: 'Montserrat', sans-serif;
   max-height: calc(100vh - 240px);
@@ -34,4 +34,23 @@
 .content::-webkit-scrollbar-thumb {
   background: rgba(2, 0, 36, 1);
   border-radius: 5px;
+}
+
+.delete_img {
+  transition: 0.5s;
+  float: right;
+  transform: scale(0.8);
+}
+
+.delete_img:hover {
+  transform: scale(1);
+}
+
+.delete_img:active {
+  transform: scale(0.6);
+}
+
+.header {
+  margin: 5px 5px 0 15px;
+  text-align: left;
 }

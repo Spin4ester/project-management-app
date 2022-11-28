@@ -41,6 +41,12 @@ export const Board = () => {
     setColumns({ ...col });
   };
 
+  const onDeleteColumn = (colId) => {
+    const col = columns;
+    delete col[colId];
+    setColumns({ ...col });
+  };
+
   const children = Object.entries(columns).map(([columnId, column], index) => {
     return (
       <Column
@@ -50,6 +56,7 @@ export const Board = () => {
         index={index}
         onTaskAdd={onTaskAdd}
         onDeleteTask={onDeleteTask}
+        onDeleteColumn={onDeleteColumn}
       />
     );
   });
