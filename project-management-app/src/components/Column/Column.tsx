@@ -7,6 +7,21 @@ import CloseIcon from '../../assets/icons/cancel.png';
 export const Column = (props) => {
   const children = props.column?.items?.map((element, index) => {
     return <Task item={element} key={element.id} index={index} onDeleteTask={props.onDeleteTask} />;
+    // return (
+    //   <Draggable key={element.id} draggableId={element.id} index={index}>
+    //     {(provided) => (
+    //       <Task
+    //         ref={provided.innerRef}
+    //         {...provided.draggableProps}
+    //         {...provided.dragHandleProps}
+    //         item={element}
+    //         key={element.id}
+    //         index={index}
+    //         onDeleteTask={props.onDeleteTask}
+    //       />
+    //     )}
+    //   </Draggable>
+    // );
   });
 
   const addTask = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,7 +47,7 @@ export const Column = (props) => {
         />
         <h5>{props.column.title}</h5>
       </div>
-      <Droppable droppableId={props.droppableId} key={props.droppableId}>
+      <Droppable droppableId={props.droppableId} key={props.droppableId} type="task">
         {(provided) => {
           return (
             <div className={styles.content} {...provided.droppableProps} ref={provided.innerRef}>
