@@ -13,12 +13,13 @@ import { Footer } from 'components/Footer/Footer';
 import { Board } from 'pages/Board/Board';
 import { RootState } from 'redux/Store';
 import { useSelector } from 'react-redux';
+import { HeaderAlt } from 'components/Header/HeaderAlt';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   return (
     <div className="App">
-      <Header />
+      <HeaderAlt />
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/boards" element={!isAuth ? <Navigate replace to="/" /> : <Main />} />

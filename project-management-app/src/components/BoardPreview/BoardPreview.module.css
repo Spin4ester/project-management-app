@@ -6,15 +6,16 @@
     height: 80px;
     background-color: rgb(255, 246, 207);
     border-radius: 10px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8em; 
 }
 
 .container:hover {
-    background-color: rgb(240, 225, 255);
+    background-color: rgb(244, 233, 255);
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.5s;
 }
 
 .content {
@@ -44,8 +45,8 @@
 }
 
 .icon {
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
 }
 
 .icon:hover {
@@ -83,3 +84,7 @@
 .add_board > h6 {
     font-family: 'Oswald', sans-serif;
 }
+
+
+
+

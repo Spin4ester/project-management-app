@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { IUserBoard, IUserBoardData, IUserBoardDataUpdate } from 'common/types';
 import config from 'config';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/Store';
 
 export const fetchUserBoards = createAsyncThunk(
   'user/boards',
@@ -97,6 +95,7 @@ export const updateUserBoard = createAsyncThunk(
 
 interface IStateBoard {
   toBeDeleteBoard: string;
+  toBeEditedBoard: string;
   boardPreviewId: string;
   board: string;
   task: string;
@@ -107,6 +106,7 @@ interface IStateBoard {
 
 export const initialState: IStateBoard = {
   toBeDeleteBoard: 'none',
+  toBeEditedBoard: 'none',
   boardPreviewId: 'first',
   board: 'first',
   task: 'first',
@@ -131,6 +131,9 @@ export const boardSlice = createSlice({
     deleteBoardPreview(state, action) {
       state.toBeDeleteBoard = action.payload;
     },
+    editBoardPreview(state, action) {
+      state.toBeEditedBoard = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -154,7 +157,12 @@ export const boardSlice = createSlice({
   },
 });
 
-export const { changeBoard, changeIsLoaded, changeBoardPreview, deleteBoardPreview } =
-  boardSlice.actions;
+export const {
+  changeBoard,
+  changeIsLoaded,
+  changeBoardPreview,
+  deleteBoardPreview,
+  editBoardPreview,
+} = boardSlice.actions;
 
 export default boardSlice.reducer;

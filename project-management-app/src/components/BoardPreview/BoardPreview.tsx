@@ -1,30 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './BoardPreview.module.css';
 import EditIcon from '../../assets/icons/edit.png';
 import DeleteIcon from '../../assets/icons/delete.png';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAllUserBoards } from 'common/asyncActions/fetchRequests';
-import { IUserBoard } from 'common/types';
-import {
-  changeBoard,
-  changeBoardPreview,
-  deleteBoardPreview,
-  deleteUserBoard,
-  fetchUserBoards,
-} from 'redux/BoardSlice';
+import { changeBoardPreview, deleteBoardPreview, editBoardPreview } from 'redux/BoardSlice';
 import AddPreview from '../../assets/icons/add-preview.png';
 import { openCreateBoardModal, openDeleteModal, openEditBoardModal } from 'redux/ModalSlice';
 import { useTranslation } from 'react-i18next';
 
 export const BoardPreview = () => {
   const { t } = useTranslation();
-  const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const boardPreviews = useSelector((state: RootState) => state.board.previews);
-  const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
-  const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
-  const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,6 +38,7 @@ export const BoardPreview = () => {
                   dispatch(changeBoardPreview(el._id));
                   e.stopPropagation();
                   dispatch(openEditBoardModal(true));
+                  dispatch(editBoardPreview(el.title));
                 }}
               ></img>
               <img

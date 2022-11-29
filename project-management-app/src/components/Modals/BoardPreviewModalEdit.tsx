@@ -3,20 +3,14 @@ import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
-import { openCreateBoardModal, openEditBoardModal } from 'redux/ModalSlice';
-import {
-  changeIsLoaded,
-  createUserBoard,
-  fetchUserBoards,
-  updateUserBoard,
-} from 'redux/BoardSlice';
+import { openEditBoardModal } from 'redux/ModalSlice';
+import { fetchUserBoards, updateUserBoard } from 'redux/BoardSlice';
 import { useForm } from 'react-hook-form';
 
 export const BoardPreviewModalEdit = () => {
-  const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
   const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
   const boardPreviewId = useSelector((state: RootState) => state.board.boardPreviewId);
-  const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
+  const boardPreviewTitle = useSelector((state: RootState) => state.board.toBeEditedBoard);
   const userId = useSelector((state: RootState) => state.user.userId);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
@@ -58,8 +52,9 @@ export const BoardPreviewModalEdit = () => {
             <div className={styles.content}>
               <h6>{t('EditBoard')}</h6>
               <input
+                autoFocus
                 className={`${styles.title} ${styles.input}`}
-                placeholder="Title"
+                placeholder={boardPreviewTitle}
                 type="text"
                 autoComplete="off"
                 {...register('title', {
@@ -81,6 +76,7 @@ export const BoardPreviewModalEdit = () => {
                   className={styles.button}
                   onClick={() => {
                     dispatch(openEditBoardModal(false));
+                    reset();
                   }}
                 >
                   {t('Cancel')}
