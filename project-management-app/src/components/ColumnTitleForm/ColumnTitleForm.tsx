@@ -3,24 +3,37 @@ import styles from './ColumnTitleForm.module.css';
 import CheckedIcon from '../../assets/icons/checked.png';
 import CrossIcon from '../../assets/icons/cross.png';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { fetchUserColumns, updateColumn } from 'redux/BoardSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/Store';
+import { IUserColumn } from 'common/types';
 
 type Props = {
-  title: string;
+  column: IUserColumn;
   setTitleEditable: Dispatch<SetStateAction<boolean>>;
 };
 
 export const ColumnTitleForm = (props: Props) => {
   const { t } = useTranslation();
-  const [titleValue, setTitleValue] = useState(props.title);
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const [titleValue, setTitleValue] = useState(props.column.title);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dispatch = useDispatch<any>();
 
-  const updateTitle = () => {
+  const updateTitle = async () => {
     props.setTitleEditable(false);
-    if (!titleValue) setTitleValue(props.title);
+    if (titleValue) {
+      await dispatch(updateColumn({ ...props.column, title: titleValue }));
+      dispatch(fetchUserColumns(userId));
+    } else {
+      setTitleValue(props.column.title);
+    }
   };
 
   const notUpdateTitle = () => {
     props.setTitleEditable(false);
-    setTitleValue(props.title);
+    setTitleValue(props.column.title);
   };
 
   return (

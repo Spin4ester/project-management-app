@@ -52,3 +52,30 @@ export interface IUserBoardDataUpdate {
   };
   _id: string;
 }
+
+export interface IUserTask {
+  _id: string;
+  title: string;
+  order: number;
+  description: string;
+  users: string[];
+}
+
+export interface IUserColumn {
+  _id: string;
+  title: string;
+  order: number;
+  boardId: string;
+}
+
+export interface IUserTaskData {
+  title: string;
+  order: number;
+  description: string;
+  users: string[];
+}
+
+export interface IUserColumnData {
+  title: string;
+  order: number;
+}

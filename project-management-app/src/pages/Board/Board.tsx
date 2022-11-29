@@ -3,14 +3,20 @@ import { CreateColumn } from 'components/Modals/CreateColumn';
 import { CreateTask } from 'components/Modals/CreateTask';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { openDeleteColumnModal, openDeleteModal, openDeleteTaskModal } from 'redux/ModalSlice';
+import {
+  openCreateColumnModal,
+  openDeleteColumnModal,
+  openDeleteModal,
+  openDeleteTaskModal,
+} from 'redux/ModalSlice';
 import { RootState } from 'redux/Store';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './Board.module.css';
-import { deleteUserColumn } from 'redux/BoardSlice';
+import { createColumn, deleteColumn, fetchUserColumns, fetchUserTasks } from 'redux/BoardSlice';
 import { CreateButton } from 'components/CreateButton/CreateButton';
+import { useParams } from 'react-router-dom';
 
 type TaskProps = {
   id: string;
@@ -18,28 +24,13 @@ type TaskProps = {
 };
 
 export const Board = () => {
-  const [columns, setColumns] = useState([
-    {
-      id: 'first',
-      title: 'first',
-      items: [
-        { id: 'task1', title: 'task 1' },
-        { id: 'task2', title: 'task 2' },
-      ],
-    },
-    {
-      id: 'second',
-      title: 'second',
-      items: [
-        { id: 'task3', title: 'task 3' },
-        { id: 'task4', title: 'task 4' },
-      ],
-    },
-  ]);
+  const boardId = useParams().id || '';
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const { columns, tasks, toBeDeleteColumn } = useSelector((state: RootState) => state.board);
+
   const isOpenDeleteColumnModal = useSelector(
     (state: RootState) => state.modal.board.deleteColumnModal
   );
-  const { toBeDeleteColumn } = useSelector((state: RootState) => state.board);
 
   const onTaskAdd = (task: TaskProps, columnId: string) => {
     const columnsCopy = [...columns];
@@ -56,24 +47,18 @@ export const Board = () => {
     setColumns([...columnsCopy]);
   };
 
-  const onDeleteColumn = (colId: string) => {
-    const columnsNew = columns.filter((el) => el.id !== colId);
-    setColumns([...columnsNew]);
-  };
-
   const children = columns.map((column, index) => {
     return (
-      <Draggable key={column.id} draggableId={column.id} index={index}>
+      <Draggable key={column._id} draggableId={column._id} index={index}>
         {(provided) => {
           return (
             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
               <Column
-                column={column}
-                key={column.id}
-                droppableId={column.id}
+                column={{ ...column }}
+                key={column._id}
+                droppableId={column._id}
                 onTaskAdd={onTaskAdd}
                 onDeleteTask={onDeleteTask}
-                onDeleteColumn={onDeleteColumn}
               />
             </div>
           );
@@ -82,12 +67,18 @@ export const Board = () => {
     );
   });
 
-  const addColumn = () => {
-    // e.preventDefault();
-    const newId = 'new' + Math.random();
-    const columnsCopy = [...columns];
-    columnsCopy.push({ id: newId, title: 'New', items: [] });
-    setColumns([...columnsCopy]);
+  const addColumn = async () => {
+    dispatch(openCreateColumnModal(true));
+    // await dispatch(
+    //   createColumn({
+    //     column: {
+    //       title: 'New',
+    //       order: 0,
+    //     },
+    //     boardId,
+    //   })
+    // );
+    // dispatch(fetchUserColumns(userId));
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -132,6 +123,11 @@ export const Board = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
+  useEffect(() => {
+    dispatch(fetchUserColumns(userId));
+    dispatch(fetchUserTasks(userId));
+  }, [userId]);
+
   return (
     <div className={styles.container}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
@@ -154,24 +150,15 @@ export const Board = () => {
       <div>
         <CreateButton title="CreateColumn" onClickFunc={addColumn} type="wide" />
       </div>
-      {/* {createColumnModal && (
-        <DeleteModal
-          onCancelClick={() => dispatch(openDeleteModal(false))}
-          onDeleteClick={async () => {
-            await dispatch(deleteUserBoard(toBeDeleteBoard));
-            dispatch(fetchUserBoards(userId));
-            dispatch(openDeleteModal(false));
-          }}
-        />
-      )} */}
-      {/* <CreateColumn /> */}
+      <CreateColumn />
       {isOpenDeleteColumnModal && (
         <DeleteModal
           onCancelClick={() => dispatch(openDeleteColumnModal(false))}
           onDeleteClick={async () => {
-            await dispatch(deleteUserColumn(toBeDeleteColumn));
-            // dispatch(fetchUserBoards(userId));
-            dispatch(openDeleteModal(false));
+            await dispatch(deleteColumn({ boardId, columnId: toBeDeleteColumn }));
+            dispatch(fetchUserColumns(userId));
+            dispatch(fetchUserTasks(userId));
+            dispatch(openDeleteColumnModal(false));
           }}
         />
       )}

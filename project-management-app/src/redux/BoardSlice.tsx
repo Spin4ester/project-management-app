@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { IUserBoard, IUserBoardData, IUserBoardDataUpdate } from 'common/types';
+import {
+  IUserBoard,
+  IUserBoardData,
+  IUserBoardDataUpdate,
+  IUserColumn,
+  IUserColumnData,
+  IUserTask,
+} from 'common/types';
 import config from 'config';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/Store';
@@ -95,12 +102,65 @@ export const updateUserBoard = createAsyncThunk(
   }
 );
 
-export const deleteUserColumn = createAsyncThunk(
-  'user/deleteBoard',
-  async function (boardId: string, { rejectWithValue }) {
+export const fetchUserColumns = createAsyncThunk(
+  'user/columns',
+  async function (userId: string, { rejectWithValue }) {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.api.url}boards/${boardId}`, {
+      const response = await fetch(`${config.api.url}columnsSet?userId=${userId}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!token) return null;
+      if (!response.ok) {
+        throw new Error('Fetch Error!');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const createColumn = createAsyncThunk(
+  'user/createColumn',
+  async function (
+    { column, boardId }: { column: IUserColumnData; boardId: string },
+    { rejectWithValue }
+  ) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}boards/${boardId}/columns`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(column),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteColumn = createAsyncThunk(
+  'user/deleteColumn',
+  async function (
+    { boardId, columnId }: { boardId: string; columnId: string },
+    { rejectWithValue }
+  ) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}boards/${boardId}/columns/${columnId}`, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
@@ -108,6 +168,56 @@ export const deleteUserColumn = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const updateColumn = createAsyncThunk(
+  'user/updateColumn',
+  async function (column: IUserColumn, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(
+        `${config.api.url}boards/${column.boardId}/columns/${column._id}`,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ title: column.title, order: column.order }),
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const fetchUserTasks = createAsyncThunk(
+  'user/tasks',
+  async function (userId: string, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}tasksSet?userId=${userId}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!token) return null;
+      if (!response.ok) {
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -125,6 +235,9 @@ interface IStateBoard {
   previews: IUserBoard[];
   isLoaded: boolean;
   toBeDeleteColumn: string;
+  toBeDeleteTask: string;
+  columns: IUserColumn[];
+  tasks: IUserTask[];
 }
 
 export const initialState: IStateBoard = {
@@ -136,6 +249,9 @@ export const initialState: IStateBoard = {
   previews: [],
   isLoaded: false,
   toBeDeleteColumn: 'none',
+  toBeDeleteTask: 'none',
+  columns: [],
+  tasks: [],
 };
 
 export const boardSlice = createSlice({
@@ -154,7 +270,7 @@ export const boardSlice = createSlice({
     deleteBoardPreview(state, action) {
       state.toBeDeleteBoard = action.payload;
     },
-    deleteColumn(state, action) {
+    deleteBoardColumn(state, action) {
       state.toBeDeleteColumn = action.payload;
     },
   },
@@ -166,6 +282,17 @@ export const boardSlice = createSlice({
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
         state.previews = action.payload;
         state.isLoaded = true;
+        // state.boardsData = action.payload.reduce((acc: IUserBoard, cur: IUserBoard) => {
+        //   return {
+        //     ...acc,
+        //     [cur._id]: {
+        //       title: cur.title,
+        //       owner: cur.owner,
+        //       users: cur.users,
+        //       columns: [],
+        //     },
+        //   };
+        // }, {});
       })
       .addCase(fetchUserBoards.rejected, (state) => {
         // state.searchError = 'Sorry, network issues, we are looking into the problem';
@@ -176,11 +303,30 @@ export const boardSlice = createSlice({
       .addCase(updateUserBoard.fulfilled, (state) => {})
       .addCase(updateUserBoard.rejected, (state) => {
         // state.searchError = 'Sorry, network issues, we are looking into the problem';
+      })
+      .addCase(fetchUserColumns.pending, (state) => {})
+      .addCase(fetchUserColumns.fulfilled, (state, action) => {
+        state.columns = action.payload;
+      })
+      .addCase(fetchUserColumns.rejected, (state) => {
+        // state.searchError = 'Sorry, network issues, we are looking into the problem';
+      })
+      .addCase(fetchUserTasks.pending, (state) => {})
+      .addCase(fetchUserTasks.fulfilled, (state, action) => {
+        state.tasks = action.payload;
+      })
+      .addCase(fetchUserTasks.rejected, (state) => {
+        // state.searchError = 'Sorry, network issues, we are looking into the problem';
       });
   },
 });
 
-export const { changeBoard, changeIsLoaded, changeBoardPreview, deleteBoardPreview, deleteColumn } =
-  boardSlice.actions;
+export const {
+  changeBoard,
+  changeIsLoaded,
+  changeBoardPreview,
+  deleteBoardPreview,
+  deleteBoardColumn,
+} = boardSlice.actions;
 
 export default boardSlice.reducer;
