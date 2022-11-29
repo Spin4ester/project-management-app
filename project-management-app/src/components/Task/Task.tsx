@@ -2,33 +2,27 @@ import React from 'react';
 import styles from './Task.module.css';
 import DeleteIcon from '../../assets/icons/delete.png';
 import { Draggable } from 'react-beautiful-dnd';
-
-type TaskProps = {
-  id: string;
-  title: string;
-};
+import { IUserTask } from 'common/types';
+import { openDeleteTaskModal } from 'redux/ModalSlice';
+import { useDispatch } from 'react-redux';
+import { deleteBoardTask } from 'redux/BoardSlice';
 
 type TaskComponentProps = {
-  item: TaskProps;
+  item: IUserTask;
   index: number;
-  onDeleteTask: (colId: string, taskId: string) => void;
 };
 
 export const Task = (props: TaskComponentProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dispatch = useDispatch<any>();
+
   const deleteTask = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const target = e.target as HTMLElement;
-    if (target) {
-      const taskId = (target.parentNode as HTMLElement).getAttribute('data-rbd-draggable-id');
-      const colId = (target.parentNode?.parentNode as HTMLElement).getAttribute(
-        'data-rbd-droppable-id'
-      );
-      if (colId && taskId) props.onDeleteTask(colId, taskId);
-    }
+    dispatch(deleteBoardTask({ id: props.item._id, columnId: props.item.columnId }));
+    dispatch(openDeleteTaskModal(true));
   };
 
   return (
-    <Draggable key={props.item.id} draggableId={props.item.id} index={props.index}>
+    <Draggable key={props.item._id} draggableId={props.item._id} index={props.index}>
       {(provided) => {
         return (
           <div

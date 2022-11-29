@@ -15,8 +15,8 @@ import { RootState } from 'redux/Store';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './Board.module.css';
 import {
-  createColumn,
   deleteColumn,
+  deleteTask,
   fetchUserColumns,
   fetchUserTasks,
   updateColumnOrder,
@@ -32,26 +32,17 @@ type TaskProps = {
 export const Board = () => {
   const boardId = useParams().id || '';
   const userId = useSelector((state: RootState) => state.user.userId);
-  const { columns, tasks, toBeDeleteColumn } = useSelector((state: RootState) => state.board);
+  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask } = useSelector(
+    (state: RootState) => state.board
+  );
 
   const isOpenDeleteColumnModal = useSelector(
     (state: RootState) => state.modal.board.deleteColumnModal
   );
 
-  const onTaskAdd = (task: TaskProps, columnId: string) => {
-    const columnsCopy = [...columns];
-    columnsCopy.find((el) => el.id === columnId)?.items.push(task);
-    setColumns([...columnsCopy]);
-  };
-
-  const onDeleteTask = (colId: string, taskId: string) => {
-    const columnsCopy = [...columns];
-    const col = columnsCopy.find((el) => el.id === colId);
-    if (col) {
-      col.items = col.items.filter((el) => el.id !== taskId);
-    }
-    setColumns([...columnsCopy]);
-  };
+  const isOpenDeleteTaskModal = useSelector(
+    (state: RootState) => state.modal.board.deleteTaskModal
+  );
 
   const children = [...columns]
     .sort((col1, col2) => col1.order - col2.order)
@@ -65,13 +56,7 @@ export const Board = () => {
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
               >
-                <Column
-                  column={{ ...column }}
-                  key={column._id}
-                  droppableId={column._id}
-                  onTaskAdd={onTaskAdd}
-                  onDeleteTask={onDeleteTask}
-                />
+                <Column column={{ ...column }} key={column._id} droppableId={column._id} />
               </div>
             );
           }}
@@ -166,7 +151,19 @@ export const Board = () => {
           }}
         />
       )}
-      {/* <CreateTask /> */}
+      {isOpenDeleteTaskModal && (
+        <DeleteModal
+          onCancelClick={() => dispatch(openDeleteTaskModal(false))}
+          onDeleteClick={async () => {
+            await dispatch(
+              deleteTask({ boardId, columnId: toBeDeleteColumn, taskId: toBeDeleteTask })
+            );
+            dispatch(fetchUserColumns(userId));
+            dispatch(fetchUserTasks(userId));
+            dispatch(openDeleteTaskModal(false));
+          }}
+        />
+      )}
     </div>
   );
 };

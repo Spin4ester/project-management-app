@@ -59,6 +59,9 @@ export interface IUserTask {
   order: number;
   description: string;
   users: string[];
+  boardId: string;
+  columnId: string;
+  userId: string;
 }
 
 export interface IUserColumn {
@@ -72,6 +75,7 @@ export interface IUserTaskData {
   title: string;
   order: number;
   description: string;
+  userId: string;
   users: string[];
 }
 

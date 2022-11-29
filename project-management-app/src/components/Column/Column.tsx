@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import styles from './Column.module.css';
 import CloseIcon from '../../assets/icons/cancel.png';
-import { openDeleteColumnModal } from 'redux/ModalSlice';
-import { useDispatch } from 'react-redux';
+import { openCreateTaskModal, openDeleteColumnModal } from 'redux/ModalSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { CreateButton } from 'components/CreateButton/CreateButton';
 import { ColumnTitleForm } from 'components/ColumnTitleForm/ColumnTitleForm';
 import { IUserColumn } from 'common/types';
-import { deleteBoardColumn } from 'redux/BoardSlice';
+import { createColumnTask, deleteBoardColumn } from 'redux/BoardSlice';
+import { RootState } from 'redux/Store';
+import { CreateTask } from 'components/Modals/CreateTask';
 
 type TaskProps = {
   id: string;
@@ -18,22 +20,25 @@ type TaskProps = {
 type ColumnComponentProps = {
   column: IUserColumn;
   droppableId: string;
-  onTaskAdd: (task: TaskProps, colId: string) => void;
-  onDeleteTask: (colId: string, taskId: string) => void;
+  // onTaskAdd: (task: TaskProps, colId: string) => void;
+  // onDeleteTask: (colId: string, taskId: string) => void;
 };
 
 export const Column = (props: ColumnComponentProps) => {
   const [isTitleEditable, setTitleEditable] = useState(false);
+  const { tasks } = useSelector((state: RootState) => state.board);
 
-  const children = props.column?.items?.map((element, index) => {
-    return <Task item={element} key={element.id} index={index} onDeleteTask={props.onDeleteTask} />;
-  });
+  const children = tasks
+    .filter((task) => task.columnId === props.column._id)
+    .map((element, index) => {
+      return <Task item={element} key={element._id} index={index} />;
+    });
 
   const dispatch = useDispatch();
 
-  const addTask = () => {
-    const newId = 'newtask' + Math.random();
-    props.onTaskAdd({ title: 'new task', id: newId }, props.droppableId);
+  const addTask = async () => {
+    dispatch(createColumnTask(props.column._id));
+    dispatch(openCreateTaskModal(true));
   };
 
   const deleteColumn = (e: React.MouseEvent) => {
@@ -79,6 +84,7 @@ export const Column = (props: ColumnComponentProps) => {
       <div>
         <CreateButton title="CreateTask" onClickFunc={addTask} type="narrow" />
       </div>
+      <CreateTask columnId={props.column._id} />
     </div>
   );
 };
