@@ -7,6 +7,7 @@ import CheckedIcon from '../../assets/icons/checked.png';
 import CrossIcon from '../../assets/icons/cross.png';
 import { openDeleteColumnModal } from 'redux/ModalSlice';
 import { useDispatch } from 'react-redux';
+import { CreateButton } from 'components/CreateButton/CreateButton';
 
 type TaskProps = {
   id: string;
@@ -37,8 +38,7 @@ export const Column = (props: ColumnComponentProps) => {
 
   const dispatch = useDispatch();
 
-  const addTask = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const addTask = () => {
     const newId = 'newtask' + Math.random();
     props.onTaskAdd({ title: 'new task', id: newId }, props.droppableId);
   };
@@ -113,7 +113,7 @@ export const Column = (props: ColumnComponentProps) => {
         }}
       </Droppable>
       <div>
-        <button onClick={addTask}>Add task</button>
+        <CreateButton title="CreateTask" onClickFunc={addTask} type="narrow" />
       </div>
     </div>
   );

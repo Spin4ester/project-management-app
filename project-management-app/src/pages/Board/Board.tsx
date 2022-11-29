@@ -10,8 +10,7 @@ import { RootState } from 'redux/Store';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './Board.module.css';
 import { deleteUserColumn } from 'redux/BoardSlice';
-import AddPreview from '../../assets/icons/add-preview.png';
-import { useTranslation } from 'react-i18next';
+import { CreateButton } from 'components/CreateButton/CreateButton';
 
 type TaskProps = {
   id: string;
@@ -19,7 +18,6 @@ type TaskProps = {
 };
 
 export const Board = () => {
-  const { t } = useTranslation();
   const [columns, setColumns] = useState([
     {
       id: 'first',
@@ -154,7 +152,7 @@ export const Board = () => {
         </Droppable>
       </DragDropContext>
       <div>
-        <button onClick={addColumn}>Add column</button>
+        <CreateButton title="CreateColumn" onClickFunc={addColumn} type="wide" />
       </div>
       {/* {createColumnModal && (
         <DeleteModal
