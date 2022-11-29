@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUser } from 'redux/UserSlice';
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
-import Profile from '../../assets/icons/user.png';
+import Profile from '../../assets/icons/user_alt.png';
 import SignIn from '../../assets/icons/sign-in.png';
 import SignUp from '../../assets/icons/sign-up.png';
-import Board from '../../assets/icons/board.png';
+import Board from '../../assets/icons/kanban_alt.png';
 import SignOut from '../../assets/icons/log-out.png';
 
 export function HeaderAlt() {
@@ -92,11 +92,25 @@ export function HeaderAlt() {
         </div>
       </div>
       <div className={styles.buttons_container}>
-        <button className={styles.button} onClick={() => i18n.changeLanguage('en')}>
+        <button
+          className={
+            localStorage.getItem('i18nextLng') === 'en'
+              ? `${styles.button} ${styles.active}`
+              : styles.button
+          }
+          onClick={() => i18n.changeLanguage('en')}
+        >
           EN
         </button>
         <div> | </div>
-        <button className={styles.button} onClick={() => i18n.changeLanguage('ru')}>
+        <button
+          className={
+            localStorage.getItem('i18nextLng') === 'ru'
+              ? `${styles.button} ${styles.active}`
+              : styles.button
+          }
+          onClick={() => i18n.changeLanguage('ru')}
+        >
           RU
         </button>
       </div>

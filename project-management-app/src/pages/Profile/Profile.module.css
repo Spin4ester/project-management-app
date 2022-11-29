@@ -5,6 +5,11 @@
   gap: 20px;
   justify-content: center;
   align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container > h5 {
+  font-family: 'Oswald', sans-serif;
 }
 
 .profile_content {
@@ -80,7 +85,7 @@
 }
 
 .profileImg {
-  width: 200px;
+  width: 150px;
 }
 
 .inputContainer {
@@ -94,4 +99,12 @@
   padding-left: 5px;
   text-align: left;
   font-size: 0.9rem;
+}
+
+
+@media only screen and (max-width: 620px) and (min-width: 280px) {
+  
+  .profileImg {
+    width: 100px;
+  }
 }

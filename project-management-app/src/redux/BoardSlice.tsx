@@ -145,7 +145,7 @@ export const boardSlice = createSlice({
         state.isLoaded = true;
       })
       .addCase(fetchUserBoards.rejected, (state) => {
-        // state.searchError = 'Sorry, network issues, we are looking into the problem';
+        // state.previews = [];
       })
       .addCase(updateUserBoard.pending, (state) => {
         state.isLoaded = false;

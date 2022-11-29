@@ -25,6 +25,7 @@
 .content > h6 {
     font-family: 'Oswald', sans-serif;
     text-align: center;
+    margin-bottom: 0;
 }
 
 .content {
@@ -87,4 +88,27 @@
 
 
 
+@media only screen and (max-width: 620px) and (min-width: 280px) {
+    .container {
+        width: 150px;
+        height: 60px;
+  }
 
+  .content > h6 {
+    font-size: 0.8em;
+}
+
+  .icon {
+    height: 15px;
+    width: 15px;
+  }
+
+  .add_board {
+        width: 150px;
+        height: 60px; 
+  }
+
+  .add_board > h6 {
+    font-size: 0.8em;
+}
+}

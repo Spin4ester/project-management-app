@@ -105,6 +105,11 @@
     height: 20px;
   }
 
+  .active {
+    background-color: rgb(72, 92, 148);
+    color: aliceblue;
+    border: 1px solid aliceblue;
+  }
 
 
   @media only screen and (max-width: 620px) and (min-width: 280px) {
