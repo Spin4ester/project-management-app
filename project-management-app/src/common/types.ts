@@ -79,3 +79,8 @@ export interface IUserColumnData {
   title: string;
   order: number;
 }
+
+export interface IUserColumnOrder {
+  _id: string;
+  order: number;
+}

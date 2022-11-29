@@ -6,6 +6,7 @@ import {
   IUserBoardDataUpdate,
   IUserColumn,
   IUserColumnData,
+  IUserColumnOrder,
   IUserTask,
 } from 'common/types';
 import config from 'config';
@@ -201,6 +202,28 @@ export const updateColumn = createAsyncThunk(
   }
 );
 
+export const updateColumnOrder = createAsyncThunk(
+  'user/updateColumnOrder',
+  async function (columnOrder: IUserColumnOrder[], { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}columnsSet`, {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(columnOrder),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const fetchUserTasks = createAsyncThunk(
   'user/tasks',
   async function (userId: string, { rejectWithValue }) {
@@ -316,6 +339,13 @@ export const boardSlice = createSlice({
         state.tasks = action.payload;
       })
       .addCase(fetchUserTasks.rejected, (state) => {
+        // state.searchError = 'Sorry, network issues, we are looking into the problem';
+      })
+      .addCase(updateColumnOrder.pending, (state) => {})
+      .addCase(updateColumnOrder.fulfilled, (state, action) => {
+        state.columns = action.payload;
+      })
+      .addCase(updateColumnOrder.rejected, (state) => {
         // state.searchError = 'Sorry, network issues, we are looking into the problem';
       });
   },

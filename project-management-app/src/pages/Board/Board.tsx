@@ -14,7 +14,13 @@ import {
 import { RootState } from 'redux/Store';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './Board.module.css';
-import { createColumn, deleteColumn, fetchUserColumns, fetchUserTasks } from 'redux/BoardSlice';
+import {
+  createColumn,
+  deleteColumn,
+  fetchUserColumns,
+  fetchUserTasks,
+  updateColumnOrder,
+} from 'redux/BoardSlice';
 import { CreateButton } from 'components/CreateButton/CreateButton';
 import { useParams } from 'react-router-dom';
 
@@ -47,38 +53,34 @@ export const Board = () => {
     setColumns([...columnsCopy]);
   };
 
-  const children = columns.map((column, index) => {
-    return (
-      <Draggable key={column._id} draggableId={column._id} index={index}>
-        {(provided) => {
-          return (
-            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-              <Column
-                column={{ ...column }}
-                key={column._id}
-                droppableId={column._id}
-                onTaskAdd={onTaskAdd}
-                onDeleteTask={onDeleteTask}
-              />
-            </div>
-          );
-        }}
-      </Draggable>
-    );
-  });
+  const children = [...columns]
+    .sort((col1, col2) => col1.order - col2.order)
+    .map((column, index) => {
+      return (
+        <Draggable key={column._id} draggableId={column._id} index={index}>
+          {(provided) => {
+            return (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Column
+                  column={{ ...column }}
+                  key={column._id}
+                  droppableId={column._id}
+                  onTaskAdd={onTaskAdd}
+                  onDeleteTask={onDeleteTask}
+                />
+              </div>
+            );
+          }}
+        </Draggable>
+      );
+    });
 
   const addColumn = async () => {
     dispatch(openCreateColumnModal(true));
-    // await dispatch(
-    //   createColumn({
-    //     column: {
-    //       title: 'New',
-    //       order: 0,
-    //     },
-    //     boardId,
-    //   })
-    // );
-    // dispatch(fetchUserColumns(userId));
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -115,7 +117,9 @@ export const Board = () => {
       case 'column':
         const [removed] = columnsCopy.splice(sourcePosition, 1);
         columnsCopy.splice(destPosition, 0, removed);
-        setColumns([...columnsCopy]);
+        const newOrderColumns = columnsCopy.map((col, index) => ({ _id: col._id, order: index }));
+        dispatch(updateColumnOrder(newOrderColumns));
+        dispatch(fetchUserColumns(userId));
         break;
     }
   };

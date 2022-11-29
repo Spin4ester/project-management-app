@@ -34,12 +34,16 @@ export const CreateColumn = () => {
     reset();
   };
 
+  const { columns } = useSelector((state: RootState) => state.board);
+
   const onSubmit = async (data: IFormValues) => {
+    dispatch(fetchUserColumns(userId));
+    const columsCount = columns.length;
     await dispatch(
       createColumn({
         column: {
           title: data.title,
-          order: 0,
+          order: columsCount,
         },
         boardId,
       })
@@ -55,7 +59,7 @@ export const CreateColumn = () => {
           <div className={styles.container} onClick={(e) => e.stopPropagation()}>
             <div className={styles.content}>
               <h6>{t('CreateColumn')}</h6>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form className={styles.create_column_form} onSubmit={handleSubmit(onSubmit)}>
                 <input
                   className={`${styles.title} ${styles.input}`}
                   placeholder="Title"
