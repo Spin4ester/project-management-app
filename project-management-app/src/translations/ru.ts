@@ -47,4 +47,7 @@ export const ru = {
   WarsawPoland: 'Варшава, Польша',
   MinskBelarus: 'Минск, Беларусь',
   OurTeam: 'Наша Команда',
+  ViewEditTask: 'Просмотр/редактирование задачи',
+  Title: 'Заголовок',
+  Description: 'Описание',
 };

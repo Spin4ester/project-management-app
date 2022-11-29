@@ -69,7 +69,7 @@ export const CreateTask = (props: { columnId: string }) => {
               <form className={styles.create_column_form} onSubmit={handleSubmit(onSubmit)}>
                 <input
                   className={`${styles.title} ${styles.input}`}
-                  placeholder="Title"
+                  placeholder={t('Title') || ''}
                   type="text"
                   {...register('title', {
                     required: { value: true, message: `${t('ThisFieldIsRequired')}` },
@@ -79,7 +79,7 @@ export const CreateTask = (props: { columnId: string }) => {
                 ></input>
                 <textarea
                   className={`${styles.description} ${styles.input}`}
-                  placeholder="Description"
+                  placeholder={t('Description') || ''}
                   {...register('description', {
                     required: { value: true, message: `${t('ThisFieldIsRequired')}` },
                     minLength: { value: 2, message: `${t('AtLeast2symbols')}` },

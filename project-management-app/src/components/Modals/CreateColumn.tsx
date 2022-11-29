@@ -62,7 +62,7 @@ export const CreateColumn = () => {
               <form className={styles.create_column_form} onSubmit={handleSubmit(onSubmit)}>
                 <input
                   className={`${styles.title} ${styles.input}`}
-                  placeholder="Title"
+                  placeholder={t('Title') || ''}
                   type="text"
                   {...register('title', {
                     required: { value: true, message: `${t('ThisFieldIsRequired')}` },

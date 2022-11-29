@@ -23,6 +23,7 @@ import {
 } from 'redux/BoardSlice';
 import { CreateButton } from 'components/CreateButton/CreateButton';
 import { useParams } from 'react-router-dom';
+import { EditTask } from 'components/Modals/EditTask';
 
 type TaskProps = {
   id: string;
@@ -72,31 +73,33 @@ export const Board = () => {
     if (!result.destination) return;
     const { source, destination, type } = result;
     const columnsCopy = [...columns];
+    const tasksCopy = [...tasks];
     const sourcePosition = source.index;
     const destPosition = destination.index;
     switch (type) {
       case 'task':
         if (source.droppableId !== destination.droppableId) {
-          const sourceColumn = columnsCopy.find((el) => el.id === source.droppableId);
-          const destColumn = columnsCopy.find((el) => el.id === destination.droppableId);
-          if (sourceColumn && destColumn) {
-            const sourceItems = [...sourceColumn.items];
-            const destItems = [...destColumn.items];
-            const [removed] = sourceItems.splice(sourcePosition, 1);
-            destItems.splice(destPosition, 0, removed);
-            sourceColumn.items = sourceItems;
-            destColumn.items = destItems;
-            setColumns([...columnsCopy]);
-          }
+          console.log(tasksCopy);
+          // const sourceColumn = columnsCopy.find((el) => el.id === source.droppableId);
+          // const destColumn = columnsCopy.find((el) => el.id === destination.droppableId);
+          // if (sourceColumn && destColumn) {
+          //   const sourceItems = [...sourceColumn.items];
+          //   const destItems = [...destColumn.items];
+          //   const [removed] = sourceItems.splice(sourcePosition, 1);
+          //   destItems.splice(destPosition, 0, removed);
+          //   sourceColumn.items = sourceItems;
+          //   destColumn.items = destItems;
+          //   setColumns([...columnsCopy]);
+          // }
         } else {
-          const column = columnsCopy.find((el) => el.id === source.droppableId);
-          if (column) {
-            const copiedItems = [...column.items];
-            const [removed] = copiedItems.splice(sourcePosition, 1);
-            copiedItems.splice(destPosition, 0, removed);
-            column.items = copiedItems;
-            setColumns([...columnsCopy]);
-          }
+          // const column = columnsCopy.find((el) => el.id === source.droppableId);
+          // if (column) {
+          //   const copiedItems = [...column.items];
+          //   const [removed] = copiedItems.splice(sourcePosition, 1);
+          //   copiedItems.splice(destPosition, 0, removed);
+          //   column.items = copiedItems;
+          //   setColumns([...columnsCopy]);
+          // }
         }
         break;
       case 'column':
@@ -140,6 +143,7 @@ export const Board = () => {
         <CreateButton title="CreateColumn" onClickFunc={addColumn} type="wide" />
       </div>
       <CreateColumn />
+      {/* <EditTask /> */}
       {isOpenDeleteColumnModal && (
         <DeleteModal
           onCancelClick={() => dispatch(openDeleteColumnModal(false))}

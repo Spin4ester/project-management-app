@@ -47,4 +47,7 @@ export const en = {
   WarsawPoland: 'Warsaw, Poland',
   MinskBelarus: 'Minsk, Belarus',
   OurTeam: 'Our Team',
+  ViewEditTask: 'View/edit task',
+  Title: 'Title',
+  Description: 'Description',
 };
