@@ -67,6 +67,10 @@
   border-radius: 5px;
 }
 
+.title_form input {
+  width: 120px;
+}
+
 .edit_btn {
   border: none;
   background: none;

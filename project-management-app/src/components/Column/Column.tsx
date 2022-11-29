@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import styles from './Column.module.css';
 import CloseIcon from '../../assets/icons/cancel.png';
-import CheckedIcon from '../../assets/icons/checked.png';
-import CrossIcon from '../../assets/icons/cross.png';
 import { openDeleteColumnModal } from 'redux/ModalSlice';
 import { useDispatch } from 'react-redux';
 import { CreateButton } from 'components/CreateButton/CreateButton';
+import { ColumnTitleForm } from 'components/ColumnTitleForm/ColumnTitleForm';
 
 type TaskProps = {
   id: string;
@@ -30,7 +29,7 @@ type ColumnComponentProps = {
 
 export const Column = (props: ColumnComponentProps) => {
   const [isTitleEditable, setTitleEditable] = useState(false);
-  const [titleValue, setTitleValue] = useState(props.column.title);
+  // const [titleValue, setTitleValue] = useState(props.column.title);
 
   const children = props.column?.items?.map((element, index) => {
     return <Task item={element} key={element.id} index={index} onDeleteTask={props.onDeleteTask} />;
@@ -59,15 +58,15 @@ export const Column = (props: ColumnComponentProps) => {
     if (target) setTitleEditable(true);
   };
 
-  const notUpdateTitle = () => {
-    setTitleEditable(false);
-    setTitleValue(props.column.title);
-  };
+  // const notUpdateTitle = () => {
+  //   setTitleEditable(false);
+  //   setTitleValue(props.column.title);
+  // };
 
-  const updateTitle = () => {
-    setTitleEditable(false);
-    if (!titleValue) setTitleValue(props.column.title);
-  };
+  // const updateTitle = () => {
+  //   setTitleEditable(false);
+  //   if (!titleValue) setTitleValue(props.column.title);
+  // };
 
   return (
     <div className={styles.container} id={props.droppableId}>
@@ -86,20 +85,21 @@ export const Column = (props: ColumnComponentProps) => {
           </>
         )}
         {isTitleEditable && (
-          <form className={styles.title_form}>
-            <input
-              value={titleValue}
-              onChange={(e) => {
-                setTitleValue(e.target.value);
-              }}
-            />
-            <button className={styles.edit_btn} onClick={updateTitle}>
-              <img src={CheckedIcon} alt="Update title" />
-            </button>
-            <button className={styles.edit_btn} onClick={notUpdateTitle}>
-              <img src={CrossIcon} alt="Not update title" />
-            </button>
-          </form>
+          <ColumnTitleForm title={props.column.title} setTitleEditable={setTitleEditable} />
+          // <form className={styles.title_form}>
+          //   <input
+          //     value={titleValue}
+          //     onChange={(e) => {
+          //       setTitleValue(e.target.value);
+          //     }}
+          //   />
+          //   <button className={styles.edit_btn} onClick={updateTitle}>
+          //     <img src={CheckedIcon} alt="Update title" />
+          //   </button>
+          //   <button className={styles.edit_btn} onClick={notUpdateTitle}>
+          //     <img src={CrossIcon} alt="Not update title" />
+          //   </button>
+          // </form>
         )}
       </div>
       <Droppable droppableId={props.droppableId} key={props.droppableId} type="task">

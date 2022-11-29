@@ -1,0 +1,18 @@
+.container {
+  border-radius: 5px;
+}
+
+.container input {
+  width: 120px;
+}
+
+.btn {
+  border: none;
+  background: none;
+  padding: 1px 3px;
+}
+
+.btn img {
+  width: 21px;
+  vertical-align: sub;
+}
