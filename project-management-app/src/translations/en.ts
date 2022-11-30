@@ -50,4 +50,5 @@ export const en = {
   ViewEditTask: 'View/edit task',
   Title: 'Title',
   Description: 'Description',
+  Loading: 'Loading',
 };

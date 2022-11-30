@@ -16,7 +16,8 @@ export const Task = (props: TaskComponentProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
-  const deleteTask = () => {
+  const deleteTask = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(deleteBoardTask({ id: props.item._id, columnId: props.item.columnId }));
     dispatch(openDeleteTaskModal(true));
   };

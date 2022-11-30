@@ -270,7 +270,7 @@ export const updateTask = createAsyncThunk(
 );
 
 interface IStateBoard {
-  isLoaded: boolean;
+  isLoading: boolean;
   toBeDeleteColumn: string;
   toBeDeleteTask: string;
   toBeCreateTaskColumn: string;
@@ -280,7 +280,7 @@ interface IStateBoard {
 }
 
 export const initialState: IStateBoard = {
-  isLoaded: false,
+  isLoading: false,
   toBeDeleteColumn: 'none',
   toBeDeleteTask: 'none',
   toBeCreateTaskColumn: 'none',
@@ -309,33 +309,26 @@ export const selectedBoardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserColumns.pending, (state) => {})
+      .addCase(fetchUserColumns.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(fetchUserColumns.fulfilled, (state, action) => {
         state.columns = action.payload;
+        state.isLoading = false;
       })
-      .addCase(fetchUserColumns.rejected, (state) => {
-        // state.searchError = 'Sorry, network issues, we are looking into the problem';
+      .addCase(fetchUserTasks.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(fetchUserTasks.pending, (state) => {})
       .addCase(fetchUserTasks.fulfilled, (state, action) => {
         state.tasks = action.payload;
+        state.isLoading = false;
       })
-      .addCase(fetchUserTasks.rejected, (state) => {
-        // state.searchError = 'Sorry, network issues, we are looking into the problem';
+      .addCase(updateColumnOrder.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(updateColumnOrder.pending, (state) => {})
       .addCase(updateColumnOrder.fulfilled, (state, action) => {
         state.columns = action.payload;
-      })
-      .addCase(updateColumnOrder.rejected, (state) => {
-        // state.searchError = 'Sorry, network issues, we are looking into the problem';
-      })
-      .addCase(fetchUserColumnTasks.pending, (state) => {})
-      .addCase(fetchUserColumnTasks.fulfilled, (state, action) => {
-        // state.tasks = action.payload;
-      })
-      .addCase(fetchUserColumnTasks.rejected, (state) => {
-        // state.searchError = 'Sorry, network issues, we are looking into the problem';
+        state.isLoading = false;
       });
   },
 });

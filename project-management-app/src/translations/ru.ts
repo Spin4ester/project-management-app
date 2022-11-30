@@ -50,4 +50,5 @@ export const ru = {
   ViewEditTask: 'Просмотр/редактирование задачи',
   Title: 'Заголовок',
   Description: 'Описание',
+  Loading: 'Загрузка',
 };
