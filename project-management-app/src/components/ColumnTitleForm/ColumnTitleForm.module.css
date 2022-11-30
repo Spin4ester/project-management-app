@@ -1,0 +1,25 @@
+.container {
+  border-radius: 5px;
+}
+
+.container input {
+  width: 120px;
+}
+
+.btn {
+  border: none;
+  background: none;
+  padding: 1px 3px;
+}
+
+.btn img {
+  width: 21px;
+  vertical-align: sub;
+}
+
+.error {
+  color: rgb(201, 47, 47);
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 0.8rem;
+}

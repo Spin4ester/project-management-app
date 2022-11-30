@@ -36,7 +36,7 @@ export const ru = {
   Error404: 'Эта страница не найдена...',
   CreateBoard: 'Cоздать борд',
   EditBoard: 'Редактировать борд',
-  CreateColumn: 'Cоздать колонну',
+  CreateColumn: 'Cоздать колонку',
   CreateTask: 'Cоздать задачу',
   Create: 'Cоздать',
   Update: 'Редактировать',
@@ -47,4 +47,8 @@ export const ru = {
   WarsawPoland: 'Варшава, Польша',
   MinskBelarus: 'Минск, Беларусь',
   OurTeam: 'Наша Команда',
+  ViewEditTask: 'Просмотр/редактирование задачи',
+  Title: 'Заголовок',
+  Description: 'Описание',
+  Loading: 'Загрузка',
 };

@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { IUserBoard, IUserBoardData, IUserBoardDataUpdate } from 'common/types';
 import config from 'config';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/Store';
 
 export const fetchUserBoards = createAsyncThunk(
   'user/boards',
@@ -141,14 +139,14 @@ export const boardSlice = createSlice({
         state.previews = action.payload;
         state.isLoaded = true;
       })
-      .addCase(fetchUserBoards.rejected, (state) => {
+      .addCase(fetchUserBoards.rejected, () => {
         // state.searchError = 'Sorry, network issues, we are looking into the problem';
       })
       .addCase(updateUserBoard.pending, (state) => {
         state.isLoaded = false;
       })
-      .addCase(updateUserBoard.fulfilled, (state) => {})
-      .addCase(updateUserBoard.rejected, (state) => {
+      .addCase(updateUserBoard.fulfilled, () => {})
+      .addCase(updateUserBoard.rejected, () => {
         // state.searchError = 'Sorry, network issues, we are looking into the problem';
       });
   },
