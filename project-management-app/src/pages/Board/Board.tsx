@@ -1,14 +1,12 @@
 import { Column } from 'components/Column/Column';
 import { CreateColumn } from 'components/Modals/CreateColumn';
-import { CreateTask } from 'components/Modals/CreateTask';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   openCreateColumnModal,
   openDeleteColumnModal,
-  openDeleteModal,
   openDeleteTaskModal,
 } from 'redux/ModalSlice';
 import { RootState } from 'redux/Store';
@@ -20,21 +18,17 @@ import {
   fetchUserColumns,
   fetchUserTasks,
   updateColumnOrder,
-} from 'redux/BoardSlice';
+} from 'redux/SelectedBoardSlice';
 import { CreateButton } from 'components/CreateButton/CreateButton';
 import { useParams } from 'react-router-dom';
 import { EditTask } from 'components/Modals/EditTask';
-
-type TaskProps = {
-  id: string;
-  title: string;
-};
+import { CreateTask } from 'components/Modals/CreateTask';
 
 export const Board = () => {
   const boardId = useParams().id || '';
   const userId = useSelector((state: RootState) => state.user.userId);
   const { columns, tasks, toBeDeleteColumn, toBeDeleteTask } = useSelector(
-    (state: RootState) => state.board
+    (state: RootState) => state.selectedBoard
   );
 
   const isOpenDeleteColumnModal = useSelector(
@@ -143,6 +137,7 @@ export const Board = () => {
         <CreateButton title="CreateColumn" onClickFunc={addColumn} type="wide" />
       </div>
       <CreateColumn />
+      <CreateTask />
       <EditTask />
       {isOpenDeleteColumnModal && (
         <DeleteModal

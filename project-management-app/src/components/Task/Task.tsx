@@ -5,7 +5,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { IUserTask } from 'common/types';
 import { openDeleteTaskModal, openEditTaskModal } from 'redux/ModalSlice';
 import { useDispatch } from 'react-redux';
-import { deleteBoardTask, editBoardTask } from 'redux/BoardSlice';
+import { deleteBoardTask, editBoardTask } from 'redux/SelectedBoardSlice';
 
 type TaskComponentProps = {
   item: IUserTask;

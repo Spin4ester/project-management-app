@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/Store';
 import { openEditTaskModal } from 'redux/ModalSlice';
-import { fetchUserTasks, updateTask } from 'redux/BoardSlice';
+import { fetchUserTasks, updateTask } from 'redux/SelectedBoardSlice';
 import { TitleInput } from 'components/TitleInput/TitleInput';
 import { IFormValues } from 'common/types';
 import { DescriptionTextarea } from 'components/DescriptionTextarea/DescriptionTextarea';
@@ -29,7 +29,7 @@ export const EditTask = () => {
     reset();
   };
 
-  const { tasks, toBeEditTask } = useSelector((state: RootState) => state.board);
+  const { tasks, toBeEditTask } = useSelector((state: RootState) => state.selectedBoard);
   const taskId = toBeEditTask;
   const task = tasks.find((el) => el._id === taskId);
 

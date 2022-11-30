@@ -4,7 +4,7 @@ import CheckedIcon from '../../assets/icons/checked.png';
 import CrossIcon from '../../assets/icons/cross.png';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { fetchUserColumns, updateColumn } from 'redux/BoardSlice';
+import { fetchUserColumns, updateColumn } from 'redux/SelectedBoardSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/Store';
 import { IUserColumn } from 'common/types';

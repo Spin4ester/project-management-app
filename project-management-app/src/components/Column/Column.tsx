@@ -8,25 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreateButton } from 'components/CreateButton/CreateButton';
 import { ColumnTitleForm } from 'components/ColumnTitleForm/ColumnTitleForm';
 import { IUserColumn } from 'common/types';
-import { createColumnTask, deleteBoardColumn } from 'redux/BoardSlice';
+import { createColumnTask, deleteBoardColumn } from 'redux/SelectedBoardSlice';
 import { RootState } from 'redux/Store';
-import { CreateTask } from 'components/Modals/CreateTask';
-
-type TaskProps = {
-  id: string;
-  title: string;
-};
 
 type ColumnComponentProps = {
   column: IUserColumn;
   droppableId: string;
-  // onTaskAdd: (task: TaskProps, colId: string) => void;
-  // onDeleteTask: (colId: string, taskId: string) => void;
 };
 
 export const Column = (props: ColumnComponentProps) => {
   const [isTitleEditable, setTitleEditable] = useState(false);
-  const { tasks } = useSelector((state: RootState) => state.board);
+  const { tasks } = useSelector((state: RootState) => state.selectedBoard);
 
   const children = tasks
     .filter((task) => task.columnId === props.column._id)
@@ -41,7 +33,7 @@ export const Column = (props: ColumnComponentProps) => {
     dispatch(openCreateTaskModal(true));
   };
 
-  const deleteColumn = (e: React.MouseEvent) => {
+  const deleteColumn = () => {
     dispatch(deleteBoardColumn(props.column._id));
     dispatch(openDeleteColumnModal(true));
   };
@@ -84,7 +76,6 @@ export const Column = (props: ColumnComponentProps) => {
       <div>
         <CreateButton title="CreateTask" onClickFunc={addTask} type="narrow" />
       </div>
-      <CreateTask />
     </div>
   );
 };

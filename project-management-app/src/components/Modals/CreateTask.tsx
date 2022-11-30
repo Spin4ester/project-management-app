@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { RootState } from 'redux/Store';
 import { openCreateTaskModal } from 'redux/ModalSlice';
-import { createTask, fetchUserColumnTasks, fetchUserTasks } from 'redux/BoardSlice';
+import { createTask, fetchUserColumnTasks, fetchUserTasks } from 'redux/SelectedBoardSlice';
 import { TitleInput } from 'components/TitleInput/TitleInput';
 import { IFormValues } from 'common/types';
 import { DescriptionTextarea } from 'components/DescriptionTextarea/DescriptionTextarea';
@@ -34,7 +34,7 @@ export const CreateTask = () => {
     reset();
   };
 
-  const { tasks, toBeCreateTaskColumn } = useSelector((state: RootState) => state.board);
+  const { tasks, toBeCreateTaskColumn } = useSelector((state: RootState) => state.selectedBoard);
 
   const onSubmit = async (data: IFormValues) => {
     const columnId = toBeCreateTaskColumn;

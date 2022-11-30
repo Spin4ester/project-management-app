@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openCreateColumnModal } from 'redux/ModalSlice';
 import { RootState } from 'redux/Store';
 import { useForm } from 'react-hook-form';
-import { createColumn, fetchUserColumns } from 'redux/BoardSlice';
+import { createColumn, fetchUserColumns } from 'redux/SelectedBoardSlice';
 import { useParams } from 'react-router';
 import { TitleInput } from 'components/TitleInput/TitleInput';
 import { IFormValues } from 'common/types';
@@ -33,7 +33,7 @@ export const CreateColumn = () => {
     reset();
   };
 
-  const { columns } = useSelector((state: RootState) => state.board);
+  const { columns } = useSelector((state: RootState) => state.selectedBoard);
 
   const onSubmit = async (data: IFormValues) => {
     dispatch(fetchUserColumns(userId));
