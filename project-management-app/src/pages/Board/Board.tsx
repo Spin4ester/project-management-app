@@ -18,6 +18,7 @@ import {
   fetchUserColumns,
   fetchUserTasks,
   updateColumnOrder,
+  updateTaskOrder,
 } from 'redux/SelectedBoardSlice';
 import { CreateButton } from 'components/CreateButton/CreateButton';
 import { useParams } from 'react-router-dom';
@@ -31,7 +32,7 @@ export const Board = () => {
   const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading } = useSelector(
     (state: RootState) => state.selectedBoard
   );
-  console.log(columns, tasks);
+
   const isOpenDeleteColumnModal = useSelector(
     (state: RootState) => state.modal.board.deleteColumnModal
   );
@@ -67,34 +68,45 @@ export const Board = () => {
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const { source, destination, type } = result;
-    const columnsCopy = [...columns];
-    const tasksCopy = [...tasks];
+    const columnsCopy = [...columns].sort((col1, col2) => col1.order - col2.order);
+    const tasksCopy = [...tasks].sort((task1, task2) => task1.order - task2.order);
     const sourcePosition = source.index;
     const destPosition = destination.index;
     switch (type) {
       case 'task':
         if (source.droppableId !== destination.droppableId) {
-          console.log(tasksCopy);
-          // const sourceColumn = columnsCopy.find((el) => el.id === source.droppableId);
-          // const destColumn = columnsCopy.find((el) => el.id === destination.droppableId);
-          // if (sourceColumn && destColumn) {
-          //   const sourceItems = [...sourceColumn.items];
-          //   const destItems = [...destColumn.items];
-          //   const [removed] = sourceItems.splice(sourcePosition, 1);
-          //   destItems.splice(destPosition, 0, removed);
-          //   sourceColumn.items = sourceItems;
-          //   destColumn.items = destItems;
-          //   setColumns([...columnsCopy]);
-          // }
+          const sourceColumn = columnsCopy.find((el) => el._id === source.droppableId);
+          const destColumn = columnsCopy.find((el) => el._id === destination.droppableId);
+          if (sourceColumn && destColumn) {
+            const sourceTasks = tasksCopy.filter((task) => task.columnId === sourceColumn._id);
+            const destTasks = tasksCopy.filter((task) => task.columnId === destColumn._id);
+            const [removed] = sourceTasks.splice(sourcePosition, 1);
+            destTasks.splice(destPosition, 0, removed);
+            const newOrderSourceTasks = sourceTasks.map((el, index) => ({
+              _id: el._id,
+              order: index,
+              columnId: sourceColumn._id,
+            }));
+            const newOrderDestTasks = destTasks.map((el, index) => ({
+              _id: el._id,
+              order: index,
+              columnId: destColumn._id,
+            }));
+            dispatch(updateTaskOrder(newOrderSourceTasks.concat(newOrderDestTasks)));
+          }
         } else {
-          // const column = columnsCopy.find((el) => el.id === source.droppableId);
-          // if (column) {
-          //   const copiedItems = [...column.items];
-          //   const [removed] = copiedItems.splice(sourcePosition, 1);
-          //   copiedItems.splice(destPosition, 0, removed);
-          //   column.items = copiedItems;
-          //   setColumns([...columnsCopy]);
-          // }
+          const column = columnsCopy.find((el) => el._id === source.droppableId);
+          if (column) {
+            const columnTasks = tasksCopy.filter((el) => el.columnId === column._id);
+            const [removed] = columnTasks.splice(sourcePosition, 1);
+            columnTasks.splice(destPosition, 0, removed);
+            const newOrderTasks = columnTasks.map((el, index) => ({
+              _id: el._id,
+              order: index,
+              columnId: el.columnId,
+            }));
+            dispatch(updateTaskOrder(newOrderTasks));
+          }
         }
         break;
       case 'column':
@@ -102,7 +114,6 @@ export const Board = () => {
         columnsCopy.splice(destPosition, 0, removed);
         const newOrderColumns = columnsCopy.map((col, index) => ({ _id: col._id, order: index }));
         dispatch(updateColumnOrder(newOrderColumns));
-        dispatch(fetchUserColumns(userId));
         break;
     }
   };

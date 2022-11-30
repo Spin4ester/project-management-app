@@ -102,3 +102,9 @@ export interface IFormValues {
   title: string;
   description?: string;
 }
+
+export interface IUserTaskOrder {
+  _id: string;
+  order: number;
+  columnId: string;
+}

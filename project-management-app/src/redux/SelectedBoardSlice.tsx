@@ -6,6 +6,7 @@ import {
   IUserColumnOrder,
   IUserTask,
   IUserTaskData,
+  IUserTaskOrder,
   IUserTaskUpdate,
 } from 'common/types';
 import config from 'config';
@@ -269,12 +270,35 @@ export const updateTask = createAsyncThunk(
   }
 );
 
+export const updateTaskOrder = createAsyncThunk(
+  'user/updateTaskOrder',
+  async function (taskOrder: IUserTaskOrder[], { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}tasksSet`, {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(taskOrder),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 interface IStateBoard {
   isLoading: boolean;
   toBeDeleteColumn: string;
   toBeDeleteTask: string;
   toBeCreateTaskColumn: string;
   toBeEditTask: string;
+  toBeAddTaskColumn: IUserColumn[];
   columns: IUserColumn[];
   tasks: IUserTask[];
 }
@@ -285,6 +309,7 @@ export const initialState: IStateBoard = {
   toBeDeleteTask: 'none',
   toBeCreateTaskColumn: 'none',
   toBeEditTask: 'none',
+  toBeAddTaskColumn: [],
   columns: [],
   tasks: [],
 };
@@ -328,6 +353,21 @@ export const selectedBoardSlice = createSlice({
       })
       .addCase(updateColumnOrder.fulfilled, (state, action) => {
         state.columns = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchUserColumnTasks.fulfilled, (state, action) => {
+        state.toBeAddTaskColumn = action.payload.sort(
+          (task1: IUserTask, task2: IUserTask) => task2.order - task1.order
+        );
+      })
+      .addCase(updateTaskOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTaskOrder.fulfilled, (state, action) => {
+        state.tasks = state.tasks.map((task) => {
+          const changedTask = action.payload.find((el: IUserTask) => el._id === task._id);
+          return changedTask ? changedTask : task;
+        });
         state.isLoading = false;
       });
   },

@@ -8,7 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreateButton } from 'components/CreateButton/CreateButton';
 import { ColumnTitleForm } from 'components/ColumnTitleForm/ColumnTitleForm';
 import { IUserColumn } from 'common/types';
-import { createColumnTask, deleteBoardColumn } from 'redux/SelectedBoardSlice';
+import {
+  createColumnTask,
+  deleteBoardColumn,
+  fetchUserColumnTasks,
+} from 'redux/SelectedBoardSlice';
 import { RootState } from 'redux/Store';
 
 type ColumnComponentProps = {
@@ -22,14 +26,17 @@ export const Column = (props: ColumnComponentProps) => {
 
   const children = tasks
     .filter((task) => task.columnId === props.column._id)
+    .sort((task1, task2) => task1.order - task2.order)
     .map((element, index) => {
       return <Task item={element} key={element._id} index={index} />;
     });
 
-  const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dispatch = useDispatch<any>();
 
   const addTask = async () => {
     dispatch(createColumnTask(props.column._id));
+    dispatch(fetchUserColumnTasks({ boardId: props.column.boardId, columnId: props.column._id }));
     dispatch(openCreateTaskModal(true));
   };
 
