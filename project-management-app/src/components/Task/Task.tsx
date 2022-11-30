@@ -3,9 +3,9 @@ import styles from './Task.module.css';
 import DeleteIcon from '../../assets/icons/delete.png';
 import { Draggable } from 'react-beautiful-dnd';
 import { IUserTask } from 'common/types';
-import { openDeleteTaskModal } from 'redux/ModalSlice';
+import { openDeleteTaskModal, openEditTaskModal } from 'redux/ModalSlice';
 import { useDispatch } from 'react-redux';
-import { deleteBoardTask } from 'redux/BoardSlice';
+import { deleteBoardTask, editBoardTask } from 'redux/BoardSlice';
 
 type TaskComponentProps = {
   item: IUserTask;
@@ -16,9 +16,14 @@ export const Task = (props: TaskComponentProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
-  const deleteTask = (e: React.MouseEvent) => {
+  const deleteTask = () => {
     dispatch(deleteBoardTask({ id: props.item._id, columnId: props.item.columnId }));
     dispatch(openDeleteTaskModal(true));
+  };
+
+  const editTask = () => {
+    dispatch(editBoardTask(props.item._id));
+    dispatch(openEditTaskModal(true));
   };
 
   return (
@@ -30,6 +35,7 @@ export const Task = (props: TaskComponentProps) => {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            onClick={editTask}
           >
             <p>{props.item.title}</p>
             <img

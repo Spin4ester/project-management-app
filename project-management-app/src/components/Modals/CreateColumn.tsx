@@ -7,10 +7,9 @@ import { RootState } from 'redux/Store';
 import { useForm } from 'react-hook-form';
 import { createColumn, fetchUserColumns } from 'redux/BoardSlice';
 import { useParams } from 'react-router';
-
-interface IFormValues {
-  title: string;
-}
+import { TitleInput } from 'components/TitleInput/TitleInput';
+import { IFormValues } from 'common/types';
+import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 
 export const CreateColumn = () => {
   const { t } = useTranslation();
@@ -60,25 +59,12 @@ export const CreateColumn = () => {
             <div className={styles.content}>
               <h6>{t('CreateColumn')}</h6>
               <form className={styles.create_column_form} onSubmit={handleSubmit(onSubmit)}>
-                <input
-                  className={`${styles.title} ${styles.input}`}
-                  placeholder={t('Title') || ''}
-                  type="text"
-                  {...register('title', {
-                    required: { value: true, message: `${t('ThisFieldIsRequired')}` },
-                    minLength: { value: 2, message: `${t('AtLeast2symbols')}` },
-                    maxLength: { value: 30, message: `${t('MaxNameLength')}` },
-                  })}
-                ></input>
-                <p className={styles.authError} id="columnNameError">
-                  {errors.title?.message?.toString()}
-                </p>
-                <div className={styles.buttons_container}>
-                  <button className={styles.button}>{t('Create')}</button>
-                  <button className={styles.button} onClick={closeCreateColumnModal}>
-                    {t('Cancel')}
-                  </button>
-                </div>
+                <TitleInput register={register} errorMsg={errors.title?.message?.toString()} />
+                <ModalFormButtons
+                  btnYes="Create"
+                  btnNo="Cancel"
+                  onClickNo={closeCreateColumnModal}
+                />
               </form>
             </div>
           </div>

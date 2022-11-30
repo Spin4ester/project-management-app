@@ -79,6 +79,15 @@ export interface IUserTaskData {
   users: string[];
 }
 
+export interface IUserTaskUpdate {
+  title: string;
+  order: number;
+  description: string;
+  users: string[];
+  columnId: string;
+  userId: string;
+}
+
 export interface IUserColumnData {
   title: string;
   order: number;
@@ -87,4 +96,9 @@ export interface IUserColumnData {
 export interface IUserColumnOrder {
   _id: string;
   order: number;
+}
+
+export interface IFormValues {
+  title: string;
+  description?: string;
 }

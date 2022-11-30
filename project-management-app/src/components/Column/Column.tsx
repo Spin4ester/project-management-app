@@ -84,7 +84,7 @@ export const Column = (props: ColumnComponentProps) => {
       <div>
         <CreateButton title="CreateTask" onClickFunc={addTask} type="narrow" />
       </div>
-      <CreateTask columnId={props.column._id} />
+      <CreateTask />
     </div>
   );
 };

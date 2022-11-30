@@ -143,7 +143,7 @@ export const Board = () => {
         <CreateButton title="CreateColumn" onClickFunc={addColumn} type="wide" />
       </div>
       <CreateColumn />
-      {/* <EditTask /> */}
+      <EditTask />
       {isOpenDeleteColumnModal && (
         <DeleteModal
           onCancelClick={() => dispatch(openDeleteColumnModal(false))}

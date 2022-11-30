@@ -16,3 +16,10 @@
   width: 21px;
   vertical-align: sub;
 }
+
+.error {
+  color: rgb(201, 47, 47);
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 0.8rem;
+}

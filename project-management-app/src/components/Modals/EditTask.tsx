@@ -3,83 +3,82 @@ import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { RootState } from 'redux/Store';
-import { openCreateTaskModal } from 'redux/ModalSlice';
-import { createTask, fetchUserColumnTasks, fetchUserTasks } from 'redux/BoardSlice';
+import { openEditTaskModal } from 'redux/ModalSlice';
+import { fetchUserTasks, updateTask } from 'redux/BoardSlice';
+import { TitleInput } from 'components/TitleInput/TitleInput';
+import { IFormValues } from 'common/types';
+import { DescriptionTextarea } from 'components/DescriptionTextarea/DescriptionTextarea';
+import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 
 export const EditTask = () => {
   const { t } = useTranslation();
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const dispatch = useDispatch<any>();
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   reset,
-  // } = useForm<IFormValues>();
-  // const boardId = useParams().id || '';
-  // const userId = useSelector((state: RootState) => state.user.userId);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dispatch = useDispatch<any>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IFormValues>();
 
-  // const isOpenCreateTaskModal = useSelector(
-  //   (state: RootState) => state.modal.board.createTaskModal
-  // );
+  const isOpenEditTaskModal = useSelector((state: RootState) => state.modal.board.editTaskModal);
 
-  // const closeCreateTaskModal = () => {
-  //   dispatch(openCreateTaskModal(false));
-  //   reset();
-  // };
+  const closeEditTaskModal = () => {
+    dispatch(openEditTaskModal(false));
+    reset();
+  };
 
-  // const { tasks, toBeCreateTaskColumn } = useSelector((state: RootState) => state.board);
+  const { tasks, toBeEditTask } = useSelector((state: RootState) => state.board);
+  const taskId = toBeEditTask;
+  const task = tasks.find((el) => el._id === taskId);
 
-  // const onSubmit = async (data: IFormValues) => {
-  //   const columnId = toBeCreateTaskColumn;
-  //   dispatch(fetchUserColumnTasks({ boardId, columnId }));
-  //   const tasksCount = tasks.length;
-  //   await dispatch(
-  //     createTask({
-  //       task: {
-  //         title: data.title,
-  //         order: tasksCount,
-  //         description: data.description,
-  //         userId,
-  //         users: [],
-  //       },
-  //       boardId,
-  //       columnId,
-  //     })
-  //   );
-  //   // dispatch(fetchUserColumnTasks({ boardId, columnId }));
-  //   dispatch(fetchUserTasks(userId));
-  //   closeCreateTaskModal();
-  // };
+  const onSubmit = async (data: IFormValues) => {
+    if (task) {
+      await dispatch(
+        updateTask({
+          boardId: task.boardId,
+          columnId: task.columnId,
+          taskId: task._id,
+          task: {
+            title: data.title,
+            order: task.order,
+            description: data.description || '',
+            columnId: task.columnId,
+            userId: task.userId,
+            users: task.users,
+          },
+        })
+      );
+      dispatch(fetchUserTasks(task.userId));
+    }
+    closeEditTaskModal();
+  };
 
   return (
     <>
-      {/* {isOpenEditTaskModal && ( */}
-      <div className={styles.blur}>
-        <div className={styles.container} onClick={(e) => e.stopPropagation()}>
-          <div className={styles.content}>
-            <h6>{t('ViewEditTask')}</h6>
-            <form className={styles.create_column_form}>
-              <input
-                className={`${styles.title} ${styles.input}`}
-                placeholder={t('Title') || ''}
-                type="text"
-              ></input>
-              <textarea
-                className={`${styles.description} ${styles.input}`}
-                placeholder={t('Description') || ''}
-              ></textarea>
-              <div className={styles.buttons_container}>
-                <button className={styles.button}>{t('Update')}</button>
-                <button className={styles.button}>{t('Cancel')}</button>
-              </div>
-            </form>
+      {isOpenEditTaskModal && (
+        <div className={styles.blur} onClick={closeEditTaskModal}>
+          <div className={styles.container} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.content}>
+              <h6>{t('ViewEditTask')}</h6>
+              <form className={styles.create_column_form} onSubmit={handleSubmit(onSubmit)}>
+                <TitleInput
+                  register={register}
+                  errorMsg={errors.title?.message?.toString()}
+                  title={task?.title}
+                />
+                <DescriptionTextarea
+                  register={register}
+                  errorMsg={errors.description?.message?.toString()}
+                  description={task?.description}
+                />
+                <ModalFormButtons btnYes="Update" btnNo="Cancel" onClickNo={closeEditTaskModal} />
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-      {/* )} */}
+      )}
     </>
   );
 };

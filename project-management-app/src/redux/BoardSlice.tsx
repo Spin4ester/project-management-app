@@ -9,6 +9,7 @@ import {
   IUserColumnOrder,
   IUserTask,
   IUserTaskData,
+  IUserTaskUpdate,
 } from 'common/types';
 import config from 'config';
 import { useDispatch, useSelector } from 'react-redux';
@@ -330,6 +331,39 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
+export const updateTask = createAsyncThunk(
+  'user/updateTask',
+  async function (
+    {
+      boardId,
+      columnId,
+      taskId,
+      task,
+    }: { boardId: string; columnId: string; taskId: string; task: IUserTaskUpdate },
+    { rejectWithValue }
+  ) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(
+        `${config.api.url}boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(task),
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 interface IStateBoard {
   toBeDeleteBoard: string;
   boardPreviewId: string;
@@ -341,6 +375,7 @@ interface IStateBoard {
   toBeDeleteColumn: string;
   toBeDeleteTask: string;
   toBeCreateTaskColumn: string;
+  toBeEditTask: string;
   columns: IUserColumn[];
   tasks: IUserTask[];
 }
@@ -356,6 +391,7 @@ export const initialState: IStateBoard = {
   toBeDeleteColumn: 'none',
   toBeDeleteTask: 'none',
   toBeCreateTaskColumn: 'none',
+  toBeEditTask: 'none',
   columns: [],
   tasks: [],
 };
@@ -385,6 +421,9 @@ export const boardSlice = createSlice({
     deleteBoardTask(state, action) {
       state.toBeDeleteTask = action.payload.id;
       state.toBeDeleteColumn = action.payload.columnId;
+    },
+    editBoardTask(state, action) {
+      state.toBeEditTask = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -445,6 +484,7 @@ export const {
   deleteBoardColumn,
   createColumnTask,
   deleteBoardTask,
+  editBoardTask,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

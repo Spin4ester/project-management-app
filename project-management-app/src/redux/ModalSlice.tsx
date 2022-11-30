@@ -13,6 +13,7 @@ interface IStateModal {
     deleteTaskModal: boolean;
     createColumnModal: boolean;
     createTaskModal: boolean;
+    editTaskModal: boolean;
   };
 }
 
@@ -29,6 +30,7 @@ export const initialState: IStateModal = {
     deleteTaskModal: false,
     createColumnModal: false,
     createTaskModal: false,
+    editTaskModal: false,
   },
 };
 
@@ -63,6 +65,9 @@ export const modalSlice = createSlice({
     openCreateTaskModal(state, action) {
       state.board.createTaskModal = action.payload;
     },
+    openEditTaskModal(state, action) {
+      state.board.editTaskModal = action.payload;
+    },
   },
 });
 
@@ -76,5 +81,6 @@ export const {
   openDeleteTaskModal,
   openCreateColumnModal,
   openCreateTaskModal,
+  openEditTaskModal,
 } = modalSlice.actions;
 export default modalSlice.reducer;

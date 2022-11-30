@@ -7,13 +7,12 @@ import { useParams } from 'react-router-dom';
 import { RootState } from 'redux/Store';
 import { openCreateTaskModal } from 'redux/ModalSlice';
 import { createTask, fetchUserColumnTasks, fetchUserTasks } from 'redux/BoardSlice';
+import { TitleInput } from 'components/TitleInput/TitleInput';
+import { IFormValues } from 'common/types';
+import { DescriptionTextarea } from 'components/DescriptionTextarea/DescriptionTextarea';
+import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 
-interface IFormValues {
-  title: string;
-  description: string;
-}
-
-export const CreateTask = (props: { columnId: string }) => {
+export const CreateTask = () => {
   const { t } = useTranslation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
@@ -46,7 +45,7 @@ export const CreateTask = (props: { columnId: string }) => {
         task: {
           title: data.title,
           order: tasksCount,
-          description: data.description,
+          description: data.description || '',
           userId,
           users: [],
         },
@@ -54,7 +53,6 @@ export const CreateTask = (props: { columnId: string }) => {
         columnId,
       })
     );
-    // dispatch(fetchUserColumnTasks({ boardId, columnId }));
     dispatch(fetchUserTasks(userId));
     closeCreateTaskModal();
   };
@@ -67,31 +65,12 @@ export const CreateTask = (props: { columnId: string }) => {
             <div className={styles.content}>
               <h6>{t('CreateTask')}</h6>
               <form className={styles.create_column_form} onSubmit={handleSubmit(onSubmit)}>
-                <input
-                  className={`${styles.title} ${styles.input}`}
-                  placeholder={t('Title') || ''}
-                  type="text"
-                  {...register('title', {
-                    required: { value: true, message: `${t('ThisFieldIsRequired')}` },
-                    minLength: { value: 2, message: `${t('AtLeast2symbols')}` },
-                    maxLength: { value: 30, message: `${t('MaxNameLength')}` },
-                  })}
-                ></input>
-                <textarea
-                  className={`${styles.description} ${styles.input}`}
-                  placeholder={t('Description') || ''}
-                  {...register('description', {
-                    required: { value: true, message: `${t('ThisFieldIsRequired')}` },
-                    minLength: { value: 2, message: `${t('AtLeast2symbols')}` },
-                    maxLength: { value: 30, message: `${t('MaxNameLength')}` },
-                  })}
-                ></textarea>
-                <div className={styles.buttons_container}>
-                  <button className={styles.button}>{t('Create')}</button>
-                  <button className={styles.button} onClick={closeCreateTaskModal}>
-                    {t('Cancel')}
-                  </button>
-                </div>
+                <TitleInput register={register} errorMsg={errors.title?.message?.toString()} />
+                <DescriptionTextarea
+                  register={register}
+                  errorMsg={errors.description?.message?.toString()}
+                />
+                <ModalFormButtons btnYes="Create" btnNo="Cancel" onClickNo={closeCreateTaskModal} />
               </form>
             </div>
           </div>
