@@ -26,6 +26,7 @@ export const fetchUserColumns = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
         throw new Error('Fetch Error!');
       }
       const data = await response.json();
@@ -147,6 +148,7 @@ export const fetchUserTasks = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
         throw new Error('Fetch Error!');
       }
       const data = await response.json();
@@ -294,6 +296,7 @@ export const updateTaskOrder = createAsyncThunk(
 
 interface IStateBoard {
   isLoading: boolean;
+  isAuthError: boolean;
   toBeDeleteColumn: string;
   toBeDeleteTask: string;
   toBeCreateTaskColumn: string;
@@ -305,6 +308,7 @@ interface IStateBoard {
 
 export const initialState: IStateBoard = {
   isLoading: false,
+  isAuthError: false,
   toBeDeleteColumn: 'none',
   toBeDeleteTask: 'none',
   toBeCreateTaskColumn: 'none',
@@ -331,6 +335,9 @@ export const selectedBoardSlice = createSlice({
     editBoardTask(state, action) {
       state.toBeEditTask = action.payload;
     },
+    removeAuthError(state) {
+      state.isAuthError = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -341,12 +348,24 @@ export const selectedBoardSlice = createSlice({
         state.columns = action.payload;
         state.isLoading = false;
       })
+      .addCase(fetchUserColumns.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
       .addCase(fetchUserTasks.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(fetchUserTasks.fulfilled, (state, action) => {
         state.tasks = action.payload;
         state.isLoading = false;
+      })
+      .addCase(fetchUserTasks.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
       })
       .addCase(updateColumnOrder.pending, (state) => {
         state.isLoading = true;
@@ -373,7 +392,12 @@ export const selectedBoardSlice = createSlice({
   },
 });
 
-export const { deleteBoardColumn, createColumnTask, deleteBoardTask, editBoardTask } =
-  selectedBoardSlice.actions;
+export const {
+  deleteBoardColumn,
+  createColumnTask,
+  deleteBoardTask,
+  editBoardTask,
+  removeAuthError,
+} = selectedBoardSlice.actions;
 
 export default selectedBoardSlice.reducer;

@@ -25,11 +25,12 @@ import { useParams } from 'react-router-dom';
 import { EditTask } from 'components/Modals/EditTask';
 import { CreateTask } from 'components/Modals/CreateTask';
 import { Loading } from 'components/Loading/Loading';
+import { AuthError } from 'components/AuthError/AuthError';
 
 export const Board = () => {
   const boardId = useParams().id || '';
   const userId = useSelector((state: RootState) => state.user.userId);
-  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading } = useSelector(
+  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading, isAuthError } = useSelector(
     (state: RootState) => state.selectedBoard
   );
 
@@ -176,6 +177,7 @@ export const Board = () => {
         />
       )}
       {isLoading && <Loading />}
+      {isAuthError && <AuthError />}
     </div>
   );
 };

@@ -51,4 +51,5 @@ export const ru = {
   Title: 'Заголовок',
   Description: 'Описание',
   Loading: 'Загрузка',
+  ReturnToMainPage: 'Вернуться на главную страницу',
 };
