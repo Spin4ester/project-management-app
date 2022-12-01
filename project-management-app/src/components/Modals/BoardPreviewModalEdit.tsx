@@ -6,6 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openEditBoardModal } from 'redux/ModalSlice';
 import { fetchUserBoards, updateUserBoard } from 'redux/BoardSlice';
 import { useForm } from 'react-hook-form';
+import { IFormValues } from 'common/types';
+import { TitleInput } from 'components/TitleInput/TitleInput';
+import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 
 export const BoardPreviewModalEdit = () => {
   const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
@@ -21,7 +24,19 @@ export const BoardPreviewModalEdit = () => {
     formState: { errors },
     setError,
     reset,
-  } = useForm();
+  } = useForm<IFormValues>();
+
+  const onSubmit = async (data: IFormValues) => {
+    await dispatch(
+      updateUserBoard({
+        body: { title: data.title, owner: userId, users: [''] },
+        _id: boardPreviewId,
+      })
+    );
+    dispatch(fetchUserBoards(userId));
+    dispatch(openEditBoardModal(false));
+    reset();
+  };
 
   return (
     <>
@@ -35,52 +50,23 @@ export const BoardPreviewModalEdit = () => {
           <form
             className={styles.container}
             onClick={(e) => e.stopPropagation()}
-            onSubmit={handleSubmit(async (data) => {
-              // dispatch(changeBoardUpdated(false));
-              await dispatch(
-                updateUserBoard({
-                  body: { title: data.title, owner: userId, users: [''] },
-                  _id: boardPreviewId,
-                })
-              );
-              dispatch(fetchUserBoards(userId));
-              dispatch(openEditBoardModal(false));
-              reset();
-            })}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <div className={styles.content}>
               <h6>{t('EditBoard')}</h6>
-              <input
-                autoFocus
-                className={`${styles.title} ${styles.input}`}
-                placeholder={boardPreviewTitle}
-                type="text"
-                autoComplete="off"
-                {...register('title', {
-                  required: { value: true, message: `${t('ThisFieldIsRequired')}` },
-                  minLength: { value: 2, message: `${t('AtLeast2symbols')}` },
-                  maxLength: { value: 30, message: `${t('MaxNameLength')}` },
-                })}
-              ></input>
-              <p className={styles.authError} id="boardNameError">
-                {errors.title?.message?.toString()}
-              </p>
-              {/* <textarea
-              className={`${styles.description} ${styles.input}`}
-              placeholder="Description"
-            ></textarea> */}
-              <div className={styles.buttons_container}>
-                <button className={styles.button}>{t('Update')}</button>
-                <button
-                  className={styles.button}
-                  onClick={() => {
-                    dispatch(openEditBoardModal(false));
-                    reset();
-                  }}
-                >
-                  {t('Cancel')}
-                </button>
-              </div>
+              <TitleInput
+                register={register}
+                errorMsg={errors.title?.message?.toString()}
+                title={boardPreviewTitle}
+              />
+              <ModalFormButtons
+                btnYes="Update"
+                btnNo="Cancel"
+                onClickNo={() => {
+                  dispatch(openEditBoardModal(false));
+                  reset();
+                }}
+              />
             </div>
           </form>
         </div>

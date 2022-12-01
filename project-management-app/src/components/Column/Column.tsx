@@ -2,7 +2,7 @@ import { Task } from 'components/Task/Task';
 import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import styles from './Column.module.css';
-import CloseIcon from '../../assets/icons/cancel.png';
+import CloseIcon from '../../assets/icons/delete.png';
 import { openCreateTaskModal, openDeleteColumnModal } from 'redux/ModalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreateButton } from 'components/CreateButton/CreateButton';
@@ -55,15 +55,15 @@ export const Column = (props: ColumnComponentProps) => {
       <div className={styles.header}>
         {!isTitleEditable && (
           <>
+            <h5 className={styles.title} onClick={showEditTitleForm}>
+              {props.column.title}
+            </h5>
             <img
               src={CloseIcon}
               alt="Delete column"
               onClick={deleteColumn}
               className={styles.delete_img}
             />
-            <h5 className={styles.title} onClick={showEditTitleForm}>
-              {props.column.title}
-            </h5>
           </>
         )}
         {isTitleEditable && (

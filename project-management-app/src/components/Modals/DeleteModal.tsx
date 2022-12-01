@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from './DeleteModal.module.css';
 import { useTranslation } from 'react-i18next';
-import { AppDispatch } from 'redux/Store';
-import { useDispatch } from 'react-redux';
+import Warning from '../../assets/icons/warning.png';
 
 interface IProps {
   onDeleteClick: () => void;
@@ -11,14 +10,14 @@ interface IProps {
 
 export const DeleteModal = (props: IProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <>
       <div className={styles.blur} onClick={props.onCancelClick}></div>
       <div className={styles.container}>
         <div className={styles.content}>
-          <h6>{t('DeleteConfirmation') + ' ' + t('Profile').toLocaleLowerCase() + '?'}</h6>
+          <img src={Warning} alt="Warning" />
+          <h6>{t('DeleteConfirmation') + ' this?'}</h6>
           <div className={styles.buttons_container}>
             <button className={styles.button} onClick={props.onDeleteClick}>
               {t('Delete')}

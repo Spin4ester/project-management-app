@@ -18,6 +18,8 @@ export const TitleInput = (props: Props) => {
   return (
     <>
       <input
+        autoFocus
+        autoComplete="off"
         className={`${styles.input}`}
         placeholder={t('Title') || ''}
         defaultValue={title}

@@ -6,7 +6,6 @@
     height: 80px;
     background-color: rgb(255, 246, 207);
     border-radius: 10px;
-    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8em; 
@@ -16,6 +15,11 @@
     background-color: rgb(244, 233, 255);
     cursor: pointer;
     transition: 0.5s;
+}
+
+.container:active {
+    transform: scale(0.95);
+    transition: 0.3s;
 }
 
 .content {
@@ -55,6 +59,11 @@
     transition: 0.3s;
 }
 
+.icon:active {
+    transform: scale(0.9);
+    transition: 0.3s;
+}
+
 
 .add_board {
     display: flex;
@@ -75,6 +84,11 @@
     cursor: pointer;
     background-color: rgba(255, 246, 207, 0.5);
     border: 2px solid rgba(92, 74, 199, 0.3);
+    transition: 0.3s;
+}
+
+.add_board:active {
+    transform: scale(0.95);
     transition: 0.3s;
 }
 

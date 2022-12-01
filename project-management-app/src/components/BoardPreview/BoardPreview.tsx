@@ -9,6 +9,7 @@ import { changeBoardPreview, deleteBoardPreview, editBoardPreview } from 'redux/
 import AddPreview from '../../assets/icons/add-preview.png';
 import { openCreateBoardModal, openDeleteModal, openEditBoardModal } from 'redux/ModalSlice';
 import { useTranslation } from 'react-i18next';
+import { IUserBoard } from 'common/types';
 
 export const BoardPreview = () => {
   const { t } = useTranslation();
@@ -16,6 +17,19 @@ export const BoardPreview = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const editBoard = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, el: IUserBoard) => {
+    dispatch(changeBoardPreview(el._id));
+    e.stopPropagation();
+    dispatch(openEditBoardModal(true));
+    dispatch(editBoardPreview(el.title));
+  };
+
+  const deleteBoard = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, el: IUserBoard) => {
+    dispatch(deleteBoardPreview(el._id));
+    e.stopPropagation();
+    dispatch(openDeleteModal(true));
+  };
 
   return (
     <>
@@ -35,10 +49,7 @@ export const BoardPreview = () => {
                 src={EditIcon}
                 alt="Edit"
                 onClick={(e) => {
-                  dispatch(changeBoardPreview(el._id));
-                  e.stopPropagation();
-                  dispatch(openEditBoardModal(true));
-                  dispatch(editBoardPreview(el.title));
+                  editBoard(e, el);
                 }}
               ></img>
               <img
@@ -46,9 +57,7 @@ export const BoardPreview = () => {
                 src={DeleteIcon}
                 alt="Delete"
                 onClick={(e) => {
-                  dispatch(deleteBoardPreview(el._id));
-                  e.stopPropagation();
-                  dispatch(openDeleteModal(true));
+                  deleteBoard(e, el);
                 }}
               ></img>
             </div>
