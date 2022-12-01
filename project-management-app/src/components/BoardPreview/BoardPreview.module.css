@@ -74,7 +74,7 @@
     height: 80px;
     background-color: rgba(255, 246, 207, 0.2);
     border-radius: 10px;
-    border: 2px solid #000;
+    border: 2px solid transparent;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8em; 
