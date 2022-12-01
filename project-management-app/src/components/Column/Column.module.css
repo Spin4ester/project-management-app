@@ -1,22 +1,83 @@
 .container {
-    background-color: bisque;
-    width: 220px;
-    height: fit-content;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-    font-family: 'Oswald', sans-serif;
+  background-color: bisque;
+  min-width: 220px;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  font-family: 'Oswald', sans-serif;
+  transition: 0.5s;
 }
 
-.container > h5 {
-    margin-bottom: 0;
+.container:active {
+  background-color: rgb(255, 239, 220);
+}
+
+.title {
+  display: inline;
+  cursor: pointer;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 10px;
-    font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 10px 10px;
+  padding: 7px 0;
+  font-family: 'Montserrat', sans-serif;
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
 }
 
+.content::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: rgb(224, 220, 228);
+  border-radius: 5px;
+  margin: 3px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgba(2, 0, 36, 1);
+  border-radius: 5px;
+}
+
+.delete_img {
+  transition: 0.5s;
+  float: right;
+  transform: scale(0.8);
+  cursor: pointer;
+}
+
+.delete_img:hover {
+  transform: scale(1);
+}
+
+.delete_img:active {
+  transform: scale(0.6);
+}
+
+.header {
+  margin: 5px 5px 0 15px;
+  text-align: left;
+  height: 30px;
+}
+
+.title_form {
+  border-radius: 5px;
+}
+
+.title_form input {
+  width: 120px;
+}
+
+.edit_btn {
+  border: none;
+  background: none;
+  padding: 1px 3px;
+}
+
+.edit_btn img {
+  width: 21px;
+  vertical-align: sub;
+}

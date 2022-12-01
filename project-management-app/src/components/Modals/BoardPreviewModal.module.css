@@ -1,32 +1,31 @@
-.blur{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1040;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
+.blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
 }
 
-
 .container {
-    background-color: rgb(239, 220, 245);
-    padding: 20px;
-    margin: 0 auto;
-    border-radius: 10px;
-    height: 20%;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    height: fit-content;
+  background-color: rgb(239, 220, 245);
+  padding: 20px;
+  margin: 0 auto;
+  border-radius: 10px;
+  height: 20%;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  height: fit-content;
 
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      margin: auto;
-      transform: translate(50%, -50%);
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  margin: auto;
+  transform: translate(50%, -50%);
 
-
-    /* position: fixed; 
+  /* position: fixed; 
     z-index: 3; 
     left: 0;
     top: 0;
@@ -38,48 +37,48 @@
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
 }
 
 .content > h6 {
-    font-family: 'Oswald', sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 
 .input {
-    border-radius: 5px;
-    padding: 5px;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .input:hover {
-    cursor: pointer;
-    background-color: rgb(245, 255, 255);
-    transition: 0.3s;
+  cursor: pointer;
+  background-color: rgb(245, 255, 255);
+  transition: 0.3s;
 }
 
 .input:focus {
-    outline-color: rgb(0, 92, 0);
+  outline-color: rgb(0, 92, 0);
 }
 
 .buttons_container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .button {
-    background-color: transparent;
-    border-radius: 5px;
-    border: 1px solid #000;
-    font-family: 'Oswald', sans-serif;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 1px solid #000;
+  font-family: 'Oswald', sans-serif;
 }
 
 .button:hover {
-    background-color: rgb(99, 128, 254);
-    color: aliceblue;
-    transition: 0.3s;
+  background-color: rgb(99, 128, 254);
+  color: aliceblue;
+  transition: 0.3s;
 }
 
 .authError {
@@ -90,6 +89,12 @@
   }
 
 
+  .create_column_form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
 
   @media only screen and (max-width: 620px) and (min-width: 280px) {
     .content {
@@ -97,3 +102,5 @@
     }
 
   }
+
+

@@ -71,7 +71,6 @@ export function Profile() {
 
   useEffect(() => {
     deleteUser(deleteConfirmed);
-    // eslint-disable-next-line
   }, [deleteConfirmed]);
 
   return (
