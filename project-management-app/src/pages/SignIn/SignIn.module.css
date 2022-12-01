@@ -50,6 +50,8 @@
   width: 100%;
   border-radius: 5px;
   padding: 5px 10px;
+  border: none;
+  outline: none;
 }
 
 .input:hover {
@@ -58,14 +60,10 @@
   transition: 0.3s;
 }
 
-.input {
-  border: none;
-  outline: none;
-}
-
 .input:focus {
   outline: none;
   background-color: rgb(216, 236, 177);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .signup {

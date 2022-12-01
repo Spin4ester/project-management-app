@@ -1,23 +1,26 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  background-color: rgba(35, 33, 37, 0.1);
+  padding: 20px;
   margin: 0 auto;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
+  border-radius: 10px;
+  /* border: 1px solid rgb(35, 33, 37); */
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   font-family: 'Montserrat', sans-serif;
+  width: 50%;
+  margin-top: 20px;
 }
 
 .container > h5 {
   font-family: 'Oswald', sans-serif;
+  margin-bottom: 30px;
 }
 
 .profile_content {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .profile_edit {
@@ -29,11 +32,25 @@
 }
 
 
+.input_description {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input_description > img {
+  width: 1em;
+  height: 1em;
+}
+
 .input {
-  width: 250px;
   border-radius: 5px;
   padding: 5px 10px;
-  margin-bottom: 15px;
+  border: none;
+  outline: none;
+  width: 100%;
 }
 
 .input::placeholder {
@@ -47,33 +64,37 @@
 }
 
 .input:focus {
-  outline-color: rgb(7, 19, 240);
+  outline: none;
+  background-color: rgb(216, 236, 177);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .buttonUpdate,
 .buttonDelete {
+  width: fit-content;
+  padding: 2px 40px;
+  background: transparent;
+  border-radius: 50px;
+  /* border: 1px solid #000; */
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   font-family: 'Oswald', sans-serif;
-  border: 1px solid #000;
-  transition: 0.3s;
-}
-
-.buttonUpdate {
-  border-radius: 5px;
-  background-color: transparent;
-  margin-top: 10px;
 }
 
 .buttonDelete {
-  background-color: rgb(233, 110, 110);
-  width: 70px;
-  padding: 5px;
-  border-radius: 5px;
+  color: darkred;
 }
 
-.buttonUpdate:hover,
 .buttonDelete:hover {
-  background-color: rgb(99, 128, 254);
+  background-color: rgb(233, 110, 110);
   color: aliceblue;
+  transition: 0.3s;
+}
+
+.buttonUpdate:hover {
+  background-color: rgb(49, 161, 49);
+  color: aliceblue;
+  transition: 0.3s;
 }
 
 .buttonUpdate:disabled,
@@ -90,6 +111,7 @@
 
 .inputContainer {
   position: relative;
+  width: 300px;
 }
 
 .authError {
@@ -102,9 +124,43 @@
 }
 
 
-@media only screen and (max-width: 620px) and (min-width: 280px) {
-  
+@media only screen and (max-width: 640px) and (min-width: 450px) {
+
+
+  .container {
+    width: 80%;
+  }
+
   .profileImg {
-    width: 100px;
+    width: 100px; 
+  }
+
+  .profile_content {
+    flex-direction: column;
+  }
+  
+}
+
+@media only screen and (max-width: 450px) and (min-width: 280px) {
+
+
+  .container {
+    width: 80%; 
+  }
+
+  .profile_content {
+    flex-direction: column;
+  }
+
+  .profileImg {
+    width: 50px;
+  }
+
+  .input::placeholder {
+    font-size: 0.7rem;
+  }
+
+  .inputContainer {
+    width: 200px;
   }
 }

@@ -4,7 +4,7 @@ import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUser } from 'redux/UserSlice';
 import styles from './Header.module.css';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Profile from '../../assets/icons/user_alt.png';
 import SignIn from '../../assets/icons/sign-in.png';
 import SignUp from '../../assets/icons/sign-up.png';
@@ -16,32 +16,53 @@ export function HeaderAlt() {
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const dispatch = useDispatch();
 
+  const activeStyle = {
+    backgroundColor: 'rgb(99, 128, 254)',
+    filter: 'opacity(100%)',
+  };
+
   return (
     <nav className={styles.container}>
-      <Link to="/" className={styles.logo}>
+      <NavLink to="/" className={styles.logo}>
         <span>T</span>ik-<span>T</span>ask
-      </Link>
+      </NavLink>
       <div className={styles.links_container}>
         <div className={styles.links}>
           {!isAuth && (
-            <Link className={styles.link} to="/login">
+            <NavLink
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/login"
+            >
               {t('SignIn')}
-            </Link>
+            </NavLink>
           )}
           {!isAuth && (
-            <Link className={styles.link} to="/registration">
+            <NavLink
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/registration"
+            >
               {t('SignUp')}
-            </Link>
+            </NavLink>
           )}
           {isAuth && (
-            <Link className={styles.link} to="/profile">
+            <NavLink
+              to="/profile"
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
               {t('Profile')}
-            </Link>
+            </NavLink>
           )}
           {isAuth && (
-            <Link className={styles.link} to="/boards">
+            <NavLink
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/boards"
+            >
               {t('Workspace')}
-            </Link>
+            </NavLink>
           )}
           {isAuth && (
             <p
@@ -59,24 +80,40 @@ export function HeaderAlt() {
       <div className={styles.mobile_links_container}>
         <div className={styles.mobile_links}>
           {!isAuth && (
-            <Link className={styles.mobile_link} to="/login">
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/login"
+            >
               <img src={SignIn} alt="Sign In" />
-            </Link>
+            </NavLink>
           )}
           {!isAuth && (
-            <Link className={styles.mobile_link} to="/registration">
-              <img src={SignUp} alt="Sign In" />
-            </Link>
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/registration"
+            >
+              <img src={SignUp} alt="Sign Up" />
+            </NavLink>
           )}
           {isAuth && (
-            <Link className={styles.mobile_link} to="/profile">
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/profile"
+            >
               <img src={Profile} alt="Profile" />
-            </Link>
+            </NavLink>
           )}
           {isAuth && (
-            <Link className={styles.mobile_link} to="/boards">
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/boards"
+            >
               <img src={Board} alt="Boards" />
-            </Link>
+            </NavLink>
           )}
           {isAuth && (
             <img
