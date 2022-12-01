@@ -7,6 +7,8 @@ import { IErrorResponse, IUser, IUserLogin, IUserSigninData } from 'common/types
 import { useDispatch } from 'react-redux';
 import { fetchAllUsers, signInUser, updateUserInfo, userSigninFetch } from 'redux/UserSlice';
 import { AppDispatch } from 'redux/Store';
+import Login from '../../assets/icons/enter.png';
+import Password from '../../assets/icons/padlock.png';
 // import { useGetAllUsersQuery } from 'redux/apiSlice';
 
 export function SignIn() {
@@ -59,9 +61,12 @@ export function SignIn() {
         <h4>{t('AccountLogin')}</h4>
 
         <div className={styles.inputContainer}>
+          <div className={styles.input_description}>
+            <img src={Login}></img>
+            <p>{t('Login')}</p>
+          </div>
           <input
             className={styles.input}
-            placeholder={t('Login') as string}
             type="text"
             autoComplete="off"
             {...register('login', {
@@ -74,9 +79,12 @@ export function SignIn() {
         </div>
 
         <div className={styles.inputContainer}>
+          <div className={styles.input_description}>
+            <img src={Password}></img>
+            <p>{t('Password')}</p>
+          </div>
           <input
             className={styles.input}
-            placeholder={t('Password') as string}
             type="password"
             autoComplete="off"
             {...register('password', {
@@ -87,7 +95,6 @@ export function SignIn() {
             {errors.password?.message?.toString()}
           </p>
         </div>
-
         <button className={styles.buttonSignin}>{t('SignIn')}</button>
       </form>
       <div className={styles.signup}>

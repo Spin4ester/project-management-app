@@ -1,16 +1,19 @@
 .container {
-  background-color: beige;
+  background-color: rgba(35, 33, 37, 0.1);
   padding: 20px;
   margin: 0 auto;
   border-radius: 10px;
+  border: 2px solid rgb(35, 33, 37);
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  font-family: 'Montserrat', sans-serif;
+  width: 50%;
+  margin-top: 20px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 300px;
 }
 
 .content>h4 {
@@ -20,7 +23,27 @@
 .inputContainer {
   position: relative;
   width: 100%;
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.input_description {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+}
+
+.input_description > img {
+  width: 0.8em;
+  height: 0.8em;
+}
+
+.input_description > p {
+  margin-bottom: 0;
 }
 
 .input {
@@ -35,8 +58,14 @@
   transition: 0.3s;
 }
 
+.input {
+  border: none;
+  outline: none;
+}
+
 .input:focus {
-  outline-color: rgb(7, 19, 240);
+  outline: none;
+  background-color: rgb(216, 236, 177);
 }
 
 .signup {
@@ -52,13 +81,18 @@
   margin-bottom: 0;
 }
 
-.buttonSignup,
-.buttonSignin {
+
+
+.buttonSignin,
+.buttonSignup {
+  
   width: fit-content;
-  padding: 5px 10px;
-  background-color: transparent;
-  border-radius: 5px;
-  border: 1px solid #000;
+  padding: 2px 40px;
+  background: transparent;
+  border-radius: 50px;
+  /* border: 1px solid #000; */
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   font-family: 'Oswald', sans-serif;
 }
 
@@ -66,17 +100,26 @@
   align-self: center;
 }
 
-.buttonSignup:hover,
 .buttonSignin:hover {
+  background-color: rgb(49, 161, 49);
+  /* border: 1px solid transparent; */
+  color: aliceblue;
+  transition: 0.3s;
+}
+
+.buttonSignup:hover {
   background-color: rgb(99, 128, 254);
+  /* border: 1px solid transparent; */
   color: aliceblue;
   transition: 0.3s;
 }
 
 .authError {
   position: absolute;
+  top: 70px;
   color: rgb(201, 47, 47);
   padding-left: 5px;
   text-align: left;
   font-size: 0.9rem;
 }
+
