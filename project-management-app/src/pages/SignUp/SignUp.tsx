@@ -8,6 +8,10 @@ import { useDispatch } from 'react-redux';
 import { signInUser, updateUserInfo, userSigninFetch, userSignupFetch } from 'redux/UserSlice';
 import { AppDispatch } from 'redux/Store';
 import { saveUserToLocalStorage } from 'pages/SignIn/SignIn';
+import Login from '../../assets/icons/enter.png';
+import Password from '../../assets/icons/padlock.png';
+import User from '../../assets/icons/account.png';
+import ConfirmPassword from '../../assets/icons/padlock_confirm.png';
 
 export function SignUp() {
   const { t } = useTranslation();
@@ -54,9 +58,12 @@ export function SignUp() {
         <h4>{t('AccountRegistration')}</h4>
 
         <div className={styles.inputContainer}>
+          <div className={styles.input_description}>
+            <img src={User}></img>
+            <p>{t('UserName')}</p>
+          </div>
           <input
             className={styles.input}
-            placeholder={t('UserName') as string}
             type="text"
             autoComplete="off"
             {...register('name', {
@@ -70,9 +77,12 @@ export function SignUp() {
         </div>
 
         <div className={styles.inputContainer}>
+          <div className={styles.input_description}>
+            <img src={Login}></img>
+            <p>{t('Login')}</p>
+          </div>
           <input
             className={styles.input}
-            placeholder={t('Login') as string}
             type="text"
             autoComplete="off"
             {...register('login', {
@@ -87,9 +97,12 @@ export function SignUp() {
         </div>
 
         <div className={styles.inputContainer}>
+          <div className={styles.input_description}>
+            <img src={Password}></img>
+            <p>{t('Password')}</p>
+          </div>
           <input
             className={styles.input}
-            placeholder={t('Password') as string}
             type="password"
             autoComplete="off"
             {...register('password', {
@@ -103,9 +116,12 @@ export function SignUp() {
         </div>
 
         <div className={styles.inputContainer}>
+          <div className={styles.input_description}>
+            <img src={ConfirmPassword}></img>
+            <p>{t('ConfirmPassword')}</p>
+          </div>
           <input
             className={styles.input}
-            placeholder={t('ConfirmPassword') as string}
             type="password"
             autoComplete="off"
             {...register('confirmPassword', {

@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styles from './ColumnTitleForm.module.css';
 import CheckedIcon from '../../assets/icons/checked.png';
-import CrossIcon from '../../assets/icons/cross.png';
+import CrossIcon from '../../assets/icons/cancel.png';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { fetchBoardColumns, updateColumn } from 'redux/SelectedBoardSlice';
@@ -44,7 +44,9 @@ export const ColumnTitleForm = (props: Props) => {
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
       <input
+        autoFocus
         defaultValue={props.column.title}
+        className={styles.input}
         type="text"
         {...register('title', {
           required: { value: true, message: `${t('ThisFieldIsRequired')}` },
@@ -52,10 +54,10 @@ export const ColumnTitleForm = (props: Props) => {
           maxLength: { value: 30, message: `${t('MaxNameLength')}` },
         })}
       />
-      <button className={styles.btn}>
+      <button className={styles.button}>
         <img src={CheckedIcon} alt={t('Update') || 'update'} />
       </button>
-      <button className={styles.btn} onClick={closeUpdateColumnTitle}>
+      <button className={styles.button} onClick={closeUpdateColumnTitle}>
         <img src={CrossIcon} alt={t('Cancel') || 'cancel'} />
       </button>
       <p className={styles.error}>{errors.title?.message?.toString()}</p>

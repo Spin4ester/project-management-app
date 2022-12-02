@@ -1,6 +1,6 @@
 import { BoardPreview } from 'components/BoardPreview/BoardPreview';
 import { BoardPreviewModalEdit } from 'components/Modals/BoardPreviewModalEdit';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect } from 'react';
 import styles from './Main.module.css';
@@ -11,12 +11,9 @@ import { openDeleteModal } from 'redux/ModalSlice';
 
 export function Main() {
   const { isLoaded, toBeDeleteBoard } = useSelector((state: RootState) => state.board);
-  // const isAuth = useSelector((state: RootState) => state.board.isLoaded);
   const userId = useSelector((state: RootState) => state.user.userId);
-  const boardPreviews = useSelector((state: RootState) => state.board.previews);
   const isOpenDeleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchUserBoards(userId));

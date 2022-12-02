@@ -1,10 +1,10 @@
 .container {
   background-color: bisque;
-  min-width: 220px;
+  min-width: 250px;
   height: fit-content;
   padding: 10px;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 3px 4px 3px;
   font-family: 'Oswald', sans-serif;
   transition: 0.5s;
 }
@@ -45,12 +45,13 @@
 .delete_img {
   transition: 0.5s;
   float: right;
-  transform: scale(0.8);
+  transform: scale(0.9);
   cursor: pointer;
 }
 
 .delete_img:hover {
   transform: scale(1);
+  transition: 0.3s;
 }
 
 .delete_img:active {
@@ -61,6 +62,17 @@
   margin: 5px 5px 0 15px;
   text-align: left;
   height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header > img {
+  height: 1.5em;
+}
+
+.header > h5 {
+  margin-bottom: 0;
 }
 
 .title_form {

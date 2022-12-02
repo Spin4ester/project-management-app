@@ -1,6 +1,11 @@
 .input {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  transition: 0.3s;
   border-radius: 5px;
-  padding: 5px;
+  padding: 8px;
 }
 
 .input:hover {
@@ -10,7 +15,9 @@
 }
 
 .input:focus {
-  outline-color: rgb(0, 92, 0);
+  outline: none;
+  background-color: rgb(241, 250, 222);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .authError {
