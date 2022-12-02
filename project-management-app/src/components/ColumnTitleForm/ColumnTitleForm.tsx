@@ -4,11 +4,10 @@ import CheckedIcon from '../../assets/icons/checked.png';
 import CrossIcon from '../../assets/icons/cancel.png';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { fetchUserColumns, updateColumn } from 'redux/SelectedBoardSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/Store';
+import { fetchBoardColumns, updateColumn } from 'redux/SelectedBoardSlice';
 import { IUserColumn } from 'common/types';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 type Props = {
   column: IUserColumn;
@@ -21,7 +20,7 @@ interface IFormValues {
 
 export const ColumnTitleForm = (props: Props) => {
   const { t } = useTranslation();
-  const userId = useSelector((state: RootState) => state.user.userId);
+  const boardId = useParams().id || '';
   const {
     register,
     handleSubmit,
@@ -38,7 +37,7 @@ export const ColumnTitleForm = (props: Props) => {
 
   const onSubmit = async (data: IFormValues) => {
     await dispatch(updateColumn({ ...props.column, title: data.title }));
-    dispatch(fetchUserColumns(userId));
+    dispatch(fetchBoardColumns(boardId));
     closeUpdateColumnTitle();
   };
 

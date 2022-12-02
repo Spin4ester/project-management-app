@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openCreateColumnModal } from 'redux/ModalSlice';
 import { RootState } from 'redux/Store';
 import { useForm } from 'react-hook-form';
-import { createColumn, fetchUserColumns } from 'redux/SelectedBoardSlice';
+import { createColumn, fetchBoardColumns } from 'redux/SelectedBoardSlice';
 import { useParams } from 'react-router';
 import { TitleInput } from 'components/TitleInput/TitleInput';
 import { IFormValues } from 'common/types';
@@ -22,7 +22,6 @@ export const CreateColumn = () => {
     reset,
   } = useForm<IFormValues>();
   const boardId = useParams().id || '';
-  const userId = useSelector((state: RootState) => state.user.userId);
 
   const isOpenCreateColumnModal = useSelector(
     (state: RootState) => state.modal.board.createColumnModal
@@ -36,7 +35,7 @@ export const CreateColumn = () => {
   const { columns } = useSelector((state: RootState) => state.selectedBoard);
 
   const onSubmit = async (data: IFormValues) => {
-    dispatch(fetchUserColumns(userId));
+    await dispatch(fetchBoardColumns(boardId));
     const nextOrder = columns[columns.length - 1].order + 1;
     await dispatch(
       createColumn({
@@ -47,7 +46,7 @@ export const CreateColumn = () => {
         boardId,
       })
     );
-    dispatch(fetchUserColumns(userId));
+    dispatch(fetchBoardColumns(boardId));
     closeCreateColumnModal();
   };
 

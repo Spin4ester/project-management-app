@@ -15,7 +15,7 @@ import styles from './Board.module.css';
 import {
   deleteColumn,
   deleteTask,
-  fetchUserColumns,
+  fetchBoardColumns,
   fetchUserTasks,
   updateColumnOrder,
   updateTaskOrder,
@@ -25,11 +25,12 @@ import { useParams } from 'react-router-dom';
 import { EditTask } from 'components/Modals/EditTask';
 import { CreateTask } from 'components/Modals/CreateTask';
 import { Loading } from 'components/Loading/Loading';
+import { AuthError } from 'components/AuthError/AuthError';
 
 export const Board = () => {
   const boardId = useParams().id || '';
   const userId = useSelector((state: RootState) => state.user.userId);
-  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading } = useSelector(
+  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading, isAuthError } = useSelector(
     (state: RootState) => state.selectedBoard
   );
 
@@ -116,15 +117,16 @@ export const Board = () => {
         dispatch(updateColumnOrder(newOrderColumns));
         break;
     }
+    return;
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(fetchUserColumns(userId));
+    dispatch(fetchBoardColumns(boardId));
     dispatch(fetchUserTasks(userId));
-  }, [userId]);
+  }, [boardId, dispatch, userId]);
 
   return (
     <div className={styles.container}>
@@ -156,7 +158,7 @@ export const Board = () => {
           onCancelClick={() => dispatch(openDeleteColumnModal(false))}
           onDeleteClick={async () => {
             await dispatch(deleteColumn({ boardId, columnId: toBeDeleteColumn }));
-            dispatch(fetchUserColumns(userId));
+            dispatch(fetchBoardColumns(boardId));
             dispatch(fetchUserTasks(userId));
             dispatch(openDeleteColumnModal(false));
           }}
@@ -169,13 +171,14 @@ export const Board = () => {
             await dispatch(
               deleteTask({ boardId, columnId: toBeDeleteColumn, taskId: toBeDeleteTask })
             );
-            dispatch(fetchUserColumns(userId));
+            dispatch(fetchBoardColumns(boardId));
             dispatch(fetchUserTasks(userId));
             dispatch(openDeleteTaskModal(false));
           }}
         />
       )}
       {isLoading && <Loading />}
+      {isAuthError && <AuthError />}
     </div>
   );
 };

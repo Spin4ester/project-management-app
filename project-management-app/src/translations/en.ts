@@ -51,4 +51,5 @@ export const en = {
   Title: 'Title',
   Description: 'Description',
   Loading: 'Loading',
+  ReturnToMainPage: 'Return to main page',
 };
