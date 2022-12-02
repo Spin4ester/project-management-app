@@ -30,8 +30,7 @@ export const EditTask = () => {
   };
 
   const { tasks, toBeEditTask } = useSelector((state: RootState) => state.selectedBoard);
-  const taskId = toBeEditTask;
-  const task = tasks.find((el) => el._id === taskId);
+  const task = tasks ? tasks.find((el) => el._id === toBeEditTask) : null;
 
   const onSubmit = async (data: IFormValues) => {
     if (task) {
