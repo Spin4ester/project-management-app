@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { openCreateBoardModal } from 'redux/ModalSlice';
 import { changeIsLoaded, createUserBoard, fetchUserBoards } from 'redux/BoardSlice';
@@ -13,8 +13,7 @@ import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 export const BoardPreviewModalCreate = () => {
   const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
   const userId = useSelector((state: RootState) => state.user.userId);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { t } = useTranslation();
   const {
