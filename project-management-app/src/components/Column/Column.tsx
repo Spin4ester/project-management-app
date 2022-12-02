@@ -24,12 +24,14 @@ export const Column = (props: ColumnComponentProps) => {
   const [isTitleEditable, setTitleEditable] = useState(false);
   const { tasks } = useSelector((state: RootState) => state.selectedBoard);
 
-  const children = tasks
-    .filter((task) => task.columnId === props.column._id)
-    .sort((task1, task2) => task1.order - task2.order)
-    .map((element, index) => {
-      return <Task item={element} key={element._id} index={index} />;
-    });
+  const children = !tasks
+    ? []
+    : tasks
+        .filter((task) => task.columnId === props.column._id)
+        .sort((task1, task2) => task1.order - task2.order)
+        .map((element, index) => {
+          return <Task item={element} key={element._id} index={index} />;
+        });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();

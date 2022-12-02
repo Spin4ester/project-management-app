@@ -11,12 +11,12 @@ import {
 } from 'common/types';
 import config from 'config';
 
-export const fetchUserColumns = createAsyncThunk(
+export const fetchBoardColumns = createAsyncThunk(
   'user/columns',
-  async function (userId: string, { rejectWithValue }) {
+  async function (boardId: string, { rejectWithValue }) {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${config.api.url}columnsSet?userId=${userId}`, {
+      const response = await fetch(`${config.api.url}boards/${boardId}/columns`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -54,6 +54,11 @@ export const createColumn = createAsyncThunk(
         },
         body: JSON.stringify(column),
       });
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -78,6 +83,11 @@ export const deleteColumn = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -103,6 +113,11 @@ export const updateColumn = createAsyncThunk(
           body: JSON.stringify({ title: column.title, order: column.order }),
         }
       );
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -125,6 +140,11 @@ export const updateColumnOrder = createAsyncThunk(
         },
         body: JSON.stringify(columnOrder),
       });
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -177,6 +197,7 @@ export const fetchUserColumnTasks = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
         throw new Error('Fetch Error!');
       }
       const data = await response.json();
@@ -204,6 +225,11 @@ export const createTask = createAsyncThunk(
         },
         body: JSON.stringify(task),
       });
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -231,6 +257,11 @@ export const deleteTask = createAsyncThunk(
           },
         }
       );
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -264,6 +295,11 @@ export const updateTask = createAsyncThunk(
           body: JSON.stringify(task),
         }
       );
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -286,6 +322,11 @@ export const updateTaskOrder = createAsyncThunk(
         },
         body: JSON.stringify(taskOrder),
       });
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -341,14 +382,14 @@ export const selectedBoardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserColumns.pending, (state) => {
+      .addCase(fetchBoardColumns.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchUserColumns.fulfilled, (state, action) => {
+      .addCase(fetchBoardColumns.fulfilled, (state, action) => {
         state.columns = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchUserColumns.rejected, (state, action) => {
+      .addCase(fetchBoardColumns.rejected, (state, action) => {
         state.isLoading = false;
         if (action.payload instanceof Error) {
           if (action.payload.message === '403') state.isAuthError = true;
@@ -374,10 +415,26 @@ export const selectedBoardSlice = createSlice({
         state.columns = action.payload;
         state.isLoading = false;
       })
+      .addCase(updateColumnOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(fetchUserColumnTasks.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(fetchUserColumnTasks.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.toBeAddTaskColumn = action.payload.sort(
           (task1: IUserTask, task2: IUserTask) => task2.order - task1.order
         );
+      })
+      .addCase(fetchUserColumnTasks.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
       })
       .addCase(updateTaskOrder.pending, (state) => {
         state.isLoading = true;
@@ -388,6 +445,84 @@ export const selectedBoardSlice = createSlice({
           return changedTask ? changedTask : task;
         });
         state.isLoading = false;
+      })
+      .addCase(updateTaskOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(createColumn.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createColumn.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(createColumn.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(deleteColumn.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteColumn.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteColumn.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(updateColumn.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateColumn.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updateColumn.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(createTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createTask.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(createTask.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(deleteTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTask.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(updateTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTask.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updateTask.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
       });
   },
 });

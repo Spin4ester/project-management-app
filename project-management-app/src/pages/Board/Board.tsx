@@ -15,7 +15,7 @@ import styles from './Board.module.css';
 import {
   deleteColumn,
   deleteTask,
-  fetchUserColumns,
+  fetchBoardColumns,
   fetchUserTasks,
   updateColumnOrder,
   updateTaskOrder,
@@ -117,15 +117,16 @@ export const Board = () => {
         dispatch(updateColumnOrder(newOrderColumns));
         break;
     }
+    return;
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(fetchUserColumns(userId));
+    dispatch(fetchBoardColumns(boardId));
     dispatch(fetchUserTasks(userId));
-  }, [userId]);
+  }, [boardId, dispatch, userId]);
 
   return (
     <div className={styles.container}>
@@ -157,7 +158,7 @@ export const Board = () => {
           onCancelClick={() => dispatch(openDeleteColumnModal(false))}
           onDeleteClick={async () => {
             await dispatch(deleteColumn({ boardId, columnId: toBeDeleteColumn }));
-            dispatch(fetchUserColumns(userId));
+            dispatch(fetchBoardColumns(boardId));
             dispatch(fetchUserTasks(userId));
             dispatch(openDeleteColumnModal(false));
           }}
@@ -170,7 +171,7 @@ export const Board = () => {
             await dispatch(
               deleteTask({ boardId, columnId: toBeDeleteColumn, taskId: toBeDeleteTask })
             );
-            dispatch(fetchUserColumns(userId));
+            dispatch(fetchBoardColumns(boardId));
             dispatch(fetchUserTasks(userId));
             dispatch(openDeleteTaskModal(false));
           }}

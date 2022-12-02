@@ -40,6 +40,7 @@ export const CreateTask = () => {
 
   const onSubmit = async (data: IFormValues) => {
     const columnId = toBeCreateTaskColumn;
+    await dispatch(fetchUserTasks(userId));
     const nextOrder = toBeAddTaskColumn.length > 0 ? toBeAddTaskColumn[0].order + 1 : 0;
     await dispatch(
       createTask({
