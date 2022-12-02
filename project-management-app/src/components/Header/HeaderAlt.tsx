@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,13 +16,25 @@ export function HeaderAlt() {
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const dispatch = useDispatch();
 
+  const [navbar, setNavbar] = useState(false);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 40) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  window.addEventListener('scroll', changeBackground);
+
   const activeStyle = {
     backgroundColor: 'rgb(99, 128, 254)',
     filter: 'opacity(100%)',
   };
 
   return (
-    <nav className={styles.container}>
+    <nav className={`${styles.container} ${navbar ? styles.scroll : ''}`}>
       <NavLink to="/" className={styles.logo}>
         <span>T</span>ik-<span>T</span>ask
       </NavLink>
@@ -139,7 +151,6 @@ export function HeaderAlt() {
         >
           EN
         </button>
-        <div> | </div>
         <button
           className={
             localStorage.getItem('i18nextLng') === 'ru'

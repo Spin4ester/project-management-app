@@ -7,6 +7,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    position: sticky;
+    top: 0;
+}
+
+.scroll {
+  background-color: rgba(35, 33, 37, 0.8);
 }
 
 .links {
@@ -67,6 +73,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 3px;
   }
 
   .button {
