@@ -142,11 +142,12 @@ export const boardSlice = createSlice({
       })
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
         state.previews = action.payload;
-        console.log(action.payload);
+        console.log(action.payload + '111111111');
         state.isLoaded = true;
       })
       .addCase(fetchUserBoards.rejected, (state, action) => {
         console.log(action.payload);
+        console.log(state.previews);
       })
       .addCase(updateUserBoard.pending, (state) => {
         state.isLoaded = false;

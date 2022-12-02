@@ -23,11 +23,14 @@
   right: 50%;
   margin: auto;
   transform: translate(50%, -50%);
+  display: flex;
+  justify-content: center;
 }
 
 .content {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   width: 400px;
 }
@@ -101,9 +104,24 @@
 }
 
 
-  @media only screen and (max-width: 620px) and (min-width: 280px) {
+  @media only screen and (max-width: 620px) and (min-width: 450px) {
     .content {
         width: 200px;
+    }
+
+    .container {
+      width: 60%;
+    }
+
+  }
+
+  @media only screen and (max-width: 450px) and (min-width: 320px) {
+    .content {
+        width: 200px;
+    }
+
+    .container {
+      width: 80%;
     }
 
   }

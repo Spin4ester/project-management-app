@@ -29,3 +29,12 @@
 .button:active {
   transform: scale(0.95);
 }
+
+
+@media only screen and (max-width: 620px) and (min-width: 320px) {
+  
+  .button {
+    padding: 5px 20px;
+  }
+
+}

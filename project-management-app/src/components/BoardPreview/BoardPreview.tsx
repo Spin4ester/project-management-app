@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './BoardPreview.module.css';
 import EditIcon from '../../assets/icons/edit.png';
 import DeleteIcon from '../../assets/icons/delete.png';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changeBoardPreview, deleteBoardPreview, editBoardPreview } from 'redux/BoardSlice';
@@ -16,7 +16,7 @@ export const BoardPreview = () => {
   const boardPreviews = useSelector((state: RootState) => state.board.previews);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const editBoard = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, el: IUserBoard) => {
     dispatch(changeBoardPreview(el._id));
