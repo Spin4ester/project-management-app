@@ -5,7 +5,6 @@ import { INewUser, IUser, IUserLogin, IUserUpdate } from 'common/types';
 import { setHeaders } from 'common/utils';
 
 interface IStateUser {
-  language: string;
   isAuth: boolean;
   userId: string;
   userName: string;
@@ -13,7 +12,6 @@ interface IStateUser {
 }
 
 export const initialState: IStateUser = {
-  language: localStorage.getItem('i18nextLng') as string,
   isAuth: !!localStorage.getItem('token'),
   userName: localStorage.getItem('userName') || '',
   userId: localStorage.getItem('userId') || '',
