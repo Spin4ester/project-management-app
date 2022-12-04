@@ -18,9 +18,15 @@
 }
 
 .narrow {
-  height: 40px;
+  height: 30px;
   flex-direction: row-reverse;
 }
+
+.narrow > h6 {
+  font-size: 1em;
+}
+
+
 
 .container:hover {
   cursor: pointer;
@@ -36,4 +42,8 @@
 .container > h6 {
   font-family: 'Oswald', sans-serif;
   margin: 0;
+}
+
+.narrow > img {
+  width: 15%;
 }

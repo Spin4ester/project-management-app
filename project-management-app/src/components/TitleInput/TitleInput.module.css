@@ -6,6 +6,7 @@
   transition: 0.3s;
   border-radius: 5px;
   padding: 8px;
+  width: 350px;
 }
 
 .input:hover {
@@ -25,4 +26,16 @@
   margin-bottom: 0;
   text-align: center;
   font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 620px) and (min-width: 450px) {
+  .input {
+      width: 250px;
+  }
+}
+
+@media only screen and (max-width: 450px) and (min-width: 320px) {
+  .input {
+      width: 220px;
+  }
 }
