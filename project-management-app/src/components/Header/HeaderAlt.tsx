@@ -18,6 +18,10 @@ export function HeaderAlt() {
 
   const [navbar, setNavbar] = useState(false);
 
+  useEffect(() => {
+    window.addEventListener('scroll', changeBackground);
+  }, []);
+
   const changeBackground = () => {
     if (window.scrollY >= 40) {
       setNavbar(true);
@@ -25,8 +29,6 @@ export function HeaderAlt() {
       setNavbar(false);
     }
   };
-
-  window.addEventListener('scroll', changeBackground);
 
   const activeStyle = {
     backgroundColor: 'rgb(99, 128, 254)',
