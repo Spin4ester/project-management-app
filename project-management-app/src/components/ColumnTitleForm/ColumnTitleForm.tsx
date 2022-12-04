@@ -8,6 +8,7 @@ import { fetchBoardColumns, updateColumn } from 'redux/SelectedBoardSlice';
 import { IUserColumn } from 'common/types';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { AppDispatch } from 'redux/Store';
 
 type Props = {
   column: IUserColumn;
@@ -27,8 +28,7 @@ export const ColumnTitleForm = (props: Props) => {
     formState: { errors },
     reset,
   } = useForm<IFormValues>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const closeUpdateColumnTitle = () => {
     props.setTitleEditable(false);

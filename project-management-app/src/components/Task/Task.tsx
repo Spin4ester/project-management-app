@@ -6,6 +6,7 @@ import { IUserTask } from 'common/types';
 import { openDeleteTaskModal, openEditTaskModal } from 'redux/ModalSlice';
 import { useDispatch } from 'react-redux';
 import { deleteBoardTask, editBoardTask } from 'redux/SelectedBoardSlice';
+import { AppDispatch } from 'redux/Store';
 
 type TaskComponentProps = {
   item: IUserTask;
@@ -13,8 +14,7 @@ type TaskComponentProps = {
 };
 
 export const Task = (props: TaskComponentProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const deleteTask = (e: React.MouseEvent) => {
     e.stopPropagation();
