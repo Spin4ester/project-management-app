@@ -16,6 +16,10 @@ import { removeUserFromLocalStorage } from 'common/utils';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import { closeDeleteProfileModal, openDeleteProfileModal } from 'redux/ModalSlice';
 import { showError, updateServerErrorInfo } from 'redux/ServerErorsSlice';
+import Login from '../../assets/icons/enter.png';
+import Password from '../../assets/icons/padlock.png';
+import User from '../../assets/icons/account.png';
+import ConfirmPassword from '../../assets/icons/padlock_confirm.png';
 
 export function Profile() {
   const { t } = useTranslation();
@@ -89,7 +93,6 @@ export function Profile() {
 
   useEffect(() => {
     deleteUser(deleteConfirmed);
-    // eslint-disable-next-line
   }, [deleteConfirmed]);
 
   return (
@@ -138,61 +141,76 @@ export function Profile() {
           })}
         >
           <div className={styles.inputContainer}>
-            <input
-              className={styles.input}
-              placeholder={(t('EditName') as string) + `: ${userName}`}
-              type="text"
-              autoComplete="off"
-              {...register('name', {
-                maxLength: { value: 30, message: `${t('MaxNameLength')}` },
-              })}
-            ></input>
+            <div className={styles.input_description}>
+              <img src={User}></img>
+              <input
+                className={styles.input}
+                placeholder={(t('EditName') as string) + `: ${userName}`}
+                type="text"
+                autoComplete="off"
+                {...register('name', {
+                  maxLength: { value: 30, message: `${t('MaxNameLength')}` },
+                })}
+              ></input>
+            </div>
+
             <p className={styles.authError} id="userNameError">
               {errors.name?.message?.toString()}
             </p>
           </div>
 
           <div className={styles.inputContainer}>
-            <input
-              className={styles.input}
-              placeholder={(t('EditLogin') as string) + `: ${userLogin}`}
-              type="text"
-              autoComplete="off"
-              {...register('login', {
-                maxLength: { value: 30, message: `${t('MaxNameLength')}` },
-                validate: (value) => value === '' || value.length >= 2 || `${t('AtLeast2symbols')}`,
-              })}
-            ></input>
+            <div className={styles.input_description}>
+              <img src={Login}></img>
+              <input
+                className={styles.input}
+                placeholder={(t('EditLogin') as string) + `: ${userLogin}`}
+                type="text"
+                autoComplete="off"
+                {...register('login', {
+                  maxLength: { value: 30, message: `${t('MaxNameLength')}` },
+                  validate: (value) =>
+                    value === '' || value.length >= 2 || `${t('AtLeast2symbols')}`,
+                })}
+              ></input>
+            </div>
             <p className={styles.authError} id="userLoginError">
               {errors.login?.message?.toString()}
             </p>
           </div>
 
           <div className={styles.inputContainer}>
-            <input
-              className={styles.input}
-              placeholder={t('EditPassword') as string}
-              type="password"
-              autoComplete="off"
-              {...register('password', {
-                validate: (value) => value === '' || value.length >= 8 || `${t('AtLeast8symbols')}`,
-              })}
-            ></input>
+            <div className={styles.input_description}>
+              <img src={Password}></img>
+              <input
+                className={styles.input}
+                placeholder={t('EditPassword') as string}
+                type="password"
+                autoComplete="off"
+                {...register('password', {
+                  validate: (value) =>
+                    value === '' || value.length >= 8 || `${t('AtLeast8symbols')}`,
+                })}
+              ></input>
+            </div>
             <p className={styles.authError} id="passwordError">
               {errors.password?.message?.toString()}
             </p>
           </div>
 
           <div className={styles.inputContainer}>
-            <input
-              className={styles.input}
-              placeholder={t('ConfirmWithPassword') as string}
-              type="password"
-              autoComplete="off"
-              {...register('confirmPassword', {
-                required: { value: true, message: `${t('ThisFieldIsRequired')}` },
-              })}
-            ></input>
+            <div className={styles.input_description}>
+              <img src={ConfirmPassword}></img>
+              <input
+                className={styles.input}
+                placeholder={t('ConfirmWithPassword') as string}
+                type="password"
+                autoComplete="off"
+                {...register('confirmPassword', {
+                  required: { value: true, message: `${t('ThisFieldIsRequired')}` },
+                })}
+              ></input>
+            </div>
             <p className={styles.authError} id="comfirmPasswordError">
               {errors.confirmPassword?.message?.toString()}
             </p>
@@ -206,10 +224,13 @@ export function Profile() {
           >
             {t('UpdateProfile')}
           </button>
+          <button
+            className={styles.buttonDelete}
+            onClick={() => dispatch(openDeleteProfileModal())}
+          >
+            {t('DeleteProfile')}
+          </button>
         </form>
-        <button className={styles.buttonDelete} onClick={() => dispatch(openDeleteProfileModal())}>
-          {t('DeleteProfile')}
-        </button>
       </div>
     </div>
   );

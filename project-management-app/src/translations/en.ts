@@ -48,4 +48,9 @@ export const en = {
   MinskBelarus: 'Minsk, Belarus',
   OurTeam: 'Our Team',
   AuthorizationExpired: 'Authorization has expired',
+  ViewEditTask: 'View/edit task',
+  Title: 'Title',
+  Description: 'Description',
+  Loading: 'Loading',
+  ReturnToMainPage: 'Return to main page',
 };

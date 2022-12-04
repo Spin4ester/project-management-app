@@ -6,14 +6,19 @@
     height: 80px;
     background-color: rgb(255, 246, 207);
     border-radius: 10px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8em; 
 }
 
 .container:hover {
-    background-color: rgb(240, 225, 255);
+    background-color: rgb(244, 233, 255);
     cursor: pointer;
+    transition: 0.5s;
+}
+
+.container:active {
+    transform: scale(0.95);
     transition: 0.3s;
 }
 
@@ -24,6 +29,7 @@
 .content > h6 {
     font-family: 'Oswald', sans-serif;
     text-align: center;
+    margin-bottom: 0;
 }
 
 .content {
@@ -44,12 +50,17 @@
 }
 
 .icon {
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
 }
 
 .icon:hover {
     transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.icon:active {
+    transform: scale(0.9);
     transition: 0.3s;
 }
 
@@ -63,7 +74,7 @@
     height: 80px;
     background-color: rgba(255, 246, 207, 0.2);
     border-radius: 10px;
-    border: 2px solid #000;
+    border: 2px solid transparent;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8em; 
@@ -76,10 +87,42 @@
     transition: 0.3s;
 }
 
+.add_board:active {
+    transform: scale(0.95);
+    transition: 0.3s;
+}
+
 .add_board > img {
     width: 20%;
 }
 
 .add_board > h6 {
     font-family: 'Oswald', sans-serif;
+}
+
+
+
+@media only screen and (max-width: 620px) and (min-width: 280px) {
+    .container {
+        width: 150px;
+        height: 60px;
+  }
+
+  .content > h6 {
+    font-size: 0.8em;
+}
+
+  .icon {
+    height: 15px;
+    width: 15px;
+  }
+
+  .add_board {
+        width: 150px;
+        height: 60px; 
+  }
+
+  .add_board > h6 {
+    font-size: 0.8em;
+}
 }

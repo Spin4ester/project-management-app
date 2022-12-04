@@ -2,24 +2,34 @@ import React from 'react';
 import styles from './BoardPreview.module.css';
 import EditIcon from '../../assets/icons/edit.png';
 import DeleteIcon from '../../assets/icons/delete.png';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { changeBoardPreview, deleteBoardPreview } from 'redux/BoardSlice';
+import { changeBoardPreview, deleteBoardPreview, editBoardPreview } from 'redux/BoardSlice';
 import AddPreview from '../../assets/icons/add-preview.png';
 import { openCreateBoardModal, openDeleteModal, openEditBoardModal } from 'redux/ModalSlice';
 import { useTranslation } from 'react-i18next';
+import { IUserBoard } from 'common/types';
 
 export const BoardPreview = () => {
   const { t } = useTranslation();
-  // const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const boardPreviews = useSelector((state: RootState) => state.board.previews);
-  // const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
-  // const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
-  // const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const editBoard = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, el: IUserBoard) => {
+    dispatch(changeBoardPreview(el._id));
+    e.stopPropagation();
+    dispatch(openEditBoardModal(true));
+    dispatch(editBoardPreview(el.title));
+  };
+
+  const deleteBoard = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, el: IUserBoard) => {
+    dispatch(deleteBoardPreview(el._id));
+    e.stopPropagation();
+    dispatch(openDeleteModal(true));
+  };
 
   return (
     <>
@@ -39,9 +49,7 @@ export const BoardPreview = () => {
                 src={EditIcon}
                 alt="Edit"
                 onClick={(e) => {
-                  dispatch(changeBoardPreview(el._id));
-                  e.stopPropagation();
-                  dispatch(openEditBoardModal(true));
+                  editBoard(e, el);
                 }}
               ></img>
               <img
@@ -49,9 +57,7 @@ export const BoardPreview = () => {
                 src={DeleteIcon}
                 alt="Delete"
                 onClick={(e) => {
-                  dispatch(deleteBoardPreview(el._id));
-                  e.stopPropagation();
-                  dispatch(openDeleteModal(true));
+                  deleteBoard(e, el);
                 }}
               ></img>
             </div>

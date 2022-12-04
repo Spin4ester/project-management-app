@@ -1,0 +1,58 @@
+.container {
+  border-radius: 5px;
+}
+
+.container input {
+  width: 150px;
+}
+
+.button {
+  border: none;
+  background: none;
+  padding: 1px 3px;
+}
+
+.input {
+  border: none;
+  outline: none;
+  cursor: text;
+  background-color: rgb(255, 255, 255);
+  transition: 0.3s;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.input:hover {
+  cursor: pointer;
+  background-color: rgb(215, 255, 254);
+  transition: 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  background-color: rgb(244, 255, 223);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+
+.button img {
+  width: 21px;
+  vertical-align: sub; 
+}
+
+.button img:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+
+.button img:active {
+  transform: scale(0.9);
+  transition: 0.3s;
+}
+
+.error {
+  color: rgb(201, 47, 47);
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 0.8rem;
+}

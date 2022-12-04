@@ -1,27 +1,39 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    background-color: ivory;
-    padding: 5px;
-    font-size: 0.7em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  background-color: ivory;
+  padding: 5px;
+  font-size: 0.7em;
+  margin: 0 5px;
 }
 
 .container > img {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .container > p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .container:hover {
-    background-color: rgb(202, 238, 255);
-    cursor: pointer;
-    transition: 0.3s;
+  background-color: rgb(202, 238, 255);
+  transition: 0.3s;
+}
+
+.delete_img {
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.delete_img:hover {
+  transform: scale(1.1);
+}
+
+.delete_img:active {
+  transform: scale(0.9);
 }

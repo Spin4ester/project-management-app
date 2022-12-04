@@ -1,0 +1,28 @@
+.description {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  transition: 0.3s;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.description:hover {
+  cursor: pointer;
+  background-color: rgb(245, 255, 255);
+  transition: 0.3s;
+}
+
+.description:focus {
+  outline: none;
+  background-color: rgb(241, 250, 222);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.authError {
+  color: rgb(201, 47, 47);
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 0.9rem;
+}

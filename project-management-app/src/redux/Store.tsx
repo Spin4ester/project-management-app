@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import boardSlice from 'redux/BoardSlice';
 import modalSlice from 'redux/ModalSlice';
 import userSlice from 'redux/UserSlice';
-import serverErrorSlice from './ServerErorsSlice';
+import serverErrorSlice from 'redux/ServerErorsSlice';
+import selectedBoard from 'redux/SelectedBoardSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     user: userSlice,
     modal: modalSlice,
     serverError: serverErrorSlice,
+    selectedBoard: selectedBoard,
   },
 });
 

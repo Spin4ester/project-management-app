@@ -12,12 +12,12 @@ import { store } from 'redux/Store';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
-      {/* <ApiProvider api={apiSlice}> */}
-      <Provider store={store}>
-        <App />
-      </Provider>
-      {/* </ApiProvider> */}
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    {/* <ApiProvider api={apiSlice}> */}
+    <Provider store={store}>
+      <App />
+    </Provider>
+    {/* </ApiProvider> */}
+    {/* </React.StrictMode> */}
   </BrowserRouter>
 );
