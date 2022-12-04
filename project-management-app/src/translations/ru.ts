@@ -52,4 +52,5 @@ export const ru = {
   Description: 'Описание',
   Loading: 'Загрузка',
   ReturnToMainPage: 'Вернуться на главную страницу',
+  Board: 'Борд',
 };

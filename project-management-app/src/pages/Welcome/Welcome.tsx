@@ -37,7 +37,7 @@ export function Welcome() {
             name={t('Anya')}
             location={t('MinskBelarus')}
             image={AnnPic}
-            tasks={['Board Page', 'Drag and Drop', 'UNDEFINED']}
+            tasks={['Board Page', 'Drag and Drop', '404 page']}
           />
         </div>
       </div>

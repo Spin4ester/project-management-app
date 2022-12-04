@@ -35,7 +35,7 @@ export const CreateColumn = () => {
 
   const onSubmit = async (data: IFormValues) => {
     await dispatch(fetchBoardColumns(boardId));
-    const nextOrder = columns[columns.length - 1].order + 1;
+    const nextOrder = columns.length > 0 ? columns[columns.length - 1].order + 1 : 0;
     await dispatch(
       createColumn({
         column: {
