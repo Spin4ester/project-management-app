@@ -8,23 +8,16 @@ import { deleteUserBoard, fetchUserBoards } from 'redux/BoardSlice';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import { BoardPreviewModalCreate } from 'components/Modals/BoardPreviewModalCreate';
 import { openDeleteModal } from 'redux/ModalSlice';
-import { useNavigate } from 'react-router-dom';
 
 export function Main() {
   const { isLoaded, toBeDeleteBoard } = useSelector((state: RootState) => state.board);
   const userId = useSelector((state: RootState) => state.user.userId);
-  const isAuth = useSelector((state: RootState) => state.user);
   const isOpenDeleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUserBoards(userId));
   }, [userId]);
-
-  // useEffect(() => {
-  //   if (!isAuth) navigate('/');
-  // }, [isAuth]);
 
   return (
     <main className={styles.container}>

@@ -1,74 +1,170 @@
-import React from 'react';
-import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUser } from 'redux/UserSlice';
 import styles from './Header.module.css';
+import { NavLink } from 'react-router-dom';
+import Profile from '../../assets/icons/user_alt.png';
+import SignIn from '../../assets/icons/sign-in.png';
+import SignUp from '../../assets/icons/sign-up.png';
+import Board from '../../assets/icons/kanban_alt.png';
+import SignOut from '../../assets/icons/log-out.png';
 
 export function Header() {
   const { t, i18n } = useTranslation();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const dispatch = useDispatch();
 
+  const [navbar, setNavbar] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('scroll', changeBackground);
+  }, []);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 40) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  const activeStyle = {
+    backgroundColor: 'rgb(99, 128, 254)',
+    filter: 'opacity(100%)',
+  };
+
   return (
-    <Navbar sticky="top" bg="dark" variant="dark" className={styles.container}>
-      <Container>
-        <LinkContainer to="/">
-          <Navbar.Brand href="#home" className={styles.logo}>
-            <span>T</span>ik-<span>T</span>ask
-          </Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className={`${styles.links} mx-auto`}>
-            {!isAuth && (
-              <LinkContainer to="/login">
-                <Nav.Link href="#login">{t('SignIn')}</Nav.Link>
-              </LinkContainer>
-            )}
-            {!isAuth && (
-              <LinkContainer to="/registration">
-                <Nav.Link href="#registration">{t('SignUp')}</Nav.Link>
-              </LinkContainer>
-            )}
-            {isAuth && (
-              <LinkContainer to="/profile">
-                <Nav.Link href="#profile">{t('Profile')}</Nav.Link>
-              </LinkContainer>
-            )}
-            {isAuth && (
-              <LinkContainer to="/boards">
-                <Nav.Link href="#boards">{t('Workspace')}</Nav.Link>
-              </LinkContainer>
-            )}
-            {isAuth && (
-              <Navbar.Text
-                className={styles.link}
-                onClick={() => {
-                  removeUserFromLocalStorage();
-                  dispatch(signOutUser());
-                }}
-              >
-                {t('SignOut')}
-              </Navbar.Text>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-        <Button
-          variant="primary"
-          className={styles.button}
+    <nav className={`${styles.container} ${navbar ? styles.scroll : ''}`}>
+      <NavLink to="/" className={styles.logo}>
+        <span>T</span>ik-<span>T</span>ask
+      </NavLink>
+      <div className={styles.links_container}>
+        <div className={styles.links}>
+          {!isAuth && (
+            <NavLink
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/login"
+            >
+              {t('SignIn')}
+            </NavLink>
+          )}
+          {!isAuth && (
+            <NavLink
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/registration"
+            >
+              {t('SignUp')}
+            </NavLink>
+          )}
+          {isAuth && (
+            <NavLink
+              to="/profile"
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              {t('Profile')}
+            </NavLink>
+          )}
+          {isAuth && (
+            <NavLink
+              className={styles.link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/boards"
+            >
+              {t('Workspace')}
+            </NavLink>
+          )}
+          {isAuth && (
+            <p
+              className={`${styles.link} ${styles.sign_out}`}
+              onClick={() => {
+                removeUserFromLocalStorage();
+                dispatch(signOutUser());
+              }}
+            >
+              {t('SignOut')}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className={styles.mobile_links_container}>
+        <div className={styles.mobile_links}>
+          {!isAuth && (
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/login"
+            >
+              <img src={SignIn} alt="Sign In" />
+            </NavLink>
+          )}
+          {!isAuth && (
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/registration"
+            >
+              <img src={SignUp} alt="Sign Up" />
+            </NavLink>
+          )}
+          {isAuth && (
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/profile"
+            >
+              <img src={Profile} alt="Profile" />
+            </NavLink>
+          )}
+          {isAuth && (
+            <NavLink
+              className={styles.mobile_link}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              to="/boards"
+            >
+              <img src={Board} alt="Boards" />
+            </NavLink>
+          )}
+          {isAuth && (
+            <img
+              src={SignOut}
+              alt="SignOut"
+              className={`${styles.mobile_link} ${styles.mobile_sign_out}`}
+              onClick={() => {
+                removeUserFromLocalStorage();
+                dispatch(signOutUser());
+              }}
+            ></img>
+          )}
+        </div>
+      </div>
+      <div className={styles.buttons_container}>
+        <button
+          className={
+            localStorage.getItem('i18nextLng') === 'en'
+              ? `${styles.button} ${styles.active}`
+              : styles.button
+          }
           onClick={() => i18n.changeLanguage('en')}
         >
           EN
-        </Button>
-        <div> | </div>
-        <Button variant="primary" onClick={() => i18n.changeLanguage('ru')}>
+        </button>
+        <button
+          className={
+            localStorage.getItem('i18nextLng') === 'ru'
+              ? `${styles.button} ${styles.active}`
+              : styles.button
+          }
+          onClick={() => i18n.changeLanguage('ru')}
+        >
           RU
-        </Button>
-      </Container>
-    </Navbar>
+        </button>
+      </div>
+    </nav>
   );
 }
 

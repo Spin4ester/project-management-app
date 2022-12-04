@@ -98,8 +98,6 @@ interface IStateBoard {
   toBeEditedBoard: string;
   boardPreviewId: string;
   board: string;
-  task: string;
-  column: string;
   previews: IUserBoard[];
   isLoaded: boolean;
 }
@@ -107,10 +105,8 @@ interface IStateBoard {
 export const initialState: IStateBoard = {
   toBeDeleteBoard: 'none',
   toBeEditedBoard: 'none',
-  boardPreviewId: 'first',
-  board: 'first',
-  task: 'first',
-  column: 'first',
+  boardPreviewId: 'init',
+  board: 'init',
   previews: [],
   isLoaded: false,
 };
