@@ -47,4 +47,5 @@ export const ru = {
   WarsawPoland: 'Варшава, Польша',
   MinskBelarus: 'Минск, Беларусь',
   OurTeam: 'Наша Команда',
+  AuthorizationExpired: 'Срок авторизации истек',
 };

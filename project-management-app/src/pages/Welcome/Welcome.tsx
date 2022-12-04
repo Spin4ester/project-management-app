@@ -9,6 +9,7 @@ import AnnPic from '../../assets/img/ann.png';
 
 export function Welcome() {
   const { t } = useTranslation();
+
   return (
     <div className={styles.container}>
       <div className={styles.project_content}>

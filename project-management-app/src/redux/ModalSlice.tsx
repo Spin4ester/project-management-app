@@ -53,4 +53,5 @@ export const {
   openCreateBoardModal,
   openEditBoardModal,
 } = modalSlice.actions;
+
 export default modalSlice.reducer;

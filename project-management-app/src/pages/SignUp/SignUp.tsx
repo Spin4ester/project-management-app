@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { signInUser, updateUserInfo, userSigninFetch, userSignupFetch } from 'redux/UserSlice';
 import { AppDispatch } from 'redux/Store';
 import { saveUserToLocalStorage } from 'pages/SignIn/SignIn';
+import { updateServerErrorInfo } from 'redux/ServerErorsSlice';
 
 export function SignUp() {
   const { t } = useTranslation();
@@ -23,14 +24,20 @@ export function SignUp() {
   const dispatch = useDispatch<AppDispatch>();
 
   async function onSubmit(data: INewUser) {
-    try {
-      delete data.confirmPassword;
-      const user = await (await dispatch(userSignupFetch(data))).payload;
+    delete data.confirmPassword;
+    const user = await (await dispatch(userSignupFetch(data))).payload;
+    if ((user as IErrorResponse).statusCode) {
       if ((user as IErrorResponse).statusCode === 409) {
         setError('login', { type: 'custom', message: `${t('LoginTaken')}` }, { shouldFocus: true });
       } else {
-        const userLoginData = { login: (user as IUser).login, password: data.password };
-        const loginData = await (await dispatch(userSigninFetch(userLoginData))).payload;
+        dispatch(updateServerErrorInfo(user));
+      }
+    } else {
+      const userLoginData = { login: (user as IUser).login, password: data.password };
+      const loginData = await (await dispatch(userSigninFetch(userLoginData))).payload;
+      if ((loginData as IErrorResponse).statusCode) {
+        dispatch(updateServerErrorInfo(loginData));
+      } else {
         dispatch(signInUser());
         dispatch(updateUserInfo(user as IUser));
         localStorage.setItem('token', (loginData as IUserSigninData).token);
@@ -38,8 +45,6 @@ export function SignUp() {
         reset();
         navigate('/boards');
       }
-    } catch (e) {
-      console.log(e);
     }
   }
 

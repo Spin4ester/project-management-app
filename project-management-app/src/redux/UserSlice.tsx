@@ -78,8 +78,7 @@ export const userSigninFetch = createAsyncThunk<string, IUserLogin>(
 );
 
 export const fetchAllUsers = createAsyncThunk<IUser[]>('users', async () => {
-  const token = localStorage.getItem('token');
-  if (!token) return null;
+  const token = localStorage.getItem('token') || '';
   try {
     const res = await fetch(config.api.url + 'users', {
       method: 'GET',
@@ -113,7 +112,7 @@ export const updateUserOnServer = createAsyncThunk<string, [string, IUserUpdate]
   'update user',
   async ([id, newUserInfo]) => {
     const url = `${config.api.url}users/${id}`;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || '';
     if (!token) return null;
     try {
       const res = await fetch(url, {

@@ -27,6 +27,7 @@ export interface IUserSigninData {
 }
 
 export interface IErrorResponse {
+  show?: boolean;
   statusCode: number;
   message: string;
 }

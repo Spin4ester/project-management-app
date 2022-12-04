@@ -6,15 +6,18 @@ import { RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOutUser } from 'redux/UserSlice';
 import styles from './Header.module.css';
+import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 
 export function Header() {
   const { t, i18n } = useTranslation();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
+  const error = useSelector((state: RootState) => state.serverError);
   const dispatch = useDispatch();
 
   return (
     <Navbar sticky="top" bg="dark" variant="dark" className={styles.container}>
       <Container>
+        {error.show && <ErrorMessage error={error} />}
         <LinkContainer to="/">
           <Navbar.Brand href="#home" className={styles.logo}>
             <span>T</span>ik-<span>T</span>ask

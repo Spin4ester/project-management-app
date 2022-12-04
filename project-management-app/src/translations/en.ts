@@ -47,4 +47,5 @@ export const en = {
   WarsawPoland: 'Warsaw, Poland',
   MinskBelarus: 'Minsk, Belarus',
   OurTeam: 'Our Team',
+  AuthorizationExpired: 'Authorization has expired',
 };

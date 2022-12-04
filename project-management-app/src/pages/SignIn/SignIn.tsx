@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { IErrorResponse, IUser, IUserLogin, IUserSigninData } from 'common/types';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllUsers, signInUser, updateUserInfo, userSigninFetch } from 'redux/UserSlice';
-import { AppDispatch } from 'redux/Store';
-// import { useGetAllUsersQuery } from 'redux/apiSlice';
+import { AppDispatch, RootState } from 'redux/Store';
+import { hideError, updateServerErrorInfo } from 'redux/ServerErorsSlice';
 
 export function SignIn() {
   const { t } = useTranslation();
@@ -23,27 +23,36 @@ export function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  // const { data: users, isLoading, isSuccess, isError, error } = useGetAllUsersQuery();
+  const tokenError = useSelector((state: RootState) => state.serverError.statusCode);
 
   async function onSubmit(data: IUserLogin) {
     const loginData = await (await dispatch(userSigninFetch(data))).payload;
     if ((loginData as IErrorResponse).statusCode) {
-      setError('login', { type: 'custom', message: `${t('AuthorizationError')}` });
-      setError('password', { type: 'custom', message: `${t('AuthorizationError')}` });
+      if ((loginData as IErrorResponse).statusCode === 401) {
+        setError('login', { type: 'custom', message: `${t('AuthorizationError')}` });
+        setError('password', { type: 'custom', message: `${t('AuthorizationError')}` });
+      } else {
+        dispatch(updateServerErrorInfo(loginData));
+      }
     } else {
-      dispatch(signInUser());
       localStorage.setItem('token', (loginData as IUserSigninData).token);
-      try {
-        const users = await (await dispatch(fetchAllUsers())).payload;
-        const user = (users as IUser[]).find((item: IUser) => item.login === data.login);
-        if (user) {
-          saveUserToLocalStorage(user);
-          dispatch(updateUserInfo(user));
-          reset();
-          navigate('/boards');
-        }
-      } catch (error) {
-        console.log(error);
+
+      if (tokenError === 403) {
+        dispatch(updateServerErrorInfo({ statusCode: 0, message: '' }));
+        dispatch(signInUser());
+        dispatch(hideError());
+      }
+
+      const users = await (await dispatch(fetchAllUsers())).payload;
+      if ((users as IErrorResponse).statusCode) {
+        dispatch(updateServerErrorInfo(users));
+      }
+      const user = (users as IUser[]).find((item: IUser) => item.login === data.login);
+      if (user) {
+        saveUserToLocalStorage(user);
+        dispatch(updateUserInfo(user));
+        reset();
+        navigate('/boards');
       }
     }
   }

@@ -1,45 +1,43 @@
 .container {
-    background-color: rgb(35, 33, 37);
-    font-family: 'Oswald', sans-serif;
+  background-color: rgb(35, 33, 37);
+  font-family: 'Oswald', sans-serif;
 }
 
 .links {
-    
-    display: flex;
-    flex-direction: row;
+
+  display: flex;
+  flex-direction: row;
 }
 
 .link {
-    padding: 8px;
+  padding: 8px;
 }
 
 .logo {
-    font-family: 'Staatliches', cursive;
-    font-size: 2em !important;
-    margin: 0 !important;
-  }
+  font-family: 'Staatliches', cursive;
+  font-size: 2em !important;
+  margin: 0 !important;
+}
 
-  .logo:hover {
-    color: rgb(49, 161, 49) !important;
-    transition: 0.3s;
-  }
-
-
-  .logo > span {
-    color: rgb(49, 161, 49) !important;
-  }
-
-  .logo:hover > span {
-    color: rgb(255, 255, 255) !important;
-    transition: 0.3s;
-  }
+.logo:hover {
+  color: rgb(49, 161, 49) !important;
+  transition: 0.3s;
+}
 
 
-  /* @media only screen and (max-width: 500px) {
+.logo>span {
+  color: rgb(49, 161, 49) !important;
+}
+
+.logo:hover>span {
+  color: rgb(255, 255, 255) !important;
+  transition: 0.3s;
+}
+
+
+/* @media only screen and (max-width: 500px) {
     .button {
        width: 5% !important;
        text
     }
   } */
-
- 

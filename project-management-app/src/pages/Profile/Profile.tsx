@@ -15,6 +15,7 @@ import {
 import { removeUserFromLocalStorage } from 'common/utils';
 import { DeleteModal } from 'components/Modals/DeleteModal';
 import { closeDeleteProfileModal, openDeleteProfileModal } from 'redux/ModalSlice';
+import { showError, updateServerErrorInfo } from 'redux/ServerErorsSlice';
 
 export function Profile() {
   const { t } = useTranslation();
@@ -41,17 +42,30 @@ export function Profile() {
       };
       const newUserData = await (await dispatch(updateUserOnServer([userId, updatedUser]))).payload;
       if ((newUserData as IErrorResponse).statusCode) {
-        const loginError = (newUserData as IErrorResponse).statusCode === 409;
-        setError(
-          'login',
-          {
-            type: 'custom',
-            message: loginError ? `${t('LoginTaken')}` : (newUserData as IErrorResponse).message,
-          },
-          { shouldFocus: true }
-        );
+        if ((newUserData as IErrorResponse).statusCode === 409) {
+          setError(
+            'login',
+            {
+              type: 'custom',
+              message: `${t('LoginTaken')}`,
+            },
+            { shouldFocus: true }
+          );
+        }
+        if ((newUserData as IErrorResponse).statusCode === 403) {
+          dispatch(signOutUser());
+          removeUserFromLocalStorage();
+          dispatch(
+            updateServerErrorInfo({
+              statusCode: (newUserData as IErrorResponse).statusCode,
+              message: t('AuthorizationExpired'),
+            })
+          );
+          dispatch(showError());
+        }
       } else {
         dispatch(updateUserInfo(newUserData as IUser));
+        dispatch(showError());
         reset();
       }
     }
@@ -60,9 +74,13 @@ export function Profile() {
   async function deleteUser(toBeDeleted: boolean) {
     if (toBeDeleted) {
       try {
-        await dispatch(deleteUserFromServer(userId));
-        removeUserFromLocalStorage();
-        dispatch(signOutUser());
+        const deletInfo = await (await dispatch(deleteUserFromServer(userId))).payload;
+        if ((deletInfo as IErrorResponse).statusCode) {
+          console.log((deletInfo as IErrorResponse).message);
+        } else {
+          removeUserFromLocalStorage();
+          dispatch(signOutUser());
+        }
       } catch (error) {
         console.log(error);
       }
