@@ -13,7 +13,7 @@ import {
   deleteBoardColumn,
   fetchUserColumnTasks,
 } from 'redux/SelectedBoardSlice';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 
 type ColumnComponentProps = {
   column: IUserColumn;
@@ -33,8 +33,7 @@ export const Column = (props: ColumnComponentProps) => {
           return <Task item={element} key={element._id} index={index} />;
         });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const addTask = async () => {
     dispatch(createColumnTask(props.column._id));

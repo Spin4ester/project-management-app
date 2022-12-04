@@ -27,3 +27,25 @@
   gap: 10px;
   margin-bottom: 10px;
 }
+
+.draggable_column {
+  height: fit-content;
+}
+
+.breadcrumbs {
+  margin: 10px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.breadcrumbs_link a {
+  color: rgb(99, 128, 254);
+  transition: 0.5s;
+}
+
+.breadcrumbs_link a:hover {
+  color: rgb(35, 33, 37);
+}
+
+.breadcrumbs ol {
+  margin: 0;
+}

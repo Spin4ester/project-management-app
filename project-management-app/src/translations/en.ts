@@ -52,4 +52,5 @@ export const en = {
   Description: 'Description',
   Loading: 'Loading',
   ReturnToMainPage: 'Return to main page',
+  Board: 'Board',
 };
