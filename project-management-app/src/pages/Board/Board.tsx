@@ -9,12 +9,13 @@ import {
   openDeleteColumnModal,
   openDeleteTaskModal,
 } from 'redux/ModalSlice';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './Board.module.css';
 import {
   deleteColumn,
   deleteTask,
+  fetchBoard,
   fetchBoardColumns,
   fetchUserTasks,
   updateColumnOrder,
@@ -26,13 +27,14 @@ import { EditTask } from 'components/Modals/EditTask';
 import { CreateTask } from 'components/Modals/CreateTask';
 import { Loading } from 'components/Loading/Loading';
 import { AuthError } from 'components/AuthError/AuthError';
+import { t } from 'i18next';
+import { Breadcrumb } from 'react-bootstrap';
 
 export const Board = () => {
   const boardId = useParams().id || '';
   const userId = useSelector((state: RootState) => state.user.userId);
-  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading, isAuthError } = useSelector(
-    (state: RootState) => state.selectedBoard
-  );
+  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading, isAuthError, boardTitle } =
+    useSelector((state: RootState) => state.selectedBoard);
 
   const isOpenDeleteColumnModal = useSelector(
     (state: RootState) => state.modal.board.deleteColumnModal
@@ -50,6 +52,7 @@ export const Board = () => {
           {(provided) => {
             return (
               <div
+                className={styles.draggable_column}
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
@@ -120,65 +123,77 @@ export const Board = () => {
     return;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchBoardColumns(boardId));
     dispatch(fetchUserTasks(userId));
+    dispatch(fetchBoard(boardId));
   }, [boardId, dispatch, userId]);
 
   return (
-    <div className={styles.container}>
-      <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
-        <Droppable droppableId="columns" type="column" direction="horizontal">
-          {(provided) => {
-            return (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className={styles.list}
-                id="columns"
-              >
-                {children}
-                {provided.placeholder}
-              </div>
-            );
-          }}
-        </Droppable>
-      </DragDropContext>
-      <div>
-        <CreateButton title="CreateColumn" onClickFunc={addColumn} type="wide" />
+    <>
+      <div className={styles.breadcrumbs} key="breadcrumbs">
+        <Breadcrumb>
+          <Breadcrumb.Item href="/boards" className={styles.breadcrumbs_link}>
+            {t('Workspace')}
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active className={styles.breadcrumbs_active}>
+            {boardTitle}
+          </Breadcrumb.Item>
+        </Breadcrumb>
       </div>
-      <CreateColumn />
-      <CreateTask />
-      <EditTask />
-      {isOpenDeleteColumnModal && (
-        <DeleteModal
-          onCancelClick={() => dispatch(openDeleteColumnModal(false))}
-          onDeleteClick={async () => {
-            await dispatch(deleteColumn({ boardId, columnId: toBeDeleteColumn }));
-            dispatch(fetchBoardColumns(boardId));
-            dispatch(fetchUserTasks(userId));
-            dispatch(openDeleteColumnModal(false));
-          }}
-        />
-      )}
-      {isOpenDeleteTaskModal && (
-        <DeleteModal
-          onCancelClick={() => dispatch(openDeleteTaskModal(false))}
-          onDeleteClick={async () => {
-            await dispatch(
-              deleteTask({ boardId, columnId: toBeDeleteColumn, taskId: toBeDeleteTask })
-            );
-            dispatch(fetchBoardColumns(boardId));
-            dispatch(fetchUserTasks(userId));
-            dispatch(openDeleteTaskModal(false));
-          }}
-        />
-      )}
-      {isLoading && <Loading />}
-      {isAuthError && <AuthError />}
-    </div>
+      <div className={styles.container}>
+        <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+          <Droppable droppableId="columns" type="column" direction="horizontal">
+            {(provided) => {
+              return (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={styles.list}
+                  id="columns"
+                >
+                  {children}
+                  {provided.placeholder}
+                </div>
+              );
+            }}
+          </Droppable>
+        </DragDropContext>
+        <div>
+          <CreateButton title="CreateColumn" onClickFunc={addColumn} type="wide" />
+        </div>
+        <CreateColumn />
+        <CreateTask />
+        <EditTask />
+        {isOpenDeleteColumnModal && (
+          <DeleteModal
+            onCancelClick={() => dispatch(openDeleteColumnModal(false))}
+            onDeleteClick={async () => {
+              await dispatch(deleteColumn({ boardId, columnId: toBeDeleteColumn }));
+              dispatch(fetchBoardColumns(boardId));
+              dispatch(fetchUserTasks(userId));
+              dispatch(openDeleteColumnModal(false));
+            }}
+          />
+        )}
+        {isOpenDeleteTaskModal && (
+          <DeleteModal
+            onCancelClick={() => dispatch(openDeleteTaskModal(false))}
+            onDeleteClick={async () => {
+              await dispatch(
+                deleteTask({ boardId, columnId: toBeDeleteColumn, taskId: toBeDeleteTask })
+              );
+              dispatch(fetchBoardColumns(boardId));
+              dispatch(fetchUserTasks(userId));
+              dispatch(openDeleteTaskModal(false));
+            }}
+          />
+        )}
+        {isLoading && <Loading />}
+        {isAuthError && <AuthError />}
+      </div>
+    </>
   );
 };

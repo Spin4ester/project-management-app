@@ -335,6 +335,32 @@ export const updateTaskOrder = createAsyncThunk(
   }
 );
 
+export const fetchBoard = createAsyncThunk(
+  'user/board',
+  async function (boardId: string, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${config.api.url}boards/${boardId}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 interface IStateBoard {
   isLoading: boolean;
   isAuthError: boolean;
@@ -345,6 +371,7 @@ interface IStateBoard {
   toBeAddTaskColumn: IUserColumn[];
   columns: IUserColumn[];
   tasks: IUserTask[];
+  boardTitle: string;
 }
 
 export const initialState: IStateBoard = {
@@ -357,6 +384,7 @@ export const initialState: IStateBoard = {
   toBeAddTaskColumn: [],
   columns: [],
   tasks: [],
+  boardTitle: '',
 };
 
 export const selectedBoardSlice = createSlice({
@@ -519,6 +547,19 @@ export const selectedBoardSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateTask.rejected, (state, action) => {
+        state.isLoading = false;
+        if (action.payload instanceof Error) {
+          if (action.payload.message === '403') state.isAuthError = true;
+        }
+      })
+      .addCase(fetchBoard.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchBoard.fulfilled, (state, action) => {
+        state.boardTitle = action.payload.title;
+        state.isLoading = false;
+      })
+      .addCase(fetchBoard.rejected, (state, action) => {
         state.isLoading = false;
         if (action.payload instanceof Error) {
           if (action.payload.message === '403') state.isAuthError = true;

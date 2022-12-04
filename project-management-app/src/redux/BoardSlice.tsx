@@ -89,8 +89,6 @@ interface IStateBoard {
   toBeEditedBoard: string;
   boardPreviewId: string;
   board: string;
-  task: string;
-  column: string;
   previews: IUserBoard[];
   isLoaded: boolean;
 }
@@ -98,10 +96,8 @@ interface IStateBoard {
 export const initialState: IStateBoard = {
   toBeDeleteBoard: 'none',
   toBeEditedBoard: 'none',
-  boardPreviewId: 'first',
-  board: 'first',
-  task: 'first',
-  column: 'first',
+  boardPreviewId: 'init',
+  board: 'init',
   previews: [],
   isLoaded: false,
 };
@@ -133,7 +129,6 @@ export const boardSlice = createSlice({
       })
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
         state.previews = action.payload;
-        // console.log(action.payload + '111111111');
         state.isLoaded = true;
       })
       .addCase(fetchUserBoards.rejected, (state, action) => {

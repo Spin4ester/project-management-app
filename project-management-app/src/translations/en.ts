@@ -33,7 +33,7 @@ export const en = {
   MaxNameLength: 'Max length is 30 symbols',
   LoginTaken: 'Login already exists',
   AuthorizationError: 'Authorization error',
-  Error404: "We can't found this page...",
+  Error404: "We can't find this page...",
   CreateBoard: 'Create Board',
   EditBoard: 'Edit Board',
   CreateColumn: 'Create Column',
@@ -53,4 +53,5 @@ export const en = {
   Description: 'Description',
   Loading: 'Loading',
   ReturnToMainPage: 'Return to main page',
+  Board: 'Board',
 };

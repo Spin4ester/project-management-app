@@ -3,7 +3,7 @@ import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { openCreateColumnModal } from 'redux/ModalSlice';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 import { useForm } from 'react-hook-form';
 import { createColumn, fetchBoardColumns } from 'redux/SelectedBoardSlice';
 import { useParams } from 'react-router';
@@ -13,8 +13,7 @@ import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 
 export const CreateColumn = () => {
   const { t } = useTranslation();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
@@ -36,7 +35,7 @@ export const CreateColumn = () => {
 
   const onSubmit = async (data: IFormValues) => {
     await dispatch(fetchBoardColumns(boardId));
-    const nextOrder = columns[columns.length - 1].order + 1;
+    const nextOrder = columns.length > 0 ? columns[columns.length - 1].order + 1 : 0;
     await dispatch(
       createColumn({
         column: {

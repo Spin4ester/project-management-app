@@ -20,7 +20,6 @@ export const BoardPreviewModalCreate = () => {
     register,
     handleSubmit,
     formState: { errors },
-    // setError,
     reset,
   } = useForm<IFormValues>();
 

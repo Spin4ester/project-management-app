@@ -3,7 +3,7 @@ import styles from './BoardPreviewModal.module.css';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'redux/Store';
+import { AppDispatch, RootState } from 'redux/Store';
 import { openEditTaskModal } from 'redux/ModalSlice';
 import { fetchUserTasks, updateTask } from 'redux/SelectedBoardSlice';
 import { TitleInput } from 'components/TitleInput/TitleInput';
@@ -13,8 +13,7 @@ import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 
 export const EditTask = () => {
   const { t } = useTranslation();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
