@@ -12,10 +12,6 @@ import { openDeleteModal } from 'redux/ModalSlice';
 export function Main() {
   const { isLoaded, toBeDeleteBoard } = useSelector((state: RootState) => state.board);
   const userId = useSelector((state: RootState) => state.user.userId);
-<<<<<<< HEAD
-  // const boardPreviews = useSelector((state: RootState) => state.board.previews);
-=======
->>>>>>> develop
   const isOpenDeleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
   const dispatch = useDispatch<AppDispatch>();
 

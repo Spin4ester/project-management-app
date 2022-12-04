@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './ErrorMessage.module.css';
 import crossBtn from '../../assets/icons/cross.svg';
 import { IErrorResponse } from 'common/types';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { hideError } from 'redux/ServerErorsSlice';
-import { signOutUser } from 'redux/UserSlice';
+import { AppDispatch } from 'redux/Store';
+import { clearUserError, signOutUser } from 'redux/UserSlice';
 import { removeUserFromLocalStorage } from 'common/utils';
 
 interface IProps {
@@ -12,24 +13,43 @@ interface IProps {
 }
 
 export function ErrorMessage(props: IProps) {
-  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+
+  let message = props.error.message;
+  makeUserFriendlyErrorName(props.error.statusCode);
+  useEffect(() => {
+    if (props.error.statusCode === 403) {
+      setTimeout(() => {
+        removeUserFromLocalStorage();
+        dispatch(signOutUser());
+      }, 2500);
+    }
+    // eslint-disable-next-line
+  }, [props.error.statusCode]);
+
+  function makeUserFriendlyErrorName(errorCode: number) {
+    switch (errorCode) {
+      case 403:
+        message = t('AuthorizationExpired');
+        break;
+    }
+  }
+
+  function onCloseBtnClick() {
+    dispatch(clearUserError());
+  }
+
   return (
     <div className={styles.container}>
       <img
         className={styles.img}
         src={crossBtn}
         alt="Close button"
-        onClick={() => {
-          if (props.error.statusCode === 403) {
-            dispatch(signOutUser());
-            removeUserFromLocalStorage();
-          }
-          dispatch(hideError());
-        }}
+        onClick={() => onCloseBtnClick()}
       />
       <p className={styles.stringInfo}>Server error occured</p>
-      <p className={styles.stringInfo}>Code: {props.error.statusCode}</p>
-      <p className={styles.stringInfo}>Message: {props.error.message}</p>
+      <p className={styles.stringInfo}>Message: {message}</p>
     </div>
   );
 }

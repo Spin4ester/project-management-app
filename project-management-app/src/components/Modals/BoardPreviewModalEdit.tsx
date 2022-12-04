@@ -11,16 +11,9 @@ import { TitleInput } from 'components/TitleInput/TitleInput';
 import { ModalFormButtons } from 'components/ModalFormButtons/ModalFormButtons';
 
 export const BoardPreviewModalEdit = () => {
-<<<<<<< HEAD
-  // const createBoardModal = useSelector((state: RootState) => state.modal.main.createBoardModal);
-  const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
-  const boardPreviewId = useSelector((state: RootState) => state.board.boardPreviewId);
-  // const isLoaded = useSelector((state: RootState) => state.board.isLoaded);
-=======
   const editBoardModal = useSelector((state: RootState) => state.modal.main.editBoardModal);
   const boardPreviewId = useSelector((state: RootState) => state.board.boardPreviewId);
   const boardPreviewTitle = useSelector((state: RootState) => state.board.toBeEditedBoard);
->>>>>>> develop
   const userId = useSelector((state: RootState) => state.user.userId);
   const dispatch = useDispatch<AppDispatch>();
 

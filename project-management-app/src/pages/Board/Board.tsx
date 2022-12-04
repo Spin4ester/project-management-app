@@ -1,10 +1,6 @@
 import { Column } from 'components/Column/Column';
 import { CreateColumn } from 'components/Modals/CreateColumn';
-<<<<<<< HEAD
-import { CreateTask } from 'components/Modals/CreateTask';
-=======
 import { DeleteModal } from 'components/Modals/DeleteModal';
->>>>>>> develop
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

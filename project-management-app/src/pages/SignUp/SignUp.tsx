@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './SignUp.module.css';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { IErrorResponse, INewUser, IUser, IUserSigninData } from 'common/types';
-import { useDispatch } from 'react-redux';
-import { signInUser, updateUserInfo, userSigninFetch, userSignupFetch } from 'redux/UserSlice';
-import { AppDispatch } from 'redux/Store';
-import { saveUserToLocalStorage } from 'pages/SignIn/SignIn';
-import { updateServerErrorInfo } from 'redux/ServerErorsSlice';
+import { INewUser } from 'common/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { userSigninFetch, userSignupFetch } from 'redux/UserSlice';
+import { AppDispatch, RootState } from 'redux/Store';
 import Login from '../../assets/icons/enter.png';
 import Password from '../../assets/icons/padlock.png';
 import User from '../../assets/icons/account.png';
 import ConfirmPassword from '../../assets/icons/padlock_confirm.png';
+import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 
 export function SignUp() {
   const { t } = useTranslation();
@@ -27,33 +26,29 @@ export function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
+  const error = useSelector((state: RootState) => state.user.serverError);
+
+  useEffect(() => {
+    if (error.statusCode === 409) {
+      setError('login', { type: 'custom', message: `${t('LoginTaken')}` }, { shouldFocus: true });
+    }
+    // eslint-disable-next-line
+  }, [error.statusCode]);
+
   async function onSubmit(data: INewUser) {
     delete data.confirmPassword;
-    const user = await (await dispatch(userSignupFetch(data))).payload;
-    if ((user as IErrorResponse).statusCode) {
-      if ((user as IErrorResponse).statusCode === 409) {
-        setError('login', { type: 'custom', message: `${t('LoginTaken')}` }, { shouldFocus: true });
-      } else {
-        dispatch(updateServerErrorInfo(user));
-      }
-    } else {
-      const userLoginData = { login: (user as IUser).login, password: data.password };
-      const loginData = await (await dispatch(userSigninFetch(userLoginData))).payload;
-      if ((loginData as IErrorResponse).statusCode) {
-        dispatch(updateServerErrorInfo(loginData));
-      } else {
-        dispatch(signInUser());
-        dispatch(updateUserInfo(user as IUser));
-        localStorage.setItem('token', (loginData as IUserSigninData).token);
-        saveUserToLocalStorage(user as IUser);
-        reset();
-        navigate('/boards');
-      }
-    }
+    await dispatch(userSignupFetch(data));
+
+    const userLoginData = { login: data.login, password: data.password };
+    await dispatch(userSigninFetch(userLoginData));
+
+    reset();
+    navigate('/boards');
   }
 
   return (
     <div className={styles.container}>
+      {!!error.statusCode && error.statusCode !== 409 && <ErrorMessage error={error} />}
       <form
         className={styles.content}
         id="signup-form"

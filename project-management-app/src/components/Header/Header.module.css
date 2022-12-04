@@ -41,27 +41,6 @@
   
 
 .logo {
-<<<<<<< HEAD
-  font-family: 'Staatliches', cursive;
-  font-size: 2em !important;
-  margin: 0 !important;
-}
-
-.logo:hover {
-  color: rgb(49, 161, 49) !important;
-  transition: 0.3s;
-}
-
-
-.logo>span {
-  color: rgb(49, 161, 49) !important;
-}
-
-.logo:hover>span {
-  color: rgb(255, 255, 255) !important;
-  transition: 0.3s;
-}
-=======
     color: #fff;
     text-decoration: none;
     font-family: 'Staatliches', cursive;
@@ -83,7 +62,6 @@
     color: rgb(255, 255, 255);
     transition: 0.3s;
   }
->>>>>>> develop
 
   .buttons_container {
     display: flex;
@@ -91,14 +69,6 @@
     align-items: center;
   }
 
-<<<<<<< HEAD
-/* @media only screen and (max-width: 500px) {
-    .button {
-       width: 5% !important;
-       text
-    }
-  } */
-=======
   .button {
     border-radius: 5px;
     background-color: seashell;
@@ -182,4 +152,3 @@
   }
 
  
->>>>>>> develop

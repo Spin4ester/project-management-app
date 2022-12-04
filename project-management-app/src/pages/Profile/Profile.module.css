@@ -89,6 +89,7 @@
 
 .buttonDelete {
   color: darkred;
+  margin: 20px;
 }
 
 .buttonDelete:hover {
@@ -123,6 +124,7 @@
 .authError {
   position: absolute;
   top: 38px;
+  left: 30px;
   color: rgb(201, 47, 47);
   padding-left: 5px;
   text-align: left;
@@ -162,7 +164,7 @@
     width: 50px;
   }
 
-  .input::placeholder {
+  .input::placeholder, .authError {
     font-size: 0.7rem;
   }
 

@@ -6,7 +6,6 @@ import { Main } from 'pages/Main/Main';
 import { Welcome } from 'pages/Welcome/Welcome';
 import { Profile } from 'pages/Profile/Profile';
 import { ErrorPage } from 'pages/Error/ErrorPage';
-import { Header } from 'components/Header/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { SignUp } from 'pages/SignUp/SignUp';
 import { Footer } from 'components/Footer/Footer';
