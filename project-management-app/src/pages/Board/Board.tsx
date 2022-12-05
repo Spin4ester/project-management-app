@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   openCreateColumnModal,
+  openCreateTaskModal,
   openDeleteColumnModal,
   openDeleteTaskModal,
 } from 'redux/ModalSlice';
@@ -29,12 +30,24 @@ import { Loading } from 'components/Loading/Loading';
 import { AuthError } from 'components/AuthError/AuthError';
 import { t } from 'i18next';
 import { Breadcrumb } from 'react-bootstrap';
+import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 export const Board = () => {
   const boardId = useParams().id || '';
   const userId = useSelector((state: RootState) => state.user.userId);
-  const { columns, tasks, toBeDeleteColumn, toBeDeleteTask, isLoading, isAuthError, boardTitle } =
-    useSelector((state: RootState) => state.selectedBoard);
+  const {
+    columns,
+    tasks,
+    toBeDeleteColumn,
+    toBeDeleteTask,
+    isLoading,
+    isAuthError,
+    boardTitle,
+    serverError,
+  } = useSelector((state: RootState) => state.selectedBoard);
+
+  const navigate = useNavigate();
 
   const isOpenDeleteColumnModal = useSelector(
     (state: RootState) => state.modal.board.deleteColumnModal
@@ -44,26 +57,28 @@ export const Board = () => {
     (state: RootState) => state.modal.board.deleteTaskModal
   );
 
-  const children = [...columns]
-    .sort((col1, col2) => col1.order - col2.order)
-    .map((column, index) => {
-      return (
-        <Draggable key={column._id} draggableId={column._id} index={index}>
-          {(provided) => {
-            return (
-              <div
-                className={styles.draggable_column}
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <Column column={{ ...column }} key={column._id} droppableId={column._id} />
-              </div>
-            );
-          }}
-        </Draggable>
-      );
-    });
+  const children = !columns
+    ? []
+    : [...columns]
+        .sort((col1, col2) => col1.order - col2.order)
+        .map((column, index) => {
+          return (
+            <Draggable key={column._id} draggableId={column._id} index={index}>
+              {(provided) => {
+                return (
+                  <div
+                    className={styles.draggable_column}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <Column column={{ ...column }} key={column._id} droppableId={column._id} />
+                  </div>
+                );
+              }}
+            </Draggable>
+          );
+        });
 
   const addColumn = async () => {
     dispatch(openCreateColumnModal(true));
@@ -126,13 +141,16 @@ export const Board = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    if (serverError.statusCode === 404) navigate(`/boards`);
     dispatch(fetchBoardColumns(boardId));
     dispatch(fetchUserTasks(userId));
     dispatch(fetchBoard(boardId));
-  }, [boardId, dispatch, userId]);
+    dispatch(openCreateTaskModal(false));
+  }, [boardId, dispatch, navigate, serverError.statusCode, userId]);
 
   return (
     <>
+      {!!serverError.statusCode && <ErrorMessage error={serverError} />}
       <div className={styles.breadcrumbs} key="breadcrumbs">
         <Breadcrumb>
           <Breadcrumb.Item href="/boards" className={styles.breadcrumbs_link}>
