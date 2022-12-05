@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { INewUser } from 'common/types';
 import { useSelector, useDispatch } from 'react-redux';
-import { userSigninFetch, userSignupFetch } from 'redux/UserSlice';
+import { signInUser, userSigninFetch, userSignupFetch } from 'redux/UserSlice';
 import { AppDispatch, RootState } from 'redux/Store';
 import Login from '../../assets/icons/enter.png';
 import Password from '../../assets/icons/padlock.png';
@@ -41,7 +41,7 @@ export function SignUp() {
 
     const userLoginData = { login: data.login, password: data.password };
     await dispatch(userSigninFetch(userLoginData));
-
+    dispatch(signInUser());
     reset();
     navigate('/boards');
   }

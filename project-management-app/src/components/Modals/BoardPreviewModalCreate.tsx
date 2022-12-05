@@ -43,6 +43,7 @@ export const BoardPreviewModalCreate = () => {
           className={styles.blur}
           onClick={() => {
             dispatch(openCreateBoardModal(false));
+            reset();
           }}
         >
           <form
