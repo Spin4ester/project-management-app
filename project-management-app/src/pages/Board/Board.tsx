@@ -31,6 +31,7 @@ import { AuthError } from 'components/AuthError/AuthError';
 import { t } from 'i18next';
 import { Breadcrumb } from 'react-bootstrap';
 import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 export const Board = () => {
   const boardId = useParams().id || '';
@@ -45,6 +46,8 @@ export const Board = () => {
     boardTitle,
     serverError,
   } = useSelector((state: RootState) => state.selectedBoard);
+
+  const navigate = useNavigate();
 
   const isOpenDeleteColumnModal = useSelector(
     (state: RootState) => state.modal.board.deleteColumnModal
@@ -138,11 +141,12 @@ export const Board = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    if (serverError.statusCode === 404) navigate(`/boards`);
     dispatch(fetchBoardColumns(boardId));
     dispatch(fetchUserTasks(userId));
     dispatch(fetchBoard(boardId));
     dispatch(openCreateTaskModal(false));
-  }, [boardId, dispatch, userId]);
+  }, [boardId, dispatch, navigate, serverError.statusCode, userId]);
 
   return (
     <>
