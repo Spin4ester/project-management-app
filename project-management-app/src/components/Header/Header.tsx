@@ -145,7 +145,8 @@ export function Header() {
       <div className={styles.buttons_container}>
         <button
           className={
-            localStorage.getItem('i18nextLng') === 'en'
+            localStorage.getItem('i18nextLng') === 'en' ||
+            localStorage.getItem('i18nextLng') === 'en-GB'
               ? `${styles.button} ${styles.active}`
               : styles.button
           }

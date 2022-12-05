@@ -56,4 +56,13 @@ export const ru = {
   Board: 'Борд',
   Message: 'Сообщение',
   ServerError: 'Ошибка Сервера',
+  BackendDeploy: 'Деплой Бэкенда',
+  DesignLayout: 'Дизайн и Вёрстка',
+  BoardsPage: 'Главная Страница',
+  ProfilePage: 'Страница Профиля',
+  Authorization: 'Авторизация',
+  ServerErrorsHandling: 'Обработка ошибок',
+  BoardPage: 'Страница Борда',
+  DragNDrop: 'Дрэг и Дроп',
+  ErrorPage: 'Страница 404',
 };

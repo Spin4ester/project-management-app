@@ -56,4 +56,13 @@ export const en = {
   Board: 'Board',
   Message: 'Message',
   ServerError: 'Server Error',
+  BackendDeploy: 'Backend Deploy',
+  DesignLayout: 'Design and Layout',
+  BoardsPage: 'Boards Page',
+  ProfilePage: 'Proflie Page',
+  Authorization: 'Authorization',
+  ServerErrorsHandling: 'Server Errors Handling',
+  BoardPage: 'Board Page',
+  DragNDrop: 'Drag and Drop',
+  ErrorPage: '404 Page',
 };
