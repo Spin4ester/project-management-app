@@ -1,32 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { IUserBoard, IUserBoardData, IUserBoardDataUpdate } from 'common/types';
+import { setHeaders } from 'common/utils';
 import config from 'config';
 
-export const fetchUserBoards = createAsyncThunk(
-  'user/boards',
-  async function (userId: string, { rejectWithValue }) {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${config.api.url}boardsSet/${userId}`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!token) return null;
-      if (!response.ok) {
-        throw new Error('Fetch Error!');
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+export const fetchUserBoards = createAsyncThunk('user/boards', async function (userId: string) {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    const response = await fetch(`${config.api.url}boardsSet/${userId}`, {
+      method: 'GET',
+      headers: setHeaders(token),
+    });
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    console.log(e);
   }
-);
+});
 
 export const createUserBoard = createAsyncThunk(
   'user/createBoard',
@@ -151,6 +142,10 @@ export const boardSlice = createSlice({
       .addCase(updateUserBoard.rejected, () => {
         // state.searchError = 'Sorry, network issues, we are looking into the problem';
       });
+    // .addCase(updateUserBoard.fulfilled, (state) => {})
+    // .addCase(updateUserBoard.rejected, (state) => {
+    //   // state.searchError = 'Sorry, network issues, we are looking into the problem';
+    // });
   },
 });
 

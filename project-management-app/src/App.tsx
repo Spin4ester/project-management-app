@@ -16,6 +16,8 @@ import { Header } from 'components/Header/Header';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
+  const error = useSelector((state: RootState) => state.serverError);
+
   return (
     <div className="App">
       <Header />
@@ -28,7 +30,12 @@ function App() {
           path="/registration"
           element={isAuth ? <Navigate replace to="/boards" /> : <SignUp />}
         />
-        <Route path="/profile" element={!isAuth ? <Navigate replace to="/" /> : <Profile />} />
+        <Route
+          path="/profile"
+          element={
+            !isAuth ? <Navigate replace to={error.statusCode ? '/login' : '/'} /> : <Profile />
+          }
+        />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Footer />

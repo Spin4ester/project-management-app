@@ -1,4 +1,10 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(35, 33, 37, 0.1);
   padding: 20px;
   margin: 0 auto;
@@ -83,6 +89,7 @@
 
 .buttonDelete {
   color: darkred;
+  margin: 20px;
 }
 
 .buttonDelete:hover {
@@ -117,6 +124,7 @@
 .authError {
   position: absolute;
   top: 38px;
+  left: 30px;
   color: rgb(201, 47, 47);
   padding-left: 5px;
   text-align: left;
@@ -156,7 +164,7 @@
     width: 50px;
   }
 
-  .input::placeholder {
+  .input::placeholder, .authError {
     font-size: 0.7rem;
   }
 

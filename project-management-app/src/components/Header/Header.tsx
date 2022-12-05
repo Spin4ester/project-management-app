@@ -14,6 +14,7 @@ import SignOut from '../../assets/icons/log-out.png';
 export function Header() {
   const { t, i18n } = useTranslation();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
+  const error = useSelector((state: RootState) => state.serverError);
   const dispatch = useDispatch();
 
   const [navbar, setNavbar] = useState(false);

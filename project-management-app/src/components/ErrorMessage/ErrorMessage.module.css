@@ -1,0 +1,35 @@
+.container {
+  position: absolute;
+  background-color: aliceblue;
+  border-radius: 5px;
+  top: 66px;
+  right: 0;
+  padding: 10px 40px;
+  animation-name: changeOpacity;
+  animation-duration: 1s
+}
+
+.stringInfo {
+  margin: 5px;
+}
+
+.img {
+  position: absolute;
+  right: 10px;
+  opacity: 0.75;
+}
+
+.img:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+@keyframes changeOpacity {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

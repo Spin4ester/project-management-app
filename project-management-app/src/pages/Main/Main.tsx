@@ -17,6 +17,7 @@ export function Main() {
 
   useEffect(() => {
     dispatch(fetchUserBoards(userId));
+    // eslint-disable-next-line
   }, [userId]);
 
   return (

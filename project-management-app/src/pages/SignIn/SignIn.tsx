@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './SignIn.module.css';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { IErrorResponse, IUser, IUserLogin, IUserSigninData } from 'common/types';
-import { useDispatch } from 'react-redux';
-import { fetchAllUsers, signInUser, updateUserInfo, userSigninFetch } from 'redux/UserSlice';
-import { AppDispatch } from 'redux/Store';
+import { IUser, IUserLogin } from 'common/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAllUsers, updateUserInfo, updateUserLogin, userSigninFetch } from 'redux/UserSlice';
+import { AppDispatch, RootState } from 'redux/Store';
 import Login from '../../assets/icons/enter.png';
 import Password from '../../assets/icons/padlock.png';
-// import { useGetAllUsersQuery } from 'redux/apiSlice';
+import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 
 export function SignIn() {
   const { t } = useTranslation();
@@ -25,33 +25,35 @@ export function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  // const { data: users, isLoading, isSuccess, isError, error } = useGetAllUsersQuery();
+  const error = useSelector((state: RootState) => state.user.serverError);
 
-  async function onSubmit(data: IUserLogin) {
-    const loginData = await (await dispatch(userSigninFetch(data))).payload;
-    if ((loginData as IErrorResponse).statusCode) {
+  useEffect(() => {
+    if (error.statusCode === 401) {
       setError('login', { type: 'custom', message: `${t('AuthorizationError')}` });
       setError('password', { type: 'custom', message: `${t('AuthorizationError')}` });
-    } else {
-      dispatch(signInUser());
-      localStorage.setItem('token', (loginData as IUserSigninData).token);
-      try {
-        const users = await (await dispatch(fetchAllUsers())).payload;
-        const user = (users as IUser[]).find((item: IUser) => item.login === data.login);
-        if (user) {
-          saveUserToLocalStorage(user);
-          dispatch(updateUserInfo(user));
-          reset();
-          navigate('/boards');
-        }
-      } catch (error) {
-        console.log(error);
+    }
+    // eslint-disable-next-line
+  }, [error.statusCode]);
+
+  async function onSubmit(data: IUserLogin) {
+    await dispatch(userSigninFetch(data));
+    const token = localStorage.getItem('token');
+    const login = localStorage.getItem('userLogin');
+    if (token) {
+      dispatch(updateUserLogin(data.login));
+      const users = await (await dispatch(fetchAllUsers())).payload;
+      const user = users.find((item: IUser) => item.login === login);
+      if (user) {
+        dispatch(updateUserInfo(user));
+        saveUserToLocalStorage(user);
+        reset();
       }
     }
   }
 
   return (
     <div className={styles.container}>
+      {!!error.statusCode && error.statusCode !== 401 && <ErrorMessage error={error} />}
       <form
         className={styles.content}
         id="signin-form"
@@ -110,5 +112,4 @@ export function SignIn() {
 export function saveUserToLocalStorage(user: IUser) {
   localStorage.setItem('userId', user._id);
   localStorage.setItem('userName', user.name);
-  localStorage.setItem('userLogin', user.login);
 }

@@ -83,4 +83,5 @@ export const {
   openCreateTaskModal,
   openEditTaskModal,
 } = modalSlice.actions;
+
 export default modalSlice.reducer;

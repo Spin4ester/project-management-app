@@ -22,7 +22,7 @@ export const BoardPreviewModalEdit = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
+    // setError,
     reset,
   } = useForm<IFormValues>();
 
