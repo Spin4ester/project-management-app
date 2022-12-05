@@ -444,11 +444,11 @@ export const selectedBoardSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchUserColumnTasks.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.toBeAddTaskColumn = action.payload.sort(
-          (task1: IUserTask, task2: IUserTask) => task2.order - task1.order
-        );
-        state.serverError = { statusCode: 0, message: '' };
+        !Array.isArray(action.payload) ? (state.toBeAddTaskColumn = []) : (state.isLoading = false),
+          (state.toBeAddTaskColumn = action.payload.sort(
+            (task1: IUserTask, task2: IUserTask) => task2.order - task1.order
+          )),
+          (state.serverError = { statusCode: 0, message: '' });
       })
       .addCase(fetchUserColumnTasks.rejected, (state, action) => {
         state.isLoading = false;
@@ -459,12 +459,14 @@ export const selectedBoardSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateTaskOrder.fulfilled, (state, action) => {
-        state.tasks = state.tasks.map((task) => {
-          const changedTask = action.payload.find((el: IUserTask) => el._id === task._id);
-          return changedTask ? changedTask : task;
-        });
-        state.isLoading = false;
-        state.serverError = { statusCode: 0, message: '' };
+        !Array.isArray(action.payload)
+          ? (state.tasks = [])
+          : (state.tasks = state.tasks.map((task) => {
+              const changedTask = action.payload.find((el: IUserTask) => el._id === task._id);
+              return changedTask ? changedTask : task;
+            })),
+          (state.isLoading = false),
+          (state.serverError = { statusCode: 0, message: '' });
       })
       .addCase(updateTaskOrder.rejected, (state, action) => {
         state.isLoading = false;
