@@ -7,11 +7,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeAuthError } from 'redux/SelectedBoardSlice';
 import Warning from '../../assets/icons/warning.png';
+import { openCreateTaskModal } from 'redux/ModalSlice';
 
 export const AuthError = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   return (
     <>
@@ -22,12 +21,13 @@ export const AuthError = () => {
           <h6>{t('AuthorizationError')}!</h6>
           <button
             className={styles.button}
-            onClick={() => {
-              removeUserFromLocalStorage();
-              dispatch(signOutUser());
-              dispatch(removeAuthError());
-              navigate(`/`);
-            }}
+            // onClick={() => {
+            //   removeUserFromLocalStorage();
+            //   dispatch(signOutUser());
+            //   dispatch(removeAuthError());
+            //   dispatch(openCreateTaskModal(false));
+            //   navigate(`/`);
+            // }}
           >
             {t('ReturnToMainPage')}
           </button>

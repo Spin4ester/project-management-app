@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  IErrorResponse,
   IUserColumn,
   IUserColumnData,
   IUserColumnOrder,
@@ -26,13 +27,12 @@ export const fetchBoardColumns = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -56,13 +56,12 @@ export const createColumn = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -85,13 +84,12 @@ export const deleteColumn = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -115,13 +113,12 @@ export const updateColumn = createAsyncThunk(
       );
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -142,13 +139,12 @@ export const updateColumnOrder = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -168,13 +164,12 @@ export const fetchUserTasks = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -197,13 +192,12 @@ export const fetchUserColumnTasks = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -227,13 +221,12 @@ export const createTask = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -259,13 +252,12 @@ export const deleteTask = createAsyncThunk(
       );
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -297,13 +289,12 @@ export const updateTask = createAsyncThunk(
       );
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -324,13 +315,12 @@ export const updateTaskOrder = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -350,13 +340,12 @@ export const fetchBoard = createAsyncThunk(
       });
       if (!token) return null;
       if (!response.ok) {
-        if (response.status === 403) throw new Error('403');
-        throw new Error('Fetch Error!');
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -372,6 +361,7 @@ interface IStateBoard {
   columns: IUserColumn[];
   tasks: IUserTask[];
   boardTitle: string;
+  serverError: { statusCode: number; message: string };
 }
 
 export const initialState: IStateBoard = {
@@ -385,6 +375,7 @@ export const initialState: IStateBoard = {
   columns: [],
   tasks: [],
   boardTitle: '',
+  serverError: { statusCode: 0, message: '' },
 };
 
 export const selectedBoardSlice = createSlice({
@@ -416,12 +407,12 @@ export const selectedBoardSlice = createSlice({
       .addCase(fetchBoardColumns.fulfilled, (state, action) => {
         state.columns = action.payload;
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(fetchBoardColumns.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(fetchUserTasks.pending, (state) => {
         state.isLoading = true;
@@ -429,12 +420,12 @@ export const selectedBoardSlice = createSlice({
       .addCase(fetchUserTasks.fulfilled, (state, action) => {
         state.tasks = action.payload;
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(fetchUserTasks.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(updateColumnOrder.pending, (state) => {
         state.isLoading = true;
@@ -442,12 +433,12 @@ export const selectedBoardSlice = createSlice({
       .addCase(updateColumnOrder.fulfilled, (state, action) => {
         state.columns = action.payload;
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(updateColumnOrder.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(fetchUserColumnTasks.pending, (state) => {
         state.isLoading = true;
@@ -457,12 +448,12 @@ export const selectedBoardSlice = createSlice({
         state.toBeAddTaskColumn = action.payload.sort(
           (task1: IUserTask, task2: IUserTask) => task2.order - task1.order
         );
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(fetchUserColumnTasks.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(updateTaskOrder.pending, (state) => {
         state.isLoading = true;
@@ -473,97 +464,97 @@ export const selectedBoardSlice = createSlice({
           return changedTask ? changedTask : task;
         });
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(updateTaskOrder.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(createColumn.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(createColumn.fulfilled, (state) => {
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(createColumn.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(deleteColumn.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteColumn.fulfilled, (state) => {
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(deleteColumn.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(updateColumn.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(updateColumn.fulfilled, (state) => {
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(updateColumn.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(createTask.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(createTask.fulfilled, (state) => {
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(deleteTask.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteTask.fulfilled, (state) => {
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(deleteTask.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(updateTask.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(updateTask.fulfilled, (state) => {
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(updateTask.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(fetchBoard.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(fetchBoard.fulfilled, (state, action) => {
-        state.boardTitle = action.payload.title;
+        state.boardTitle = action.payload ? action.payload.title : '';
         state.isLoading = false;
+        state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(fetchBoard.rejected, (state, action) => {
         state.isLoading = false;
-        if (action.payload instanceof Error) {
-          if (action.payload.message === '403') state.isAuthError = true;
-        }
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       });
   },
 });
