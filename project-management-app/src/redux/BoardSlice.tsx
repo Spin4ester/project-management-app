@@ -112,6 +112,7 @@ interface IStateBoard {
   board: string;
   previews: IUserBoard[];
   isLoaded: boolean;
+  isLoading: boolean;
   serverError: { statusCode: number; message: string };
 }
 
@@ -122,6 +123,7 @@ export const initialState: IStateBoard = {
   board: 'init',
   previews: [],
   isLoaded: false,
+  isLoading: false,
   serverError: { statusCode: 0, message: '' },
 };
 
@@ -149,47 +151,59 @@ export const boardSlice = createSlice({
     builder
       .addCase(fetchUserBoards.pending, (state) => {
         state.isLoaded = false;
+        state.isLoading = true;
       })
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
         !Array.isArray(action.payload) ? (action.payload = []) : (state.previews = action.payload),
           (state.isLoaded = true),
-          (state.serverError = { statusCode: 0, message: '' });
+          (state.serverError = { statusCode: 0, message: '' }),
+          (state.isLoading = false);
       })
       .addCase(fetchUserBoards.rejected, (state, action) => {
         state.isLoaded = false;
+        state.isLoading = false;
         state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
         state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(updateUserBoard.pending, (state) => {
         state.isLoaded = false;
+        state.isLoading = true;
       })
       .addCase(updateUserBoard.fulfilled, (state) => {
+        state.isLoading = false;
         state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(updateUserBoard.rejected, (state, action) => {
         state.isLoaded = false;
+        state.isLoading = false;
         state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
         state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(createUserBoard.pending, (state) => {
         state.isLoaded = false;
+        state.isLoading = true;
       })
       .addCase(createUserBoard.fulfilled, (state) => {
+        state.isLoading = false;
         state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(createUserBoard.rejected, (state, action) => {
         state.isLoaded = false;
+        state.isLoading = false;
         state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
         state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(deleteUserBoard.pending, (state) => {
         state.isLoaded = false;
+        state.isLoading = true;
       })
       .addCase(deleteUserBoard.fulfilled, (state) => {
+        state.isLoading = false;
         state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(deleteUserBoard.rejected, (state, action) => {
         state.isLoaded = false;
+        state.isLoading = false;
         state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
         state.serverError.message = (action.payload as IErrorResponse).message;
       });

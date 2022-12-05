@@ -9,9 +9,12 @@ import { DeleteModal } from 'components/Modals/DeleteModal';
 import { BoardPreviewModalCreate } from 'components/Modals/BoardPreviewModalCreate';
 import { openDeleteModal } from 'redux/ModalSlice';
 import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
+import { Loading } from 'components/Loading/Loading';
 
 export function Main() {
-  const { isLoaded, toBeDeleteBoard, serverError } = useSelector((state: RootState) => state.board);
+  const { isLoaded, toBeDeleteBoard, serverError, isLoading } = useSelector(
+    (state: RootState) => state.board
+  );
   const { userId } = useSelector((state: RootState) => state.user);
   const isOpenDeleteModal = useSelector((state: RootState) => state.modal.main.deleteItemModal);
   const dispatch = useDispatch<AppDispatch>();
@@ -26,6 +29,7 @@ export function Main() {
       {isLoaded && <BoardPreview />}
       <BoardPreviewModalCreate />
       <BoardPreviewModalEdit />
+      {isLoading && <Loading />}
       {isOpenDeleteModal && (
         <DeleteModal
           onCancelClick={() => dispatch(openDeleteModal(false))}
