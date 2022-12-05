@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AppDispatch, RootState } from 'redux/Store';
 import { useSelector, useDispatch } from 'react-redux';
 import { openCreateBoardModal } from 'redux/ModalSlice';
-import { changeIsLoaded, createUserBoard, fetchUserBoards } from 'redux/BoardSlice';
+import { createUserBoard, fetchUserBoards } from 'redux/BoardSlice';
 import { useForm } from 'react-hook-form';
 import { TitleInput } from 'components/TitleInput/TitleInput';
 import { IFormValues } from 'common/types';
@@ -32,7 +32,6 @@ export const BoardPreviewModalCreate = () => {
       })
     );
     dispatch(openCreateBoardModal(false));
-    dispatch(changeIsLoaded(false));
     dispatch(fetchUserBoards(userId));
     reset();
   };

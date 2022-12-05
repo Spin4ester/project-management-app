@@ -1,29 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { IUserBoard, IUserBoardData, IUserBoardDataUpdate } from 'common/types';
+import { IErrorResponse, IUserBoard, IUserBoardData, IUserBoardDataUpdate } from 'common/types';
 import { setHeaders } from 'common/utils';
 import config from 'config';
 
-export const fetchUserBoards = createAsyncThunk('user/boards', async function (userId: string) {
-  try {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-    const response = await fetch(`${config.api.url}boardsSet/${userId}`, {
-      method: 'GET',
-      headers: setHeaders(token),
-    });
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.log(e);
+export const fetchUserBoards = createAsyncThunk(
+  'user/boards',
+  async function (userId: string, { rejectWithValue }) {
+    try {
+      const token = localStorage.getItem('token') || '';
+      if (!token) return null;
+      const response = await fetch(`${config.api.url}boardsSet/${userId}`, {
+        method: 'GET',
+        headers: setHeaders(token),
+      });
+      if (!response.ok) {
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
+      }
+      const data = await response.json();
+      return data;
+    } catch (e) {
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
+    }
   }
-});
+);
 
 export const createUserBoard = createAsyncThunk(
   'user/createBoard',
   async function (board: IUserBoardData, { rejectWithValue }) {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token') || '';
       const response = await fetch(`${config.api.url}boards`, {
         method: 'POST',
         headers: {
@@ -33,10 +39,13 @@ export const createUserBoard = createAsyncThunk(
         },
         body: JSON.stringify(board),
       });
+      if (!response.ok) {
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
+      }
       const data = await response.json();
       return data;
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (e) {
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -54,10 +63,14 @@ export const deleteUserBoard = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      if (!token) return null;
+      if (!response.ok) {
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
+      }
       const data = await response.json();
       return data;
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (e) {
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -76,10 +89,18 @@ export const updateUserBoard = createAsyncThunk(
         },
         body: JSON.stringify(board.body),
       });
+      if (!token) return null;
+      if (!response.ok) {
+        if (response.status === 403) throw new Error('403');
+        throw new Error('Fetch Error!');
+      }
+      if (!response.ok) {
+        return rejectWithValue({ statusCode: response.status, message: response.statusText });
+      }
       const data = await response.json();
       return data;
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (e) {
+      return rejectWithValue({ statusCode: -1, message: 'Unknown error' });
     }
   }
 );
@@ -91,6 +112,7 @@ interface IStateBoard {
   board: string;
   previews: IUserBoard[];
   isLoaded: boolean;
+  serverError: { statusCode: number; message: string };
 }
 
 export const initialState: IStateBoard = {
@@ -100,6 +122,7 @@ export const initialState: IStateBoard = {
   board: 'init',
   previews: [],
   isLoaded: false,
+  serverError: { statusCode: 0, message: '' },
 };
 
 export const boardSlice = createSlice({
@@ -128,24 +151,48 @@ export const boardSlice = createSlice({
         state.isLoaded = false;
       })
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
-        state.previews = action.payload;
-        state.isLoaded = true;
+        !Array.isArray(action.payload) ? (action.payload = []) : (state.previews = action.payload),
+          (state.isLoaded = true),
+          (state.serverError = { statusCode: 0, message: '' });
       })
       .addCase(fetchUserBoards.rejected, (state, action) => {
-        console.log(action.payload);
-        console.log(state.previews);
+        state.isLoaded = false;
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       })
       .addCase(updateUserBoard.pending, (state) => {
         state.isLoaded = false;
       })
-      .addCase(updateUserBoard.fulfilled, () => {})
-      .addCase(updateUserBoard.rejected, () => {
-        // state.searchError = 'Sorry, network issues, we are looking into the problem';
+      .addCase(updateUserBoard.fulfilled, (state) => {
+        state.serverError = { statusCode: 0, message: '' };
+      })
+      .addCase(updateUserBoard.rejected, (state, action) => {
+        state.isLoaded = false;
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
+      })
+      .addCase(createUserBoard.pending, (state) => {
+        state.isLoaded = false;
+      })
+      .addCase(createUserBoard.fulfilled, (state) => {
+        state.serverError = { statusCode: 0, message: '' };
+      })
+      .addCase(createUserBoard.rejected, (state, action) => {
+        state.isLoaded = false;
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
+      })
+      .addCase(deleteUserBoard.pending, (state) => {
+        state.isLoaded = false;
+      })
+      .addCase(deleteUserBoard.fulfilled, (state) => {
+        state.serverError = { statusCode: 0, message: '' };
+      })
+      .addCase(deleteUserBoard.rejected, (state, action) => {
+        state.isLoaded = false;
+        state.serverError.statusCode = (action.payload as IErrorResponse).statusCode;
+        state.serverError.message = (action.payload as IErrorResponse).message;
       });
-    // .addCase(updateUserBoard.fulfilled, (state) => {})
-    // .addCase(updateUserBoard.rejected, (state) => {
-    //   // state.searchError = 'Sorry, network issues, we are looking into the problem';
-    // });
   },
 });
 

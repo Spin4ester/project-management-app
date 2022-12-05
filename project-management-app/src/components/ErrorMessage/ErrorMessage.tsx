@@ -20,10 +20,10 @@ export function ErrorMessage(props: IProps) {
   makeUserFriendlyErrorName(props.error.statusCode);
   useEffect(() => {
     if (props.error.statusCode === 403) {
-      setTimeout(() => {
-        removeUserFromLocalStorage();
-        dispatch(signOutUser());
-      }, 2500);
+      // setTimeout(() => {
+      removeUserFromLocalStorage();
+      dispatch(signOutUser());
+      // }, 2500);
     }
     // eslint-disable-next-line
   }, [props.error.statusCode]);

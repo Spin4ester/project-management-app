@@ -48,7 +48,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(userSigninFetch.fulfilled, (state) => {
-        state.isAuth = true;
+        // state.isAuth = true;
         state.serverError = { statusCode: 0, message: '' };
       })
       .addCase(userSigninFetch.rejected, (state, action) => {
