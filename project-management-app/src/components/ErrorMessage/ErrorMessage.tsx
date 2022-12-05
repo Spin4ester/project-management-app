@@ -20,10 +20,10 @@ export function ErrorMessage(props: IProps) {
   makeUserFriendlyErrorName(props.error.statusCode);
   useEffect(() => {
     if (props.error.statusCode === 403) {
-      // setTimeout(() => {
-      removeUserFromLocalStorage();
-      dispatch(signOutUser());
-      // }, 2500);
+      setTimeout(() => {
+        removeUserFromLocalStorage();
+        dispatch(signOutUser());
+      }, 2500);
     }
     // eslint-disable-next-line
   }, [props.error.statusCode]);
@@ -48,8 +48,10 @@ export function ErrorMessage(props: IProps) {
         alt="Close button"
         onClick={() => onCloseBtnClick()}
       />
-      <p className={styles.stringInfo}>Server error occured</p>
-      <p className={styles.stringInfo}>Message: {message}</p>
+      <p className={styles.stringInfo}>{t('ServerError')}</p>
+      <p className={styles.stringInfo}>
+        {t('Message')}: {message}
+      </p>
     </div>
   );
 }

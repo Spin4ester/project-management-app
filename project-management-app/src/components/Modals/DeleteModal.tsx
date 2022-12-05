@@ -17,7 +17,7 @@ export const DeleteModal = (props: IProps) => {
       <div className={styles.container}>
         <div className={styles.content}>
           <img src={Warning} alt="Warning" />
-          <h6>{t('DeleteConfirmation') + ' this?'}</h6>
+          <h6>{t('DeleteConfirmation')}</h6>
           <div className={styles.buttons_container}>
             <button className={styles.button} onClick={props.onDeleteClick}>
               {t('Delete')}

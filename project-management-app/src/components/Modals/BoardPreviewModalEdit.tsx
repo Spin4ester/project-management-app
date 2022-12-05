@@ -22,7 +22,7 @@ export const BoardPreviewModalEdit = () => {
     register,
     handleSubmit,
     formState: { errors },
-    // setError,
+    setError,
     reset,
   } = useForm<IFormValues>();
 
@@ -33,8 +33,8 @@ export const BoardPreviewModalEdit = () => {
         _id: boardPreviewId,
       })
     );
-    dispatch(fetchUserBoards(userId));
     dispatch(openEditBoardModal(false));
+    dispatch(fetchUserBoards(userId));
     reset();
   };
 
@@ -45,6 +45,7 @@ export const BoardPreviewModalEdit = () => {
           className={styles.blur}
           onClick={() => {
             dispatch(openEditBoardModal(false));
+            reset();
           }}
         >
           <form

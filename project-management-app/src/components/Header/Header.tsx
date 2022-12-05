@@ -14,7 +14,6 @@ import SignOut from '../../assets/icons/log-out.png';
 export function Header() {
   const { t, i18n } = useTranslation();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
-  const error = useSelector((state: RootState) => state.serverError);
   const dispatch = useDispatch();
 
   const [navbar, setNavbar] = useState(false);
@@ -146,7 +145,8 @@ export function Header() {
       <div className={styles.buttons_container}>
         <button
           className={
-            localStorage.getItem('i18nextLng') === 'en'
+            localStorage.getItem('i18nextLng') === 'en' ||
+            localStorage.getItem('i18nextLng') === 'en-GB'
               ? `${styles.button} ${styles.active}`
               : styles.button
           }

@@ -5,7 +5,13 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { IUser, IUserLogin } from 'common/types';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllUsers, updateUserInfo, updateUserLogin, userSigninFetch } from 'redux/UserSlice';
+import {
+  fetchAllUsers,
+  signInUser,
+  updateUserInfo,
+  updateUserLogin,
+  userSigninFetch,
+} from 'redux/UserSlice';
 import { AppDispatch, RootState } from 'redux/Store';
 import Login from '../../assets/icons/enter.png';
 import Password from '../../assets/icons/padlock.png';
@@ -46,6 +52,7 @@ export function SignIn() {
       if (user) {
         dispatch(updateUserInfo(user));
         saveUserToLocalStorage(user);
+        dispatch(signInUser());
         reset();
       }
     }
