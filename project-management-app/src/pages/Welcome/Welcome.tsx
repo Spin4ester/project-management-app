@@ -18,9 +18,7 @@ export function Welcome() {
         </h2>
         <h4>{t('KanbanTypeProjectManagementApp')}</h4>
       </div>
-      <div className={styles.video_content}>
-        <YouTube videoId="2cGSmp55ipg" />
-      </div>
+      <YouTube className={styles.video_content} videoId="2cGSmp55ipg" />
       <div className={styles.developers_container}>
         <h3>{t('OurTeam')}:</h3>
         <div className={styles.developers_content}>
