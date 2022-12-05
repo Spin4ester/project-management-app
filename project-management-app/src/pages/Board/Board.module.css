@@ -1,0 +1,51 @@
+.container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin: 10px;
+  overflow-x: auto;
+}
+
+.container::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: rgb(224, 220, 228);
+  border-radius: 5px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: rgba(2, 0, 36, 1);
+  border-radius: 5px;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.draggable_column {
+  height: fit-content;
+}
+
+.breadcrumbs {
+  margin: 10px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.breadcrumbs_link a {
+  color: rgb(99, 128, 254);
+  transition: 0.5s;
+}
+
+.breadcrumbs_link a:hover {
+  color: rgb(35, 33, 37);
+}
+
+.breadcrumbs ol {
+  margin: 0;
+}

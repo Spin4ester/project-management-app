@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button {
+  width: fit-content;
+  padding: 2px 30px;
+  background: rgba(240, 240, 240, 0.1);
+  border-radius: 50px;
+  border: none;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.button:first-child:hover {
+  background-color: rgb(49, 161, 49);
+  color: aliceblue;
+  transition: 0.3s;
+}
+
+.button:last-child:hover {
+  background-color: rgb(99, 128, 254);
+  color: aliceblue;
+  transition: 0.3s;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+
+@media only screen and (max-width: 620px) and (min-width: 320px) {
+  
+  .button {
+    padding: 5px 20px;
+  }
+
+}

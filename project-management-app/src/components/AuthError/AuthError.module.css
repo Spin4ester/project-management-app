@@ -1,0 +1,94 @@
+.container {
+  z-index: 2000;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  margin: auto;
+  transform: translate(50%, -50%);
+  background-color: #A9B3CE;
+  padding: 20px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.content > img {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.content > h6 {
+  font-family: 'Oswald', sans-serif;
+}
+
+.input {
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.input:hover {
+  cursor: pointer;
+  background-color: rgb(245, 255, 255);
+  transition: 0.3s;
+}
+
+.input:focus {
+  outline-color: rgb(0, 92, 0);
+}
+
+.description {
+  resize: none;
+  height: 200px;
+}
+
+.button {
+  width: fit-content;
+  padding: 2px 30px;
+  background: transparent;
+  border: 2px solid rgb(233, 110, 110);
+  border-radius: 50px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.button:last-child:hover {
+  background-color: rgb(233, 110, 110);
+  border: 2px solid transparent;
+  color: aliceblue;
+  transition: 0.3s;
+}
+
+.blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+
+@media only screen and (max-width: 620px) and (min-width: 450px) {
+
+  .container {
+    width: 70%;
+  }
+
+}
+
+@media only screen and (max-width: 450px) and (min-width: 320px) {
+
+  .container {
+    width: 90%;
+  }
+
+}
