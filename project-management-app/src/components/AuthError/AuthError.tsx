@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './AuthError.module.css';
 import { useTranslation } from 'react-i18next';
-import { removeUserFromLocalStorage } from 'common/utils';
-import { signOutUser } from 'redux/UserSlice';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { removeAuthError } from 'redux/SelectedBoardSlice';
+// import { removeUserFromLocalStorage } from 'common/utils';
+// import { signOutUser } from 'redux/UserSlice';
+// import { useDispatch } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
+// import { removeAuthError } from 'redux/SelectedBoardSlice';
 import Warning from '../../assets/icons/warning.png';
-import { openCreateTaskModal } from 'redux/ModalSlice';
+// import { openCreateTaskModal } from 'redux/ModalSlice';
 
 export const AuthError = () => {
   const { t } = useTranslation();

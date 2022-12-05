@@ -32,7 +32,7 @@ export function Welcome() {
             name={t('Dasha')}
             location={t('WarsawPoland')}
             image={DashaPic}
-            tasks={['Profile Page', 'Authorization', 'UNDEFINED']}
+            tasks={['Profile Page', 'Authorization', 'Server Errors Handling']}
           />
           <DeveloperCard
             name={t('Anya')}

@@ -54,4 +54,6 @@ export const ru = {
   Loading: 'Загрузка',
   ReturnToMainPage: 'Вернуться на главную страницу',
   Board: 'Борд',
+  Message: 'Сообщение',
+  ServerError: 'Ошибка Сервера',
 };

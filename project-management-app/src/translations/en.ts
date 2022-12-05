@@ -54,4 +54,6 @@ export const en = {
   Loading: 'Loading',
   ReturnToMainPage: 'Return to main page',
   Board: 'Board',
+  Message: 'Message',
+  ServerError: 'Server Error',
 };

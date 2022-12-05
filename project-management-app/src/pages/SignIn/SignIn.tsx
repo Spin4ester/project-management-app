@@ -32,7 +32,6 @@ export function SignIn() {
   const dispatch = useDispatch<AppDispatch>();
 
   const error = useSelector((state: RootState) => state.user.serverError);
-  const isAuth = useSelector((state: RootState) => state.user.isAuth);
 
   useEffect(() => {
     if (error.statusCode === 401) {
