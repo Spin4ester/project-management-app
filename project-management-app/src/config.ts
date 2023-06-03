@@ -1,7 +1,7 @@
 export const config = {
   // sitePath: ''
   api: {
-    url: 'http://localhost:3000/',
+    url: 'https://plain-zephyr-production.up.railway.app/',
   },
 };
 
